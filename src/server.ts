@@ -15,6 +15,7 @@ import workoutsRoutes from './routes/workouts';
 import exercisesRoutes from './routes/exercises';
 import metricsRoutes from './routes/metrics';
 import nutritionRoutes from './routes/nutrition';
+import testRoutes from './routes/test';
 
 const app = express();
 const PORT = parseInt(process.env.PORT || '5000', 10);
@@ -62,6 +63,7 @@ app.use('/api/workouts', workoutsRoutes);
 app.use('/api/exercises', exercisesRoutes);
 app.use('/api/metrics', metricsRoutes);
 app.use('/api/nutrition', nutritionRoutes);
+app.use('/api/test', testRoutes);
 
 // 404 handler
 app.use((req, res) => {

@@ -36,14 +36,6 @@ router.post('/register', async (req, res) => {
       return errorResponse(res, 'Email, name, and password are required', 400)
     }
 
-    if (!height || !weight_kg || !date_of_birth || !gender) {
-      return errorResponse(
-        res,
-        'Height, weight, date of birth, and gender are required',
-        400,
-      )
-    }
-
     if (password.length < 6) {
       return errorResponse(
         res,
@@ -52,7 +44,6 @@ router.post('/register', async (req, res) => {
       )
     }
 
-
     const existingUser = await User.findOne({ email: email.toLowerCase() })
     if (existingUser) {
       return errorResponse(res, 'User with this email already exists', 409)
@@ -60,14 +51,17 @@ router.post('/register', async (req, res) => {
 
     const hashedPassword = await hashPassword(password)
 
+    // Check if user needs onboarding (missing profile data)
+    const needsOnboarding = !height || !weight_kg || !date_of_birth || !gender
+
     const user = await User.create({
       email: email.toLowerCase(),
       name,
       password: hashedPassword,
-      height,
-      weight_kg,
-      date_of_birth,
-      gender,
+      height: height || null,
+      weight_kg: weight_kg || null,
+      date_of_birth: date_of_birth || null,
+      gender: gender || null,
       units: units || 'metric',
       auth_provider: 'email',
     })
@@ -89,6 +83,7 @@ router.post('/register', async (req, res) => {
           avatar_url: user.avatar_url,
         },
         token,
+        needsOnboarding,
       },
       201,
     )
@@ -318,6 +313,84 @@ router.post('/google-mobile', async (req, res) => {
     })
   } catch (err: any) {
     console.error('Google mobile auth error:', err)
+    return errorResponse(res, 'Google authentication failed', 401)
+  }
+})
+
+// POST /api/auth/google-web
+router.post('/google-web', async (req, res) => {
+  try {
+    const { access_token } = req.body
+
+    if (!access_token) {
+      return errorResponse(res, 'Access token required', 400)
+    }
+
+    // Fetch user info from Google using access token
+    const userInfoResponse = await fetch(
+      'https://www.googleapis.com/oauth2/v2/userinfo',
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      },
+    )
+
+    if (!userInfoResponse.ok) {
+      return errorResponse(res, 'Invalid access token', 401)
+    }
+
+    const googleUserInfo: any = await userInfoResponse.json()
+    const { id: googleId, email, name, picture } = googleUserInfo as {
+      id: string
+      email?: string
+      name?: string
+      picture?: string
+    }
+
+    if (!email) {
+      return errorResponse(res, 'Email not provided by Google', 400)
+    }
+
+    let user = await User.findOne({ $or: [{ google_id: googleId }, { email }] })
+
+    if (!user) {
+      user = await User.create({
+        email,
+        name: name || email.split('@')[0],
+        avatar_url: picture,
+        google_id: googleId,
+        auth_provider: 'google',
+        units: 'metric',
+      })
+    } else if (!user.google_id) {
+      user.google_id = googleId
+      user.avatar_url = picture || user.avatar_url
+      await user.save()
+    }
+
+    const token = generateToken(user._id.toString())
+
+    const needsOnboarding =
+      !user.height || !user.weight_kg || !user.date_of_birth || !user.gender
+
+    return successResponse(res, {
+      token,
+      needsOnboarding,
+      user: {
+        id: user._id,
+        email: user.email,
+        name: user.name,
+        avatar_url: user.avatar_url,
+        height: user.height,
+        weight_kg: user.weight_kg,
+        date_of_birth: user.date_of_birth,
+        gender: user.gender,
+        units: user.units,
+      },
+    })
+  } catch (err: any) {
+    console.error('Google web auth error:', err)
     return errorResponse(res, 'Google authentication failed', 401)
   }
 })

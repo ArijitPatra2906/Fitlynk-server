@@ -3,6 +3,7 @@ import Goal from '../models/Goal';
 import BodyMetrics from '../models/BodyMetrics';
 import StepLog from '../models/StepLog';
 import WaterLog from '../models/WaterLog';
+import User from '../models/User';
 import { errorResponse, successResponse } from '../utils/auth';
 import { authenticateUser, AuthRequest } from '../middleware/auth';
 
@@ -37,6 +38,12 @@ router.post('/goals', async (req: AuthRequest, res) => {
         runValidators: true,
       }
     );
+
+    // Mark onboarding as complete when user sets their goals
+    // Goals are the final step of onboarding
+    await User.findByIdAndUpdate(req.user._id, {
+      onboarding_completed: true,
+    });
 
     return successResponse(res, goal);
   } catch (error: any) {

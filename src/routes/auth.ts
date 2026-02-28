@@ -51,8 +51,13 @@ router.post('/register', async (req, res) => {
 
     const hashedPassword = await hashPassword(password)
 
-    // Check if user needs onboarding (missing profile data)
-    const needsOnboarding = !height || !weight_kg || !date_of_birth || !gender
+    // Check if user has completed onboarding (has all profile data)
+    const hasCompletedOnboarding = !!(
+      height &&
+      weight_kg &&
+      date_of_birth &&
+      gender
+    )
 
     const user = await User.create({
       email: email.toLowerCase(),
@@ -64,6 +69,7 @@ router.post('/register', async (req, res) => {
       gender: gender || null,
       units: units || 'metric',
       auth_provider: 'email',
+      onboarding_completed: hasCompletedOnboarding,
     })
 
     const token = generateToken(user._id.toString())
@@ -83,7 +89,7 @@ router.post('/register', async (req, res) => {
           avatar_url: user.avatar_url,
         },
         token,
-        needsOnboarding,
+        needsOnboarding: !user.onboarding_completed,
       },
       201,
     )
@@ -101,7 +107,6 @@ router.post('/login', async (req, res) => {
     if (!email || !password) {
       return errorResponse(res, 'Email and password are required', 400)
     }
-
 
     const user = await User.findOne({ email: email.toLowerCase() }).select(
       '+password',
@@ -135,6 +140,7 @@ router.post('/login', async (req, res) => {
         avatar_url: user.avatar_url,
       },
       token,
+      needsOnboarding: !user.onboarding_completed,
     })
   } catch (error: any) {
     console.error('Login error:', error)
@@ -195,7 +201,6 @@ router.get('/google/callback', async (req, res) => {
       return errorResponse(res, 'Email not provided by Google', 400)
     }
 
-
     let user = await User.findOne({ $or: [{ google_id: googleId }, { email }] })
 
     if (!user) {
@@ -206,6 +211,7 @@ router.get('/google/callback', async (req, res) => {
         google_id: googleId,
         auth_provider: 'google',
         units: 'metric',
+        onboarding_completed: false,
       })
     } else if (!user.google_id) {
       user.google_id = googleId
@@ -214,8 +220,7 @@ router.get('/google/callback', async (req, res) => {
     }
 
     const authToken = generateToken(user._id.toString())
-    const needsOnboarding =
-      !user.height || !user.weight_kg || !user.date_of_birth || !user.gender
+    const needsOnboarding = !user.onboarding_completed
 
     // Return HTML that closes the browser and communicates with the app
     const redirectUrl = needsOnboarding
@@ -287,7 +292,6 @@ router.post('/google-mobile', async (req, res) => {
       return errorResponse(res, 'Email not provided', 400)
     }
 
-
     let user = await User.findOne({ $or: [{ google_id: googleId }, { email }] })
 
     if (!user) {
@@ -298,17 +302,15 @@ router.post('/google-mobile', async (req, res) => {
         google_id: googleId,
         auth_provider: 'google',
         units: 'metric',
+        onboarding_completed: false,
       })
     }
 
     const token = generateToken(user._id.toString())
 
-    const needsOnboarding =
-      !user.height || !user.weight_kg || !user.date_of_birth || !user.gender
-
     return successResponse(res, {
       token,
-      needsOnboarding,
+      needsOnboarding: !user.onboarding_completed,
       user,
     })
   } catch (err: any) {
@@ -341,7 +343,12 @@ router.post('/google-web', async (req, res) => {
     }
 
     const googleUserInfo: any = await userInfoResponse.json()
-    const { id: googleId, email, name, picture } = googleUserInfo as {
+    const {
+      id: googleId,
+      email,
+      name,
+      picture,
+    } = googleUserInfo as {
       id: string
       email?: string
       name?: string
@@ -362,6 +369,7 @@ router.post('/google-web', async (req, res) => {
         google_id: googleId,
         auth_provider: 'google',
         units: 'metric',
+        onboarding_completed: false,
       })
     } else if (!user.google_id) {
       user.google_id = googleId
@@ -371,12 +379,9 @@ router.post('/google-web', async (req, res) => {
 
     const token = generateToken(user._id.toString())
 
-    const needsOnboarding =
-      !user.height || !user.weight_kg || !user.date_of_birth || !user.gender
-
     return successResponse(res, {
       token,
-      needsOnboarding,
+      needsOnboarding: !user.onboarding_completed,
       user: {
         id: user._id,
         email: user.email,
@@ -417,6 +422,7 @@ router.put('/profile', authenticateUser, async (req: AuthRequest, res) => {
       'units',
       'avatar_url',
     ]
+
     const updates: any = {}
 
     Object.keys(req.body).forEach((key) => {
@@ -424,7 +430,6 @@ router.put('/profile', authenticateUser, async (req: AuthRequest, res) => {
         updates[key] = req.body[key]
       }
     })
-
 
     const updatedUser = await User.findByIdAndUpdate(req.user._id, updates, {
       new: true,

@@ -13,6 +13,7 @@ export interface IUser {
   units: 'metric' | 'imperial';
   google_id?: string;
   auth_provider: 'email' | 'google';
+  onboarding_completed: boolean;
   created_at: Date;
   updated_at: Date;
 }
@@ -70,6 +71,10 @@ const UserSchema = new Schema<IUser>(
       type: String,
       enum: ['email', 'google'],
       default: 'email',
+    },
+    onboarding_completed: {
+      type: Boolean,
+      default: false,
     },
   },
   {

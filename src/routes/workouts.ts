@@ -1,126 +1,272 @@
-import { Router } from 'express';
-import Workout from '../models/Workout';
-import { errorResponse, successResponse } from '../utils/auth';
-import { authenticateUser, AuthRequest } from '../middleware/auth';
+import { Router } from 'express'
+import Workout from '../models/Workout'
+import User from '../models/User'
+import Exercise from '../models/Exercise'
+import { errorResponse, successResponse } from '../utils/auth'
+import { authenticateUser, AuthRequest } from '../middleware/auth'
 
-const router = Router();
+const router = Router()
+
+const STRENGTH_MET = 5
+const CARDIO_MET = 8
+const MIXED_MET = (STRENGTH_MET + CARDIO_MET) / 2
+
+const calculateWorkoutVolume = (exercises: any[] = []): number => {
+  return exercises.reduce((totalVolume, exercise) => {
+    const setVolume = (exercise.sets || []).reduce((acc: number, set: any) => {
+      return acc + (set.weight_kg || 0) * (set.reps || 0)
+    }, 0)
+    return totalVolume + setVolume
+  }, 0)
+}
+
+const calculateWorkoutCalories = async (
+  userId: string,
+  workoutData: any,
+): Promise<number> => {
+  if (workoutData.is_template) {
+    return 0
+  }
+
+  if (!workoutData.started_at || !workoutData.ended_at) {
+    return 0
+  }
+
+  const start = new Date(workoutData.started_at).getTime()
+  const end = new Date(workoutData.ended_at).getTime()
+
+  if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start) {
+    return 0
+  }
+
+  const durationHours = (end - start) / (1000 * 60 * 60)
+  const exercises = workoutData.exercises || []
+  const exerciseIds = exercises
+    .map((exercise: any) => exercise.exercise_id?.toString())
+    .filter((id: string | undefined) => !!id)
+
+  const [user, exerciseDocs] = await Promise.all([
+    User.findById(userId).select('weight_kg'),
+    exerciseIds.length > 0
+      ? Exercise.find({ _id: { $in: exerciseIds } }).select('category')
+      : Promise.resolve([]),
+  ])
+
+  const userWeight = user?.weight_kg
+
+  if (!userWeight || userWeight <= 0) {
+    const totalVolume = calculateWorkoutVolume(exercises)
+    return Math.round(totalVolume * 0.05)
+  }
+
+  const categoryMap = new Map(
+    exerciseDocs.map((doc: any) => [doc._id.toString(), doc.category]),
+  )
+
+  const cardioCount = exerciseIds.reduce((count: number, id: string) => {
+    return categoryMap.get(id) === 'cardio' ? count + 1 : count
+  }, 0)
+
+  const strengthCount = exerciseIds.length - cardioCount
+
+  let met = STRENGTH_MET
+  if (cardioCount > 0) {
+    met = cardioCount > strengthCount ? CARDIO_MET : MIXED_MET
+  }
+
+  return Math.round(met * userWeight * durationHours)
+}
+
+const buildWorkoutPayload = async (req: AuthRequest, existingWorkout?: any) => {
+  const {
+    _id: _existingId,
+    created_at: _existingCreatedAt,
+    updated_at: _existingUpdatedAt,
+    __v: _existingV,
+    ...existingData
+  } = existingWorkout || {}
+
+  const {
+    _id: _incomingId,
+    created_at: _incomingCreatedAt,
+    updated_at: _incomingUpdatedAt,
+    __v: _incomingV,
+    user_id: _incomingUserId,
+    ...incomingData
+  } = req.body || {}
+
+  const basePayload = {
+    ...existingData,
+    ...incomingData,
+    user_id: req.user._id,
+  }
+
+  basePayload.calories = await calculateWorkoutCalories(
+    req.user._id.toString(),
+    basePayload,
+  )
+
+  return basePayload
+}
 
 // All routes require authentication
-router.use(authenticateUser);
+router.use(authenticateUser)
 
 // GET /api/workouts
 router.get('/', async (req: AuthRequest, res) => {
   try {
+    const {
+      is_template,
+      search,
+      page = '1',
+      limit = '20',
+      skip = '0',
+      completed,
+    } = req.query
 
-    const { is_template, limit = '50', skip = '0' } = req.query;
-
-    const filter: any = { user_id: req.user._id };
+    const filter: any = { user_id: req.user._id }
 
     if (is_template !== undefined) {
-      filter.is_template = is_template === 'true';
+      filter.is_template = is_template === 'true'
     }
 
-    const workouts = await Workout.find(filter)
-      .populate('exercises.exercise_id', 'name category muscle_groups')
-      .sort({ started_at: -1 })
-      .limit(parseInt(limit as string))
-      .skip(parseInt(skip as string));
+    if (search) {
+      filter.name = { $regex: search, $options: 'i' }
+    }
 
-    const total = await Workout.countDocuments(filter);
+    // Filter by completed status (has ended_at)
+    if (completed === 'true') {
+      filter.ended_at = { $ne: null }
+    } else if (completed === 'false') {
+      // `null` query matches both explicit null and missing field.
+      filter.ended_at = null
+    }
+
+    // Support both page-based and skip-based pagination
+    const limitNum = parseInt(limit as string)
+    const skipNum =
+      skip !== '0'
+        ? parseInt(skip as string)
+        : (parseInt(page as string) - 1) * limitNum
+    const pageNum =
+      skip !== '0'
+        ? Math.floor(skipNum / limitNum) + 1
+        : parseInt(page as string)
+
+    const [workouts, total] = await Promise.all([
+      Workout.find(filter)
+        .populate('exercises.exercise_id', 'name category muscle_groups')
+        .sort({ started_at: -1 })
+        .limit(limitNum)
+        .skip(skipNum),
+      Workout.countDocuments(filter),
+    ])
 
     return successResponse(res, {
       workouts,
       pagination: {
+        page: pageNum,
         total,
-        limit: parseInt(limit as string),
-        skip: parseInt(skip as string),
+        limit: limitNum,
+        totalPages: Math.ceil(total / limitNum),
+        skip: skipNum,
       },
-    });
+    })
   } catch (error: any) {
-    console.error('Get workouts error:', error);
-    return errorResponse(res, error.message || 'Internal server error', 500);
+    console.error('Get workouts error:', error)
+    return errorResponse(res, error.message || 'Internal server error', 500)
   }
-});
+})
 
 // POST /api/workouts
 router.post('/', async (req: AuthRequest, res) => {
   try {
-
-    let workout = await Workout.create({
-      ...req.body,
-      user_id: req.user._id,
-    });
+    const payload = await buildWorkoutPayload(req)
+    let workout = await Workout.create(payload)
 
     // Populate exercise references
-    workout = await Workout.findById(workout._id)
-      .populate('exercises.exercise_id', 'name category muscle_groups equipment') as any;
+    workout = (await Workout.findById(workout._id).populate(
+      'exercises.exercise_id',
+      'name category muscle_groups equipment',
+    )) as any
 
-    return successResponse(res, workout, 201);
+    return successResponse(res, workout, 201)
   } catch (error: any) {
-    console.error('Create workout error:', error);
-    return errorResponse(res, error.message || 'Internal server error', 500);
+    console.error('Create workout error:', error)
+    return errorResponse(res, error.message || 'Internal server error', 500)
   }
-});
+})
 
 // GET /api/workouts/:id
 router.get('/:id', async (req: AuthRequest, res) => {
   try {
-
     const workout = await Workout.findOne({
       _id: req.params.id,
       user_id: req.user._id,
-    }).populate('exercises.exercise_id', 'name category muscle_groups equipment');
+    }).populate(
+      'exercises.exercise_id',
+      'name category muscle_groups equipment',
+    )
 
     if (!workout) {
-      return errorResponse(res, 'Workout not found', 404);
+      return errorResponse(res, 'Workout not found', 404)
     }
 
-    return successResponse(res, workout);
+    return successResponse(res, workout)
   } catch (error: any) {
-    console.error('Get workout error:', error);
-    return errorResponse(res, error.message || 'Internal server error', 500);
+    console.error('Get workout error:', error)
+    return errorResponse(res, error.message || 'Internal server error', 500)
   }
-});
+})
 
 // PUT /api/workouts/:id
 router.put('/:id', async (req: AuthRequest, res) => {
   try {
+    const existingWorkout = await Workout.findOne({
+      _id: req.params.id,
+      user_id: req.user._id,
+    })
+
+    if (!existingWorkout) {
+      return errorResponse(res, 'Workout not found', 404)
+    }
+
+    const payload = await buildWorkoutPayload(req, existingWorkout.toObject())
 
     const workout = await Workout.findOneAndUpdate(
       { _id: req.params.id, user_id: req.user._id },
-      req.body,
-      { new: true, runValidators: true }
-    ).populate('exercises.exercise_id', 'name category muscle_groups equipment');
+      payload,
+      { new: true, runValidators: true },
+    ).populate('exercises.exercise_id', 'name category muscle_groups equipment')
 
     if (!workout) {
-      return errorResponse(res, 'Workout not found', 404);
+      return errorResponse(res, 'Workout not found', 404)
     }
 
-    return successResponse(res, workout);
+    return successResponse(res, workout)
   } catch (error: any) {
-    console.error('Update workout error:', error);
-    return errorResponse(res, error.message || 'Internal server error', 500);
+    console.error('Update workout error:', error)
+    return errorResponse(res, error.message || 'Internal server error', 500)
   }
-});
+})
 
 // DELETE /api/workouts/:id
 router.delete('/:id', async (req: AuthRequest, res) => {
   try {
-
     const workout = await Workout.findOneAndDelete({
       _id: req.params.id,
       user_id: req.user._id,
-    });
+    })
 
     if (!workout) {
-      return errorResponse(res, 'Workout not found', 404);
+      return errorResponse(res, 'Workout not found', 404)
     }
 
-    return successResponse(res, { message: 'Workout deleted successfully' });
+    return successResponse(res, { message: 'Workout deleted successfully' })
   } catch (error: any) {
-    console.error('Delete workout error:', error);
-    return errorResponse(res, error.message || 'Internal server error', 500);
+    console.error('Delete workout error:', error)
+    return errorResponse(res, error.message || 'Internal server error', 500)
   }
-});
+})
 
-export default router;
+export default router

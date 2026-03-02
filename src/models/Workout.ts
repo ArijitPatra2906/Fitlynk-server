@@ -1,34 +1,35 @@
-import mongoose, { Schema, model, models } from 'mongoose';
+import mongoose, { Schema, model, models } from 'mongoose'
 
 export interface ISet {
-  set_number: number;
-  reps: number;
-  weight_kg: number;
-  duration_s?: number;
-  distance_m?: number;
-  is_warmup: boolean;
-  completed_at?: Date;
+  set_number: number
+  reps: number
+  weight_kg: number
+  duration_s?: number
+  distance_m?: number
+  is_warmup: boolean
+  completed_at?: Date
 }
 
 export interface IExerciseInWorkout {
-  exercise_id: mongoose.Types.ObjectId;
-  order_index: number;
-  sets: ISet[];
-  notes?: string;
+  exercise_id: mongoose.Types.ObjectId
+  order_index: number
+  sets: ISet[]
+  notes?: string
 }
 
 export interface IWorkout {
-  _id: mongoose.Types.ObjectId;
-  user_id: mongoose.Types.ObjectId;
-  name: string;
-  started_at: Date;
-  ended_at?: Date;
-  notes?: string;
-  is_template: boolean;
-  template_id?: mongoose.Types.ObjectId;
-  exercises: IExerciseInWorkout[];
-  created_at: Date;
-  updated_at: Date;
+  _id: mongoose.Types.ObjectId
+  user_id: mongoose.Types.ObjectId
+  name: string
+  started_at: Date
+  ended_at?: Date
+  calories: number
+  notes?: string
+  is_template: boolean
+  template_id?: mongoose.Types.ObjectId
+  exercises: IExerciseInWorkout[]
+  created_at: Date
+  updated_at: Date
 }
 
 const SetSchema = new Schema<ISet>(
@@ -64,8 +65,8 @@ const SetSchema = new Schema<ISet>(
       type: Date,
     },
   },
-  { _id: false }
-);
+  { _id: false },
+)
 
 const ExerciseInWorkoutSchema = new Schema<IExerciseInWorkout>(
   {
@@ -89,8 +90,8 @@ const ExerciseInWorkoutSchema = new Schema<IExerciseInWorkout>(
       maxlength: 500,
     },
   },
-  { _id: false }
-);
+  { _id: false },
+)
 
 const WorkoutSchema = new Schema<IWorkout>(
   {
@@ -113,6 +114,11 @@ const WorkoutSchema = new Schema<IWorkout>(
     ended_at: {
       type: Date,
     },
+    calories: {
+      type: Number,
+      min: 0,
+      default: 0,
+    },
     notes: {
       type: String,
       trim: true,
@@ -134,11 +140,11 @@ const WorkoutSchema = new Schema<IWorkout>(
   },
   {
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
-  }
-);
+  },
+)
 
-WorkoutSchema.index({ user_id: 1, started_at: -1 });
+WorkoutSchema.index({ user_id: 1, started_at: -1 })
 
-const Workout = models.Workout || model<IWorkout>('Workout', WorkoutSchema);
+const Workout = models.Workout || model<IWorkout>('Workout', WorkoutSchema)
 
-export default Workout;
+export default Workout

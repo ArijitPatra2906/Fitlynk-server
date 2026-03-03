@@ -11,6 +11,18 @@ const router = Router();
 
 router.use(authenticateUser);
 
+const toStartOfDay = (value: string) => {
+  const d = new Date(value);
+  d.setHours(0, 0, 0, 0);
+  return d;
+};
+
+const toEndOfDay = (value: string) => {
+  const d = new Date(value);
+  d.setHours(23, 59, 59, 999);
+  return d;
+};
+
 // GET /api/metrics/goals
 router.get('/goals', async (req: AuthRequest, res) => {
   try {
@@ -114,7 +126,7 @@ router.get('/steps', async (req: AuthRequest, res) => {
     const filter: any = { user_id: req.user._id };
 
     if (date) {
-      const targetDate = new Date(date as string);
+      const targetDate = toStartOfDay(date as string);
       const nextDate = new Date(targetDate);
       nextDate.setDate(nextDate.getDate() + 1);
 
@@ -124,8 +136,8 @@ router.get('/steps', async (req: AuthRequest, res) => {
       };
     } else if (startDate && endDate) {
       filter.date = {
-        $gte: new Date(startDate as string),
-        $lte: new Date(endDate as string),
+        $gte: toStartOfDay(startDate as string),
+        $lte: toEndOfDay(endDate as string),
       };
     }
 
@@ -224,7 +236,7 @@ router.get('/water', async (req: AuthRequest, res) => {
     const filter: any = { user_id: req.user._id };
 
     if (date) {
-      const targetDate = new Date(date as string);
+      const targetDate = toStartOfDay(date as string);
       const nextDate = new Date(targetDate);
       nextDate.setDate(nextDate.getDate() + 1);
 
@@ -234,8 +246,8 @@ router.get('/water', async (req: AuthRequest, res) => {
       };
     } else if (startDate && endDate) {
       filter.date = {
-        $gte: new Date(startDate as string),
-        $lte: new Date(endDate as string),
+        $gte: toStartOfDay(startDate as string),
+        $lte: toEndOfDay(endDate as string),
       };
     }
 

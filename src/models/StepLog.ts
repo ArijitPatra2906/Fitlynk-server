@@ -6,6 +6,11 @@ export interface IStepLog extends Document {
   steps: number;
   distance_km?: number;
   calories_burned?: number;
+  active_minutes?: number;
+  slow_minutes?: number;
+  brisk_minutes?: number;
+  slow_steps?: number;
+  brisk_steps?: number;
   source: 'manual' | 'device' | 'synced';
   created_at: Date;
   updated_at: Date;
@@ -34,6 +39,26 @@ const StepLogSchema = new Schema<IStepLog>(
       min: 0,
     },
     calories_burned: {
+      type: Number,
+      min: 0,
+    },
+    active_minutes: {
+      type: Number,
+      min: 0,
+    },
+    slow_minutes: {
+      type: Number,
+      min: 0,
+    },
+    brisk_minutes: {
+      type: Number,
+      min: 0,
+    },
+    slow_steps: {
+      type: Number,
+      min: 0,
+    },
+    brisk_steps: {
       type: Number,
       min: 0,
     },

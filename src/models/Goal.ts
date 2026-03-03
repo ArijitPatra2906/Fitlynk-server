@@ -5,6 +5,7 @@ export interface IGoal {
   user_id: mongoose.Types.ObjectId;
   goal_type: 'lose' | 'maintain' | 'gain';
   calorie_target: number;
+  step_target?: number;
   protein_g: number;
   carbs_g: number;
   fat_g: number;
@@ -29,6 +30,11 @@ const GoalSchema = new Schema<IGoal>(
     calorie_target: {
       type: Number,
       required: true,
+    },
+    step_target: {
+      type: Number,
+      min: 0,
+      default: 10000,
     },
     protein_g: {
       type: Number,

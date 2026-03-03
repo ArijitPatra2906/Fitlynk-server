@@ -109,7 +109,7 @@ router.post('/body', async (req: AuthRequest, res) => {
 router.get('/steps', async (req: AuthRequest, res) => {
   try {
 
-    const { date, startDate, endDate } = req.query;
+    const { date, startDate, endDate, page, limit } = req.query;
 
     const filter: any = { user_id: req.user._id };
 
@@ -129,9 +129,36 @@ router.get('/steps', async (req: AuthRequest, res) => {
       };
     }
 
-    const stepLogs = await StepLog.find(filter).sort({ date: -1 });
+    const hasPagination = page !== undefined || limit !== undefined;
+    const rawPage = parseInt((page as string) || '1', 10);
+    const rawLimit = parseInt((limit as string) || '10', 10);
+    const pageNum = Number.isFinite(rawPage) ? Math.max(1, rawPage) : 1;
+    const limitNum = Number.isFinite(rawLimit) ? Math.max(1, rawLimit) : 10;
 
-    return successResponse(res, stepLogs);
+    if (!hasPagination) {
+      const stepLogs = await StepLog.find(filter).sort({ date: -1 });
+      return successResponse(res, stepLogs);
+    }
+
+    const skip = (pageNum - 1) * limitNum;
+
+    const [total, logs] = await Promise.all([
+      StepLog.countDocuments(filter),
+      StepLog.find(filter).sort({ date: -1 }).skip(skip).limit(limitNum),
+    ]);
+
+    const totalPages = Math.max(1, Math.ceil(total / limitNum));
+    return successResponse(res, {
+      logs,
+      pagination: {
+        page: pageNum,
+        limit: limitNum,
+        total,
+        totalPages,
+        hasNext: pageNum < totalPages,
+        hasPrev: pageNum > 1,
+      },
+    });
   } catch (error: any) {
     console.error('Get step logs error:', error);
     return errorResponse(res, error.message || 'Internal server error', 500);
@@ -142,7 +169,18 @@ router.get('/steps', async (req: AuthRequest, res) => {
 router.post('/steps', async (req: AuthRequest, res) => {
   try {
 
-    const { date, steps, distance_km, calories_burned, source } = req.body;
+    const {
+      date,
+      steps,
+      distance_km,
+      calories_burned,
+      active_minutes,
+      slow_minutes,
+      brisk_minutes,
+      slow_steps,
+      brisk_steps,
+      source,
+    } = req.body;
 
     const logDate = new Date(date);
     logDate.setHours(0, 0, 0, 0);
@@ -156,6 +194,11 @@ router.post('/steps', async (req: AuthRequest, res) => {
         steps,
         distance_km,
         calories_burned,
+        active_minutes,
+        slow_minutes,
+        brisk_minutes,
+        slow_steps,
+        brisk_steps,
         source,
       },
       {

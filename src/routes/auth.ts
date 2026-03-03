@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import { createHash } from 'crypto'
 import { OAuth2Client } from 'google-auth-library'
 import User from '../models/User'
 import {
@@ -446,5 +447,178 @@ router.put('/profile', authenticateUser, async (req: AuthRequest, res) => {
     return errorResponse(res, error.message || 'Internal server error', 500)
   }
 })
+
+// POST /api/auth/avatar/upload
+router.post(
+  '/avatar/upload',
+  authenticateUser,
+  async (req: AuthRequest, res) => {
+    try {
+      const imageData = String(req.body?.imageData || '')
+      if (!imageData || !imageData.startsWith('data:image/')) {
+        return errorResponse(res, 'Valid imageData is required', 400)
+      }
+
+      // Basic guard to prevent very large base64 payloads.
+      if (imageData.length > 1_800_000) {
+        return errorResponse(res, 'Image payload is too large', 413)
+      }
+
+      const cloudName = process.env.CLOUDINARY_CLOUD_NAME
+      const apiKey = process.env.CLOUDINARY_API_KEY
+      const apiSecret = process.env.CLOUDINARY_API_SECRET
+      if (!cloudName || !apiKey || !apiSecret) {
+        return errorResponse(
+          res,
+          'Cloudinary env is not configured on server',
+          500,
+        )
+      }
+
+      const timestamp = Math.floor(Date.now() / 1000)
+      const folder = 'fitlynk/avatars'
+      const publicId = `fitlynk_${req.user?._id}_${Date.now()}`
+      const transformation = 'c_limit,w_512,h_512,q_auto,f_auto'
+
+      const signatureBase = `folder=${folder}&public_id=${publicId}&timestamp=${timestamp}&transformation=${transformation}${apiSecret}`
+      const signature = createHash('sha1').update(signatureBase).digest('hex')
+
+      const body = new URLSearchParams()
+      body.append('file', imageData)
+      body.append('api_key', apiKey)
+      body.append('timestamp', String(timestamp))
+      body.append('folder', folder)
+      body.append('public_id', publicId)
+      body.append('transformation', transformation)
+      body.append('signature', signature)
+
+      const uploadRes = await fetch(
+        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: body.toString(),
+        },
+      )
+
+      const uploadPayload: any = await uploadRes.json()
+      if (!uploadRes.ok || !uploadPayload?.secure_url) {
+        return errorResponse(
+          res,
+          uploadPayload?.error?.message || 'Cloudinary upload failed',
+          uploadRes.status || 500,
+        )
+      }
+
+      return successResponse(res, { avatar_url: uploadPayload.secure_url })
+    } catch (error: any) {
+      console.error('Avatar upload error:', error)
+      return errorResponse(
+        res,
+        error.message || 'Failed to upload avatar',
+        500,
+      )
+    }
+  },
+)
+
+// POST /api/auth/avatar/generate
+router.post(
+  '/avatar/generate',
+  authenticateUser,
+  async (req: AuthRequest, res) => {
+    try {
+      const apiKey = process.env.GEMINI_API_KEY
+      if (!apiKey) {
+        return errorResponse(res, 'GEMINI_API_KEY is not configured', 500)
+      }
+
+      const baseUrl =
+        process.env.GEMINI_API_BASE_URL ||
+        'https://generativelanguage.googleapis.com'
+      const model =
+        process.env.GEMINI_AVATAR_MODEL || 'gemini-2.0-flash-exp'
+      const count = Math.max(1, Math.min(4, Number(req.body?.count || 1)))
+      const stylePrompt = String(req.body?.prompt || '').trim()
+      const userName = req.user?.name || 'athlete'
+
+      const promptBase =
+        `Create a clean, modern fitness app profile avatar for ${userName}. ` +
+        `Headshot only, centered face, sportswear or gym aesthetic, high contrast, no text, no watermark, plain background, app-icon friendly. ` +
+        (stylePrompt ? `Style hint: ${stylePrompt}.` : '')
+
+      const avatars: string[] = []
+
+      for (let i = 0; i < count; i += 1) {
+        const response = await fetch(
+          `${baseUrl}/v1beta/models/${model}:generateContent?key=${apiKey}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [
+                {
+                  parts: [
+                    {
+                      text: `${promptBase} Variant ${i + 1}.`,
+                    },
+                  ],
+                },
+              ],
+              generationConfig: {
+                temperature: 0.9,
+                responseModalities: ['IMAGE', 'TEXT'],
+              },
+            }),
+          },
+        )
+
+        if (!response.ok) {
+          const errText = await response.text()
+          return errorResponse(
+            res,
+            `Gemini avatar generation failed: ${errText}`,
+            response.status,
+          )
+        }
+
+        const data: any = await response.json()
+        const parts: any[] =
+          data?.candidates?.[0]?.content?.parts ||
+          data?.candidates?.flatMap((c: any) => c?.content?.parts || []) ||
+          []
+
+        const inlineImage = parts.find(
+          (p) => p?.inlineData?.data && p?.inlineData?.mimeType?.startsWith('image/'),
+        )?.inlineData
+
+        if (!inlineImage?.data) {
+          continue
+        }
+
+        avatars.push(
+          `data:${inlineImage.mimeType || 'image/png'};base64,${inlineImage.data}`,
+        )
+      }
+
+      if (avatars.length === 0) {
+        return errorResponse(
+          res,
+          'No avatar image returned by Gemini for this prompt',
+          502,
+        )
+      }
+
+      return successResponse(res, { avatars })
+    } catch (error: any) {
+      console.error('Generate avatar error:', error)
+      return errorResponse(
+        res,
+        error.message || 'Failed to generate avatar',
+        500,
+      )
+    }
+  },
+)
 
 export default router

@@ -4,6 +4,8 @@ import BodyMetrics from '../models/BodyMetrics';
 import StepLog from '../models/StepLog';
 import WaterLog from '../models/WaterLog';
 import User from '../models/User';
+import MealLog from '../models/MealLog';
+import Workout from '../models/Workout';
 import { errorResponse, successResponse } from '../utils/auth';
 import { authenticateUser, AuthRequest } from '../middleware/auth';
 
@@ -145,6 +147,104 @@ router.post('/body', async (req: AuthRequest, res) => {
     return successResponse(res, metric, 201);
   } catch (error: any) {
     console.error('Create body metric error:', error);
+    return errorResponse(res, error.message || 'Internal server error', 500);
+  }
+});
+
+// GET /api/metrics/recent-activity
+router.get('/recent-activity', async (req: AuthRequest, res) => {
+  try {
+    const rawLimit = parseInt((req.query.limit as string) || '5', 10);
+    const limit = Number.isFinite(rawLimit) ? Math.max(1, Math.min(50, rawLimit)) : 5;
+    const perTypeFetch = Math.max(10, limit * 3);
+
+    const [meals, workouts, waters, weights, steps] = await Promise.all([
+      MealLog.find({ user_id: req.user._id })
+        .populate('food_id', 'name')
+        .sort({ created_at: -1 })
+        .limit(perTypeFetch)
+        .lean<any[]>(),
+      Workout.find({
+        user_id: req.user._id,
+        is_template: false,
+        ended_at: { $ne: null },
+      })
+        .populate('exercises.exercise_id', 'name')
+        .sort({ ended_at: -1, updated_at: -1 })
+        .limit(perTypeFetch)
+        .lean<any[]>(),
+      WaterLog.find({ user_id: req.user._id })
+        .sort({ created_at: -1 })
+        .limit(perTypeFetch)
+        .lean<any[]>(),
+      BodyMetrics.find({ user_id: req.user._id })
+        .sort({ recorded_at: -1, created_at: -1 })
+        .limit(perTypeFetch)
+        .lean<any[]>(),
+      StepLog.find({ user_id: req.user._id })
+        .sort({ updated_at: -1, date: -1 })
+        .limit(perTypeFetch)
+        .lean<any[]>(),
+    ]);
+
+    const activities = [
+      ...meals.map((meal: any) => ({
+        type: 'meal',
+        name: meal.meal_type
+          ? meal.meal_type.charAt(0).toUpperCase() + meal.meal_type.slice(1)
+          : 'Meal',
+        description: meal.food_id?.name || 'Food log',
+        metadata: `${Math.round(meal.calories || 0)} kcal`,
+        timestamp: meal.created_at || meal.date,
+      })),
+      ...workouts.map((workout: any) => {
+        const exerciseNames = (workout.exercises || [])
+          .slice(0, 3)
+          .map((e: any) => e.exercise_id?.name || 'Exercise')
+          .join(' | ');
+
+        return {
+          type: 'workout',
+          name: workout.name || 'Workout',
+          description: exerciseNames || 'Completed workout',
+          metadata: `${Math.round(workout.calories || 0)} kcal`,
+          timestamp: workout.ended_at || workout.updated_at || workout.started_at,
+        };
+      }),
+      ...waters.map((water: any) => ({
+        type: 'water',
+        name: 'Water Log',
+        description: 'Hydration entry',
+        metadata: `${Math.round(water.amount_ml || 0)} ml`,
+        timestamp: water.created_at || water.date,
+      })),
+      ...weights.map((metric: any) => ({
+        type: 'weight',
+        name: 'Weight Log',
+        description: 'Body weight entry',
+        metadata: `${Number(metric.weight_kg || 0).toFixed(1)} kg`,
+        timestamp: metric.recorded_at || metric.created_at,
+      })),
+      ...steps.map((step: any) => ({
+        type: 'steps',
+        name: 'Step Log',
+        description: step.source ? `${step.source} sync` : 'Daily steps',
+        metadata: `${Math.round(step.steps || 0).toLocaleString()} steps`,
+        timestamp: step.updated_at || step.date,
+      })),
+    ];
+
+    activities.sort((a: any, b: any) => {
+      const aTime = new Date(a.timestamp).getTime();
+      const bTime = new Date(b.timestamp).getTime();
+      const safeA = Number.isFinite(aTime) ? aTime : 0;
+      const safeB = Number.isFinite(bTime) ? bTime : 0;
+      return safeB - safeA;
+    });
+
+    return successResponse(res, activities.slice(0, limit));
+  } catch (error: any) {
+    console.error('Get recent activity error:', error);
     return errorResponse(res, error.message || 'Internal server error', 500);
   }
 });

@@ -79,22 +79,49 @@ router.get('/goals/current', async (req: AuthRequest, res) => {
 router.get('/body', async (req: AuthRequest, res) => {
   try {
 
-    const { startDate, endDate, limit = '50' } = req.query;
+    const { startDate, endDate, page, limit } = req.query;
 
     const filter: any = { user_id: req.user._id };
 
     if (startDate && endDate) {
       filter.recorded_at = {
-        $gte: new Date(startDate as string),
-        $lte: new Date(endDate as string),
+        $gte: toStartOfDay(startDate as string),
+        $lte: toEndOfDay(endDate as string),
       };
     }
 
-    const metrics = await BodyMetrics.find(filter)
-      .sort({ recorded_at: -1 })
-      .limit(parseInt(limit as string));
+    const hasPagination = page !== undefined;
+    const rawLimit = parseInt((limit as string) || '50', 10);
+    const limitNum = Number.isFinite(rawLimit) ? Math.max(1, rawLimit) : 50;
 
-    return successResponse(res, metrics);
+    if (!hasPagination) {
+      const metrics = await BodyMetrics.find(filter)
+        .sort({ recorded_at: -1 })
+        .limit(limitNum);
+      return successResponse(res, metrics);
+    }
+
+    const rawPage = parseInt((page as string) || '1', 10);
+    const pageNum = Number.isFinite(rawPage) ? Math.max(1, rawPage) : 1;
+    const skip = (pageNum - 1) * limitNum;
+
+    const [total, logs] = await Promise.all([
+      BodyMetrics.countDocuments(filter),
+      BodyMetrics.find(filter).sort({ recorded_at: -1 }).skip(skip).limit(limitNum),
+    ]);
+
+    const totalPages = Math.max(1, Math.ceil(total / limitNum));
+    return successResponse(res, {
+      logs,
+      pagination: {
+        page: pageNum,
+        limit: limitNum,
+        total,
+        totalPages,
+        hasNext: pageNum < totalPages,
+        hasPrev: pageNum > 1,
+      },
+    });
   } catch (error: any) {
     console.error('Get body metrics error:', error);
     return errorResponse(res, error.message || 'Internal server error', 500);

@@ -122,6 +122,8 @@ router.get('/', async (req: AuthRequest, res) => {
       limit = '20',
       skip = '0',
       completed,
+      startDate,
+      endDate,
     } = req.query
 
     const filter: any = { user_id: req.user._id }
@@ -140,6 +142,34 @@ router.get('/', async (req: AuthRequest, res) => {
     } else if (completed === 'false') {
       // `null` query matches both explicit null and missing field.
       filter.ended_at = null
+    }
+
+    if (startDate && endDate) {
+      const start = new Date(startDate as string)
+      start.setHours(0, 0, 0, 0)
+      const end = new Date(endDate as string)
+      end.setHours(23, 59, 59, 999)
+
+      // For completed workout views, filter by ended_at. Otherwise use started_at.
+      const dateField = completed === 'true' ? 'ended_at' : 'started_at'
+      const existingDateFilter = filter[dateField]
+
+      if (
+        existingDateFilter &&
+        typeof existingDateFilter === 'object' &&
+        !Array.isArray(existingDateFilter)
+      ) {
+        filter[dateField] = {
+          ...existingDateFilter,
+          $gte: start,
+          $lte: end,
+        }
+      } else {
+        filter[dateField] = {
+          $gte: start,
+          $lte: end,
+        }
+      }
     }
 
     // Support both page-based and skip-based pagination

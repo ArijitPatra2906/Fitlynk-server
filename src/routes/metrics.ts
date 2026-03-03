@@ -137,6 +137,11 @@ router.post('/body', async (req: AuthRequest, res) => {
       user_id: req.user._id,
     });
 
+    const weightKg = Number(req.body?.weight_kg);
+    if (Number.isFinite(weightKg) && weightKg > 0) {
+      await User.findByIdAndUpdate(req.user._id, { weight_kg: weightKg });
+    }
+
     return successResponse(res, metric, 201);
   } catch (error: any) {
     console.error('Create body metric error:', error);

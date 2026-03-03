@@ -25,7 +25,7 @@ const WaterLogSchema = new Schema<IWaterLog>(
       type: Number,
       required: [true, 'Water amount is required'],
       min: 1,
-      max: 10000,
+      max: 50000,
     },
   },
   {

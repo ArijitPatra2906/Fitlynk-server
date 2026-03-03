@@ -231,7 +231,7 @@ router.post('/steps', async (req: AuthRequest, res) => {
 router.get('/water', async (req: AuthRequest, res) => {
   try {
 
-    const { date, startDate, endDate } = req.query;
+    const { date, startDate, endDate, page, limit } = req.query;
 
     const filter: any = { user_id: req.user._id };
 
@@ -251,13 +251,46 @@ router.get('/water', async (req: AuthRequest, res) => {
       };
     }
 
-    const waterLogs = await WaterLog.find(filter).sort({ date: -1, created_at: -1 });
+    const hasPagination = page !== undefined || limit !== undefined;
+    const rawPage = parseInt((page as string) || '1', 10);
+    const rawLimit = parseInt((limit as string) || '10', 10);
+    const pageNum = Number.isFinite(rawPage) ? Math.max(1, rawPage) : 1;
+    const limitNum = Number.isFinite(rawLimit) ? Math.max(1, rawLimit) : 10;
 
-    const total = waterLogs.reduce((sum, log) => sum + log.amount_ml, 0);
+    if (!hasPagination) {
+      const waterLogs = await WaterLog.find(filter).sort({ date: -1, created_at: -1 });
+      const total = waterLogs.reduce((sum, log) => sum + log.amount_ml, 0);
+
+      return successResponse(res, {
+        logs: waterLogs,
+        total_ml: total,
+      });
+    }
+
+    const skip = (pageNum - 1) * limitNum;
+    const [totalCount, logs, sumResult] = await Promise.all([
+      WaterLog.countDocuments(filter),
+      WaterLog.find(filter).sort({ date: -1, created_at: -1 }).skip(skip).limit(limitNum),
+      WaterLog.aggregate([
+        { $match: filter },
+        { $group: { _id: null, total_ml: { $sum: '$amount_ml' } } },
+      ]),
+    ]);
+
+    const totalPages = Math.max(1, Math.ceil(totalCount / limitNum));
+    const totalMl = Number(sumResult?.[0]?.total_ml || 0);
 
     return successResponse(res, {
-      logs: waterLogs,
-      total_ml: total,
+      logs,
+      total_ml: totalMl,
+      pagination: {
+        page: pageNum,
+        limit: limitNum,
+        total: totalCount,
+        totalPages,
+        hasNext: pageNum < totalPages,
+        hasPrev: pageNum > 1,
+      },
     });
   } catch (error: any) {
     console.error('Get water logs error:', error);

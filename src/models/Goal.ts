@@ -6,6 +6,7 @@ export interface IGoal {
   goal_type: 'lose' | 'maintain' | 'gain';
   calorie_target: number;
   step_target?: number;
+  water_target_ml?: number;
   protein_g: number;
   carbs_g: number;
   fat_g: number;
@@ -35,6 +36,11 @@ const GoalSchema = new Schema<IGoal>(
       type: Number,
       min: 0,
       default: 10000,
+    },
+    water_target_ml: {
+      type: Number,
+      min: 0,
+      default: 3000,
     },
     protein_g: {
       type: Number,

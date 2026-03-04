@@ -1,48 +1,9 @@
-import admin from 'firebase-admin';
+import admin from '../config/firebase-admin';
 import Notification, { NotificationType } from '../models/Notification';
 import NotificationPreferences from '../models/NotificationPreferences';
 import mongoose from 'mongoose';
 
-// Initialize Firebase Admin SDK
-let firebaseInitialized = false;
-
-const initializeFirebase = () => {
-  if (firebaseInitialized) return;
-
-  console.log('[DEBUG] FIREBASE_ADMIN_KEY_PATH:', process.env.FIREBASE_ADMIN_KEY_PATH);
-  console.log('[DEBUG] FIREBASE_ADMIN_KEY:', process.env.FIREBASE_ADMIN_KEY ? 'SET' : 'NOT SET');
-
-  try {
-    // Try to initialize from environment variable (for production)
-    if (process.env.FIREBASE_ADMIN_KEY) {
-      const serviceAccount = JSON.parse(process.env.FIREBASE_ADMIN_KEY);
-      admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount),
-      });
-      console.log('✅ Firebase Admin initialized from environment variable');
-    }
-    // Try to initialize from file (for local development)
-    else if (process.env.FIREBASE_ADMIN_KEY_PATH) {
-      const serviceAccount = require('../config/firebase-admin-key.json');
-      admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount),
-      });
-      console.log('✅ Firebase Admin initialized from file');
-    } else {
-      console.warn('⚠️ Firebase Admin not initialized - no credentials found');
-      console.warn('Push notifications will be disabled. In-app notifications will still work.');
-      return;
-    }
-
-    firebaseInitialized = true;
-  } catch (error) {
-    console.error('❌ Failed to initialize Firebase Admin:', error);
-    console.warn('Push notifications will be disabled. In-app notifications will still work.');
-  }
-};
-
-// Initialize on first use (delayed initialization to allow env vars to load)
-// initializeFirebase() will be called when first notification is sent
+// Firebase Admin is initialized in the shared config module
 
 interface NotificationPayload {
   userId: mongoose.Types.ObjectId | string;
@@ -57,11 +18,6 @@ class NotificationService {
    * Send a notification to a user (both push and in-app)
    */
   async sendNotification(payload: NotificationPayload): Promise<boolean> {
-    // Initialize Firebase on first use
-    if (!firebaseInitialized) {
-      initializeFirebase();
-    }
-
     try {
       const userId =
         typeof payload.userId === 'string'
@@ -121,11 +77,6 @@ class NotificationService {
     fcmToken: string,
     payload: NotificationPayload
   ): Promise<void> {
-    if (!firebaseInitialized) {
-      console.warn('Firebase not initialized - skipping push notification');
-      return;
-    }
-
     try {
       // Convert all data values to strings (FCM requirement)
       const stringifiedData: Record<string, string> = {

@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { createHash } from 'crypto'
-import { OAuth2Client } from 'google-auth-library'
+import admin from '../config/firebase-admin'
 import User from '../models/User'
 import {
   hashPassword,
@@ -12,12 +12,6 @@ import {
 import { authenticateUser, AuthRequest } from '../middleware/auth'
 
 const router = Router()
-
-// Use Web client for OAuth - works with browser-based OAuth flow on mobile
-const googleClient = new OAuth2Client(
-  process.env.GOOGLE_CLIENT_ID,
-  process.env.GOOGLE_CLIENT_SECRET,
-)
 
 // POST /api/auth/register
 router.post('/register', async (req, res) => {
@@ -149,127 +143,8 @@ router.post('/login', async (req, res) => {
   }
 })
 
-// GET /api/auth/google/callback - OAuth callback endpoint
-router.get('/google/callback', async (req, res) => {
-  try {
-    const { code, error } = req.query
-
-    if (error) {
-      // Return HTML that closes the browser and shows error
-      return res.send(`
-        <!DOCTYPE html>
-        <html>
-          <head>
-            <title>Authentication Error</title>
-            <script>
-              window.close();
-            </script>
-          </head>
-          <body>
-            <p>Authentication failed. You can close this window.</p>
-          </body>
-        </html>
-      `)
-    }
-
-    if (!code) {
-      return errorResponse(res, 'No authorization code provided', 400)
-    }
-
-    // Exchange code for tokens
-    const { tokens } = await googleClient.getToken({
-      code: code as string,
-      redirect_uri: `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/auth/google/callback`,
-    })
-
-    if (!tokens.id_token) {
-      return errorResponse(res, 'No ID token received', 400)
-    }
-
-    const ticket = await googleClient.verifyIdToken({
-      idToken: tokens.id_token,
-      audience: process.env.GOOGLE_CLIENT_ID,
-    })
-
-    const payload = ticket.getPayload()
-    if (!payload) {
-      return errorResponse(res, 'Invalid token payload', 400)
-    }
-
-    const { sub: googleId, email, name, picture } = payload
-
-    if (!email) {
-      return errorResponse(res, 'Email not provided by Google', 400)
-    }
-
-    let user = await User.findOne({ $or: [{ google_id: googleId }, { email }] })
-
-    if (!user) {
-      user = await User.create({
-        email,
-        name: name || email.split('@')[0],
-        avatar_url: picture,
-        google_id: googleId,
-        auth_provider: 'google',
-        units: 'metric',
-        onboarding_completed: false,
-      })
-    } else if (!user.google_id) {
-      user.google_id = googleId
-      user.avatar_url = picture || user.avatar_url
-      await user.save()
-    }
-
-    const authToken = generateToken(user._id.toString())
-    const needsOnboarding = !user.onboarding_completed
-
-    // Return HTML that closes the browser and communicates with the app
-    const redirectUrl = needsOnboarding
-      ? 'com.fitlynk.app://oauth?onboarding=true'
-      : 'com.fitlynk.app://oauth'
-
-    return res.send(`
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>Authentication Successful</title>
-          <script>
-            // Try to send message to Capacitor app
-            window.location.href = '${redirectUrl}&token=${authToken}';
-
-            // Also close the browser after a short delay
-            setTimeout(() => {
-              window.close();
-            }, 100);
-          </script>
-        </head>
-        <body>
-          <p>Authentication successful! Redirecting...</p>
-        </body>
-      </html>
-    `)
-  } catch (error: any) {
-    console.error('Google OAuth callback error:', error)
-    return res.send(`
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>Authentication Error</title>
-          <script>
-            setTimeout(() => window.close(), 3000);
-          </script>
-        </head>
-        <body>
-          <p>Authentication failed: ${error.message}</p>
-          <p>This window will close automatically.</p>
-        </body>
-      </html>
-    `)
-  }
-})
-
-// POST /api/auth/google-mobile
-router.post('/google-mobile', async (req, res) => {
+// POST /api/auth/google-firebase - Firebase Authentication endpoint
+router.post('/google-firebase', async (req, res) => {
   try {
     const { idToken } = req.body
 
@@ -277,87 +152,13 @@ router.post('/google-mobile', async (req, res) => {
       return errorResponse(res, 'ID token required', 400)
     }
 
-    const ticket = await googleClient.verifyIdToken({
-      idToken,
-      audience: process.env.GOOGLE_ANDROID_CLIENT_ID, // ANDROID CLIENT ID
-    })
+    // Verify the Firebase ID token using Firebase Admin SDK
+    const decodedToken = await admin.auth().verifyIdToken(idToken)
 
-    const payload = ticket.getPayload()
-    if (!payload) {
-      return errorResponse(res, 'Invalid Google token', 401)
-    }
-
-    const { sub: googleId, email, name, picture } = payload
+    const { uid: googleId, email, name, picture } = decodedToken
 
     if (!email) {
       return errorResponse(res, 'Email not provided', 400)
-    }
-
-    let user = await User.findOne({ $or: [{ google_id: googleId }, { email }] })
-
-    if (!user) {
-      user = await User.create({
-        email,
-        name: name || email.split('@')[0],
-        avatar_url: picture,
-        google_id: googleId,
-        auth_provider: 'google',
-        units: 'metric',
-        onboarding_completed: false,
-      })
-    }
-
-    const token = generateToken(user._id.toString())
-
-    return successResponse(res, {
-      token,
-      needsOnboarding: !user.onboarding_completed,
-      user,
-    })
-  } catch (err: any) {
-    console.error('Google mobile auth error:', err)
-    return errorResponse(res, 'Google authentication failed', 401)
-  }
-})
-
-// POST /api/auth/google-web
-router.post('/google-web', async (req, res) => {
-  try {
-    const { access_token } = req.body
-
-    if (!access_token) {
-      return errorResponse(res, 'Access token required', 400)
-    }
-
-    // Fetch user info from Google using access token
-    const userInfoResponse = await fetch(
-      'https://www.googleapis.com/oauth2/v2/userinfo',
-      {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      },
-    )
-
-    if (!userInfoResponse.ok) {
-      return errorResponse(res, 'Invalid access token', 401)
-    }
-
-    const googleUserInfo: any = await userInfoResponse.json()
-    const {
-      id: googleId,
-      email,
-      name,
-      picture,
-    } = googleUserInfo as {
-      id: string
-      email?: string
-      name?: string
-      picture?: string
-    }
-
-    if (!email) {
-      return errorResponse(res, 'Email not provided by Google', 400)
     }
 
     let user = await User.findOne({ $or: [{ google_id: googleId }, { email }] })
@@ -396,8 +197,8 @@ router.post('/google-web', async (req, res) => {
       },
     })
   } catch (err: any) {
-    console.error('Google web auth error:', err)
-    return errorResponse(res, 'Google authentication failed', 401)
+    console.error('Firebase auth error:', err)
+    return errorResponse(res, 'Firebase authentication failed', 401)
   }
 })
 

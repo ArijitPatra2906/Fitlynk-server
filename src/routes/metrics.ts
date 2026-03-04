@@ -8,6 +8,7 @@ import MealLog from '../models/MealLog';
 import Workout from '../models/Workout';
 import { errorResponse, successResponse } from '../utils/auth';
 import { authenticateUser, AuthRequest } from '../middleware/auth';
+import NotificationHelpers from '../services/notificationHelpers';
 
 const router = Router();
 
@@ -352,6 +353,17 @@ router.post('/steps', async (req: AuthRequest, res) => {
       }
     );
 
+    // Check if step goal was reached
+    const goal = await Goal.findOne({ user_id: req.user._id });
+    if (goal && steps >= goal.step_target && goal.step_target > 0) {
+      NotificationHelpers.notifyStepGoalReached(req.user._id, steps)
+        .catch(err => console.error('Error sending step goal notification:', err));
+
+      // Check if all daily goals met
+      NotificationHelpers.checkAndNotifyDailyGoals(req.user._id)
+        .catch(err => console.error('Error checking daily goals:', err));
+    }
+
     return successResponse(res, stepLog);
   } catch (error: any) {
     console.error('Upsert step log error:', error);
@@ -438,6 +450,26 @@ router.post('/water', async (req: AuthRequest, res) => {
       ...req.body,
       user_id: req.user._id,
     });
+
+    // Check if water goal was reached
+    const today = new Date().toISOString().split('T')[0];
+    const [goal, waterLogs] = await Promise.all([
+      Goal.findOne({ user_id: req.user._id }),
+      WaterLog.find({ user_id: req.user._id, date: today }),
+    ]);
+
+    if (goal && goal.water_target_ml > 0) {
+      const totalWater = waterLogs.reduce((sum, log) => sum + log.amount_ml, 0);
+
+      if (totalWater >= goal.water_target_ml) {
+        NotificationHelpers.notifyWaterGoalReached(req.user._id, totalWater)
+          .catch(err => console.error('Error sending water goal notification:', err));
+
+        // Check if all daily goals met
+        NotificationHelpers.checkAndNotifyDailyGoals(req.user._id)
+          .catch(err => console.error('Error checking daily goals:', err));
+      }
+    }
 
     return successResponse(res, waterLog, 201);
   } catch (error: any) {

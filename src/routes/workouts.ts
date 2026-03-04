@@ -4,6 +4,7 @@ import User from '../models/User'
 import Exercise from '../models/Exercise'
 import { errorResponse, successResponse } from '../utils/auth'
 import { authenticateUser, AuthRequest } from '../middleware/auth'
+import NotificationHelpers from '../services/notificationHelpers'
 
 const router = Router()
 
@@ -271,6 +272,62 @@ router.put('/:id', async (req: AuthRequest, res) => {
 
     if (!workout) {
       return errorResponse(res, 'Workout not found', 404)
+    }
+
+    // Trigger notifications if workout was just completed (ended_at was set)
+    const wasCompleted = !existingWorkout.ended_at && workout.ended_at
+    if (wasCompleted && !workout.is_template) {
+      // Calculate workout stats
+      const durationMs = new Date(workout.ended_at!).getTime() - new Date(workout.started_at).getTime()
+      const durationMinutes = durationMs / (1000 * 60)
+      const totalSets = workout.exercises.reduce((sum, ex) => sum + (ex.sets?.length || 0), 0)
+      const volumeKg = calculateWorkoutVolume(workout.exercises)
+
+      // Send workout completion notification
+      NotificationHelpers.notifyWorkoutCompleted(req.user._id, {
+        name: workout.name,
+        duration_minutes: durationMinutes,
+        total_sets: totalSets,
+        volume_kg: volumeKg,
+        calories: workout.calories,
+      }).catch(err => console.error('Error sending workout notification:', err))
+
+      // Check for PRs
+      for (const exercise of workout.exercises) {
+        if (!exercise.sets || exercise.sets.length === 0) continue
+
+        const exerciseId = exercise.exercise_id
+        const maxWeight = Math.max(...exercise.sets.map((s: any) => s.weight_kg || 0))
+
+        if (maxWeight > 0 && exerciseId) {
+          // Find historical max for this exercise
+          const historicalWorkouts = await Workout.find({
+            user_id: req.user._id,
+            'exercises.exercise_id': exerciseId,
+            ended_at: { $ne: null, $lt: workout.ended_at },
+          })
+
+          let previousMax = 0
+          for (const hw of historicalWorkouts) {
+            const ex = hw.exercises.find((e: any) => e.exercise_id?.toString() === exerciseId.toString())
+            if (ex && ex.sets) {
+              const hwMax = Math.max(...ex.sets.map((s: any) => s.weight_kg || 0))
+              previousMax = Math.max(previousMax, hwMax)
+            }
+          }
+
+          // If current weight is heavier than previous max, it's a PR!
+          if (maxWeight > previousMax && previousMax > 0) {
+            const exerciseName = typeof exerciseId === 'object' ? (exerciseId as any).name : 'Exercise'
+            NotificationHelpers.notifyPR(req.user._id, exerciseName, maxWeight, previousMax)
+              .catch(err => console.error('Error sending PR notification:', err))
+          }
+        }
+      }
+
+      // Check if all daily goals met
+      NotificationHelpers.checkAndNotifyDailyGoals(req.user._id)
+        .catch(err => console.error('Error checking daily goals:', err))
     }
 
     return successResponse(res, workout)

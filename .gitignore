@@ -23,3 +23,6 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+
+# Firebase Admin SDK credentials
+src/config/firebase-admin-key.json

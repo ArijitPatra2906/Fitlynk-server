@@ -4,6 +4,7 @@ import MealLog from '../models/MealLog';
 import { errorResponse, successResponse } from '../utils/auth';
 import { authenticateUser, AuthRequest } from '../middleware/auth';
 import foodApiService from '../services/foodApiService';
+import NotificationHelpers from '../services/notificationHelpers';
 
 const router = Router();
 
@@ -173,6 +174,10 @@ router.post('/meals', async (req: AuthRequest, res) => {
     });
 
     await mealLog.populate('food_id', 'name brand');
+
+    // Check if calorie/macro goals were reached after logging this meal
+    NotificationHelpers.checkAndNotifyDailyGoals(req.user._id)
+      .catch(err => console.error('Error checking daily goals:', err));
 
     return successResponse(res, mealLog, 201);
   } catch (error: any) {

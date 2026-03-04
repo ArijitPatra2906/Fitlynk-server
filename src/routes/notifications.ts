@@ -69,7 +69,7 @@ router.get('/', authenticateUser, async (req: AuthRequest, res) => {
  * GET /api/notifications/unread-count
  * Get unread notification count
  */
-router.get('/unread-count', authenticateUser, async (req, res) => {
+router.get('/unread-count', authenticateUser, async (req: AuthRequest, res) => {
   try {
     const userId = req.user?._id;
     if (!userId) {
@@ -92,7 +92,7 @@ router.get('/unread-count', authenticateUser, async (req, res) => {
  * PATCH /api/notifications/:id/read
  * Mark a notification as read
  */
-router.patch('/:id/read', authenticateUser, async (req, res) => {
+router.patch('/:id/read', authenticateUser, async (req: AuthRequest, res) => {
   try {
     const userId = req.user?._id;
     if (!userId) {
@@ -114,7 +114,7 @@ router.patch('/:id/read', authenticateUser, async (req, res) => {
  * PATCH /api/notifications/read-all
  * Mark all notifications as read
  */
-router.patch('/read-all', authenticateUser, async (req, res) => {
+router.patch('/read-all', authenticateUser, async (req: AuthRequest, res) => {
   try {
     const userId = req.user?._id;
     if (!userId) {
@@ -134,7 +134,7 @@ router.patch('/read-all', authenticateUser, async (req, res) => {
  * DELETE /api/notifications/:id
  * Delete a notification
  */
-router.delete('/:id', authenticateUser, async (req, res) => {
+router.delete('/:id', authenticateUser, async (req: AuthRequest, res) => {
   try {
     const userId = req.user?._id;
     if (!userId) {
@@ -156,7 +156,7 @@ router.delete('/:id', authenticateUser, async (req, res) => {
  * GET /api/notifications/preferences
  * Get notification preferences for authenticated user
  */
-router.get('/preferences', authenticateUser, async (req, res) => {
+router.get('/preferences', authenticateUser, async (req: AuthRequest, res) => {
   try {
     const userId = req.user?._id;
     if (!userId) {
@@ -185,7 +185,7 @@ router.get('/preferences', authenticateUser, async (req, res) => {
  * PUT /api/notifications/preferences
  * Update notification preferences
  */
-router.put('/preferences', authenticateUser, async (req, res) => {
+router.put('/preferences', authenticateUser, async (req: AuthRequest, res) => {
   try {
     const userId = req.user?._id;
     if (!userId) {
@@ -216,7 +216,7 @@ router.put('/preferences', authenticateUser, async (req, res) => {
  * POST /api/notifications/register-token
  * Register FCM token for push notifications
  */
-router.post('/register-token', authenticateUser, async (req, res) => {
+router.post('/register-token', authenticateUser, async (req: AuthRequest, res) => {
   try {
     const userId = req.user?._id;
     if (!userId) {
@@ -242,7 +242,7 @@ router.post('/register-token', authenticateUser, async (req, res) => {
  * POST /api/notifications/test
  * Send a test notification (for development)
  */
-router.post('/test', authenticateUser, async (req, res) => {
+router.post('/test', authenticateUser, async (req: AuthRequest, res) => {
   try {
     const userId = req.user?._id;
     if (!userId) {
@@ -275,7 +275,7 @@ router.post('/test', authenticateUser, async (req, res) => {
  * POST /api/notifications/send-test
  * Send a test notification to a specific user (for development/testing)
  */
-router.post('/send-test', authenticateUser, async (req, res) => {
+router.post('/send-test', authenticateUser, async (req: AuthRequest, res) => {
   try {
     const requesterId = req.user?._id;
     if (!requesterId) {

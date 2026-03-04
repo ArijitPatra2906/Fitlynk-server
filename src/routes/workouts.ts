@@ -280,7 +280,7 @@ router.put('/:id', async (req: AuthRequest, res) => {
       // Calculate workout stats
       const durationMs = new Date(workout.ended_at!).getTime() - new Date(workout.started_at).getTime()
       const durationMinutes = durationMs / (1000 * 60)
-      const totalSets = workout.exercises.reduce((sum, ex) => sum + (ex.sets?.length || 0), 0)
+      const totalSets = workout.exercises.reduce((sum: number, ex: any) => sum + (ex.sets?.length || 0), 0)
       const volumeKg = calculateWorkoutVolume(workout.exercises)
 
       // Send workout completion notification

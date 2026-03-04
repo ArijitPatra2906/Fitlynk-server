@@ -3,7 +3,7 @@
  * Handles scheduled notifications using cron jobs
  */
 
-import cron from 'node-cron';
+import * as cron from 'node-cron';
 import NotificationPreferences from '../models/NotificationPreferences';
 import NotificationHelpers from './notificationHelpers';
 import Workout from '../models/Workout';
@@ -359,7 +359,7 @@ class NotificationScheduler {
       // Find most frequent exercise
       const exerciseCounts: Record<string, number> = {};
       workouts.forEach((workout) => {
-        workout.exercises.forEach((ex) => {
+        workout.exercises.forEach((ex: any) => {
           const name = typeof ex.exercise_id === 'object' ? ex.exercise_id.name : 'Unknown';
           exerciseCounts[name] = (exerciseCounts[name] || 0) + 1;
         });

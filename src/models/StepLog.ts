@@ -32,7 +32,7 @@ const StepLogSchema = new Schema<IStepLog>(
     steps: {
       type: Number,
       required: true,
-      min: 0,
+      min: [1, 'Steps must be at least 1'],
     },
     distance_km: {
       type: Number,

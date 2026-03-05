@@ -327,6 +327,11 @@ router.post('/steps', async (req: AuthRequest, res) => {
       source,
     } = req.body;
 
+    // Don't save step logs with 0 or negative steps
+    if (!steps || steps <= 0) {
+      return errorResponse(res, 'Steps must be greater than 0', 400);
+    }
+
     const logDate = new Date(date);
     logDate.setHours(0, 0, 0, 0);
 

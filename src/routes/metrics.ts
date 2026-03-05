@@ -335,38 +335,75 @@ router.post('/steps', async (req: AuthRequest, res) => {
     const logDate = new Date(date);
     logDate.setHours(0, 0, 0, 0);
 
-    const stepLog = await StepLog.findOneAndUpdate(
-      {
-        user_id: req.user._id,
-        date: logDate,
-      },
-      {
-        steps,
-        distance_km,
-        calories_burned,
-        active_minutes,
-        slow_minutes,
-        brisk_minutes,
-        slow_steps,
-        brisk_steps,
-        source,
-      },
-      {
-        new: true,
-        upsert: true,
-        runValidators: true,
+    // Find existing log for today
+    const existingLog = await StepLog.findOne({
+      user_id: req.user._id,
+      date: logDate,
+    });
+
+    let stepLog;
+
+    if (source === 'manual' && existingLog) {
+      // Manual entry: ADD to existing steps
+      stepLog = await StepLog.findOneAndUpdate(
+        {
+          user_id: req.user._id,
+          date: logDate,
+        },
+        {
+          $inc: {
+            steps: steps,
+            distance_km: distance_km || 0,
+            calories_burned: calories_burned || 0,
+            active_minutes: active_minutes || 0,
+            slow_minutes: slow_minutes || 0,
+            brisk_minutes: brisk_minutes || 0,
+            slow_steps: slow_steps || 0,
+            brisk_steps: brisk_steps || 0,
+          },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+    } else {
+      // Device sync or new entry: REPLACE values
+      stepLog = await StepLog.findOneAndUpdate(
+        {
+          user_id: req.user._id,
+          date: logDate,
+        },
+        {
+          steps,
+          distance_km,
+          calories_burned,
+          active_minutes,
+          slow_minutes,
+          brisk_minutes,
+          slow_steps,
+          brisk_steps,
+          source,
+        },
+        {
+          new: true,
+          upsert: true,
+          runValidators: true,
+        }
+      );
+    }
+
+    // Check if step goal was reached (use final total)
+    if (stepLog) {
+      const goal = await Goal.findOne({ user_id: req.user._id });
+      if (goal && stepLog.steps >= goal.step_target && goal.step_target > 0) {
+        NotificationHelpers.notifyStepGoalReached(req.user._id, stepLog.steps)
+          .catch(err => console.error('Error sending step goal notification:', err));
+
+        // Check if all daily goals met
+        NotificationHelpers.checkAndNotifyDailyGoals(req.user._id)
+          .catch(err => console.error('Error checking daily goals:', err));
       }
-    );
-
-    // Check if step goal was reached
-    const goal = await Goal.findOne({ user_id: req.user._id });
-    if (goal && steps >= goal.step_target && goal.step_target > 0) {
-      NotificationHelpers.notifyStepGoalReached(req.user._id, steps)
-        .catch(err => console.error('Error sending step goal notification:', err));
-
-      // Check if all daily goals met
-      NotificationHelpers.checkAndNotifyDailyGoals(req.user._id)
-        .catch(err => console.error('Error checking daily goals:', err));
     }
 
     return successResponse(res, stepLog);

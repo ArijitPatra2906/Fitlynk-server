@@ -2,6 +2,10 @@
 import dotenv from 'dotenv'
 dotenv.config()
 
+// Initialize Firebase Admin after env vars are loaded
+import { initializeFirebaseAdmin } from './config/firebase-admin'
+initializeFirebaseAdmin()
+
 import express from 'express'
 import cors from 'cors'
 import helmet from 'helmet'

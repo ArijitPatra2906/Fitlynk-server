@@ -1,0 +1,4368 @@
+[
+  {
+    "name": "Push Up",
+    "category": "strength",
+    "muscle_groups": ["chest", "triceps", "shoulders"],
+    "primary_muscle": "chest",
+    "secondary_muscles": ["triceps", "shoulders", "core"],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": [
+      "Start in plank position",
+      "Lower chest toward floor",
+      "Push back up until arms are extended"
+    ]
+  },
+  {
+    "name": "Bench Press",
+    "category": "strength",
+    "muscle_groups": ["chest", "triceps", "shoulders"],
+    "primary_muscle": "chest",
+    "secondary_muscles": ["triceps", "shoulders"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": [
+      "Lie on bench",
+      "Lower bar to chest",
+      "Press bar upward until arms are straight"
+    ]
+  },
+  {
+    "name": "Squat",
+    "category": "strength",
+    "muscle_groups": ["quadriceps", "glutes", "hamstrings"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes", "hamstrings", "core"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 10,
+    "instructions": [
+      "Stand with feet shoulder width apart",
+      "Lower hips down",
+      "Push through heels to stand"
+    ]
+  },
+  {
+    "name": "Deadlift",
+    "category": "strength",
+    "muscle_groups": ["glutes", "hamstrings", "back"],
+    "primary_muscle": "glutes",
+    "secondary_muscles": ["hamstrings", "lower back", "core"],
+    "equipment": "barbell",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 10,
+    "instructions": [
+      "Stand with barbell over midfoot",
+      "Bend hips and grab bar",
+      "Lift bar by extending hips and knees"
+    ]
+  },
+  {
+    "name": "Pull Up",
+    "category": "strength",
+    "muscle_groups": ["lats", "biceps", "back"],
+    "primary_muscle": "lats",
+    "secondary_muscles": ["biceps", "shoulders"],
+    "equipment": "pull-up bar",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": [
+      "Grab bar with overhand grip",
+      "Pull body upward",
+      "Lower body slowly"
+    ]
+  },
+  {
+    "name": "Plank",
+    "category": "strength",
+    "muscle_groups": ["core"],
+    "primary_muscle": "core",
+    "secondary_muscles": ["shoulders", "glutes"],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Hold forearm plank", "Keep body straight", "Engage core"]
+  },
+  {
+    "name": "Bicep Curl",
+    "category": "strength",
+    "muscle_groups": ["biceps"],
+    "primary_muscle": "biceps",
+    "secondary_muscles": ["forearms"],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Hold dumbbells", "Curl weight upward", "Lower slowly"]
+  },
+  {
+    "name": "Tricep Dips",
+    "category": "strength",
+    "muscle_groups": ["triceps"],
+    "primary_muscle": "triceps",
+    "secondary_muscles": ["chest", "shoulders"],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": [
+      "Place hands behind on bench",
+      "Lower body down",
+      "Push back up"
+    ]
+  },
+  {
+    "name": "Lunges",
+    "category": "strength",
+    "muscle_groups": ["quadriceps", "glutes"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes", "hamstrings"],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": ["Step forward", "Lower hips", "Push back to standing"]
+  },
+  {
+    "name": "Jump Squat",
+    "category": "plyometric",
+    "muscle_groups": ["quadriceps", "glutes"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes", "calves"],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 12,
+    "instructions": ["Perform squat", "Explode upward", "Land softly"]
+  },
+  {
+    "name": "Burpees",
+    "category": "cardio",
+    "muscle_groups": ["full body"],
+    "primary_muscle": "full body",
+    "secondary_muscles": ["core", "legs", "chest"],
+    "equipment": "bodyweight",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 14,
+    "instructions": [
+      "Drop into squat",
+      "Kick feet back",
+      "Return to squat and jump"
+    ]
+  },
+  {
+    "name": "Mountain Climbers",
+    "category": "cardio",
+    "muscle_groups": ["core", "legs"],
+    "primary_muscle": "core",
+    "secondary_muscles": ["shoulders"],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 10,
+    "instructions": [
+      "Start plank position",
+      "Alternate knees to chest",
+      "Maintain quick pace"
+    ]
+  },
+  {
+    "name": "Jump Rope",
+    "category": "cardio",
+    "muscle_groups": ["calves", "legs"],
+    "primary_muscle": "calves",
+    "secondary_muscles": ["shoulders"],
+    "equipment": "jump rope",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 12,
+    "instructions": ["Hold rope handles", "Jump lightly", "Maintain rhythm"]
+  },
+  {
+    "name": "Running",
+    "category": "cardio",
+    "muscle_groups": ["legs"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["hamstrings", "glutes", "calves"],
+    "equipment": "none",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 11,
+    "instructions": [
+      "Maintain upright posture",
+      "Swing arms naturally",
+      "Land mid-foot"
+    ]
+  },
+  {
+    "name": "Cycling",
+    "category": "cardio",
+    "muscle_groups": ["legs"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes", "hamstrings"],
+    "equipment": "bike",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 9,
+    "instructions": ["Sit on bike", "Pedal consistently", "Maintain cadence"]
+  },
+  {
+    "name": "Leg Raise",
+    "category": "strength",
+    "muscle_groups": ["core"],
+    "primary_muscle": "abs",
+    "secondary_muscles": ["hip flexors"],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Lie flat", "Raise legs upward", "Lower slowly"]
+  },
+  {
+    "name": "Russian Twist",
+    "category": "strength",
+    "muscle_groups": ["core"],
+    "primary_muscle": "obliques",
+    "secondary_muscles": ["abs"],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": [
+      "Sit with knees bent",
+      "Twist torso side to side",
+      "Keep core tight"
+    ]
+  },
+  {
+    "name": "Shoulder Press",
+    "category": "strength",
+    "muscle_groups": ["shoulders"],
+    "primary_muscle": "deltoids",
+    "secondary_muscles": ["triceps"],
+    "equipment": "dumbbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": [
+      "Hold dumbbells at shoulder level",
+      "Press upward",
+      "Lower slowly"
+    ]
+  },
+  {
+    "name": "Lateral Raise",
+    "category": "strength",
+    "muscle_groups": ["shoulders"],
+    "primary_muscle": "deltoids",
+    "secondary_muscles": [],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": [
+      "Hold dumbbells at sides",
+      "Raise arms sideways",
+      "Lower slowly"
+    ]
+  },
+  {
+    "name": "Hip Bridge",
+    "category": "strength",
+    "muscle_groups": ["glutes"],
+    "primary_muscle": "glutes",
+    "secondary_muscles": ["hamstrings"],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Lie on back", "Lift hips upward", "Squeeze glutes"]
+  },
+  {
+    "name": "Incline Bench Press",
+    "category": "strength",
+    "muscle_groups": ["chest", "shoulders", "triceps"],
+    "primary_muscle": "upper chest",
+    "secondary_muscles": ["shoulders", "triceps"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": [
+      "Lie on an incline bench",
+      "Grip bar slightly wider than shoulders",
+      "Lower bar to upper chest",
+      "Press bar upward"
+    ]
+  },
+  {
+    "name": "Decline Bench Press",
+    "category": "strength",
+    "muscle_groups": ["chest", "triceps"],
+    "primary_muscle": "lower chest",
+    "secondary_muscles": ["triceps", "shoulders"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": [
+      "Lie on decline bench",
+      "Lower bar toward chest",
+      "Push bar upward"
+    ]
+  },
+  {
+    "name": "Dumbbell Fly",
+    "category": "strength",
+    "muscle_groups": ["chest"],
+    "primary_muscle": "chest",
+    "secondary_muscles": ["shoulders"],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": [
+      "Lie on bench with dumbbells",
+      "Lower arms wide",
+      "Bring weights together above chest"
+    ]
+  },
+  {
+    "name": "Cable Chest Fly",
+    "category": "strength",
+    "muscle_groups": ["chest"],
+    "primary_muscle": "chest",
+    "secondary_muscles": ["shoulders"],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": [
+      "Hold cable handles",
+      "Bring arms forward together",
+      "Return slowly"
+    ]
+  },
+  {
+    "name": "Front Raise",
+    "category": "strength",
+    "muscle_groups": ["shoulders"],
+    "primary_muscle": "anterior deltoid",
+    "secondary_muscles": [],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": [
+      "Hold dumbbells in front",
+      "Raise arms forward to shoulder height",
+      "Lower slowly"
+    ]
+  },
+  {
+    "name": "Face Pull",
+    "category": "strength",
+    "muscle_groups": ["shoulders", "upper back"],
+    "primary_muscle": "rear deltoids",
+    "secondary_muscles": ["traps"],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": [
+      "Grip rope attachment",
+      "Pull rope toward face",
+      "Squeeze shoulder blades"
+    ]
+  },
+  {
+    "name": "Bent Over Row",
+    "category": "strength",
+    "muscle_groups": ["back", "biceps"],
+    "primary_muscle": "lats",
+    "secondary_muscles": ["biceps", "rear delts"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": [
+      "Bend forward with barbell",
+      "Pull bar toward torso",
+      "Lower under control"
+    ]
+  },
+  {
+    "name": "Seated Cable Row",
+    "category": "strength",
+    "muscle_groups": ["back"],
+    "primary_muscle": "lats",
+    "secondary_muscles": ["biceps"],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": [
+      "Sit at cable row machine",
+      "Pull handle toward torso",
+      "Return slowly"
+    ]
+  },
+  {
+    "name": "Lat Pulldown",
+    "category": "strength",
+    "muscle_groups": ["back", "biceps"],
+    "primary_muscle": "lats",
+    "secondary_muscles": ["biceps"],
+    "equipment": "lat machine",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": [
+      "Grip bar wider than shoulders",
+      "Pull bar to chest",
+      "Release slowly"
+    ]
+  },
+  {
+    "name": "Hammer Curl",
+    "category": "strength",
+    "muscle_groups": ["biceps", "forearms"],
+    "primary_muscle": "brachialis",
+    "secondary_muscles": ["forearms"],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": [
+      "Hold dumbbells neutral grip",
+      "Curl upward",
+      "Lower slowly"
+    ]
+  },
+  {
+    "name": "Concentration Curl",
+    "category": "strength",
+    "muscle_groups": ["biceps"],
+    "primary_muscle": "biceps",
+    "secondary_muscles": [],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": [
+      "Sit with elbow on thigh",
+      "Curl dumbbell upward",
+      "Lower slowly"
+    ]
+  },
+  {
+    "name": "Skull Crushers",
+    "category": "strength",
+    "muscle_groups": ["triceps"],
+    "primary_muscle": "triceps",
+    "secondary_muscles": [],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": [
+      "Lie on bench",
+      "Lower bar toward forehead",
+      "Extend arms upward"
+    ]
+  },
+  {
+    "name": "Cable Tricep Pushdown",
+    "category": "strength",
+    "muscle_groups": ["triceps"],
+    "primary_muscle": "triceps",
+    "secondary_muscles": [],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": ["Grip cable bar", "Push bar downward", "Return slowly"]
+  },
+  {
+    "name": "Leg Press",
+    "category": "strength",
+    "muscle_groups": ["quadriceps", "glutes"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes", "hamstrings"],
+    "equipment": "leg press machine",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": ["Sit in machine", "Push platform away", "Lower slowly"]
+  },
+  {
+    "name": "Leg Extension",
+    "category": "strength",
+    "muscle_groups": ["quadriceps"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": [],
+    "equipment": "leg extension machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": ["Sit on machine", "Extend legs upward", "Lower slowly"]
+  },
+  {
+    "name": "Hamstring Curl",
+    "category": "strength",
+    "muscle_groups": ["hamstrings"],
+    "primary_muscle": "hamstrings",
+    "secondary_muscles": [],
+    "equipment": "leg curl machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": [
+      "Lie on curl machine",
+      "Curl heels toward glutes",
+      "Lower slowly"
+    ]
+  },
+  {
+    "name": "Standing Calf Raise",
+    "category": "strength",
+    "muscle_groups": ["calves"],
+    "primary_muscle": "gastrocnemius",
+    "secondary_muscles": [],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Stand on toes", "Raise heels upward", "Lower slowly"]
+  },
+  {
+    "name": "Seated Calf Raise",
+    "category": "strength",
+    "muscle_groups": ["calves"],
+    "primary_muscle": "soleus",
+    "secondary_muscles": [],
+    "equipment": "calf machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": [
+      "Sit at calf machine",
+      "Raise heels upward",
+      "Lower slowly"
+    ]
+  },
+  {
+    "name": "High Knees",
+    "category": "cardio",
+    "muscle_groups": ["legs", "core"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["core"],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 11,
+    "instructions": ["Run in place", "Lift knees high", "Maintain fast pace"]
+  },
+  {
+    "name": "Butt Kicks",
+    "category": "cardio",
+    "muscle_groups": ["hamstrings"],
+    "primary_muscle": "hamstrings",
+    "secondary_muscles": ["calves"],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 10,
+    "instructions": [
+      "Run in place",
+      "Kick heels toward glutes",
+      "Maintain rhythm"
+    ]
+  },
+  {
+    "name": "Side Lunges",
+    "category": "strength",
+    "muscle_groups": ["glutes", "quadriceps"],
+    "primary_muscle": "glutes",
+    "secondary_muscles": ["quadriceps"],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": ["Step sideways", "Lower hips", "Push back to center"]
+  },
+  {
+    "name": "Goblet Squat",
+    "category": "strength",
+    "muscle_groups": ["quadriceps", "glutes"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes", "core"],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": [
+      "Hold a dumbbell at chest level",
+      "Squat down keeping chest upright",
+      "Push through heels to stand"
+    ]
+  },
+  {
+    "name": "Bulgarian Split Squat",
+    "category": "strength",
+    "muscle_groups": ["quadriceps", "glutes"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes", "hamstrings"],
+    "equipment": "dumbbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": [
+      "Place back foot on bench",
+      "Lower body into squat",
+      "Push through front heel to rise"
+    ]
+  },
+  {
+    "name": "Step Ups",
+    "category": "strength",
+    "muscle_groups": ["quadriceps", "glutes"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes", "hamstrings"],
+    "equipment": "bench",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": [
+      "Place one foot on bench",
+      "Push body upward",
+      "Step down slowly"
+    ]
+  },
+  {
+    "name": "Sumo Deadlift",
+    "category": "strength",
+    "muscle_groups": ["glutes", "hamstrings"],
+    "primary_muscle": "glutes",
+    "secondary_muscles": ["hamstrings", "inner thighs"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 9,
+    "instructions": [
+      "Stand with wide stance",
+      "Grip bar inside knees",
+      "Lift bar by extending hips"
+    ]
+  },
+  {
+    "name": "Romanian Deadlift",
+    "category": "strength",
+    "muscle_groups": ["hamstrings", "glutes"],
+    "primary_muscle": "hamstrings",
+    "secondary_muscles": ["glutes", "lower back"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": [
+      "Hold barbell at hips",
+      "Hinge at hips lowering bar",
+      "Return to standing"
+    ]
+  },
+  {
+    "name": "Good Morning",
+    "category": "strength",
+    "muscle_groups": ["hamstrings", "glutes"],
+    "primary_muscle": "hamstrings",
+    "secondary_muscles": ["lower back", "glutes"],
+    "equipment": "barbell",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": [
+      "Place bar on shoulders",
+      "Hinge hips forward",
+      "Return upright"
+    ]
+  },
+  {
+    "name": "Reverse Lunge",
+    "category": "strength",
+    "muscle_groups": ["quadriceps", "glutes"],
+    "primary_muscle": "glutes",
+    "secondary_muscles": ["quadriceps"],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": [
+      "Step backward",
+      "Lower knee toward floor",
+      "Push through front foot"
+    ]
+  },
+  {
+    "name": "Walking Lunges",
+    "category": "strength",
+    "muscle_groups": ["quadriceps", "glutes"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes"],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": [
+      "Step forward into lunge",
+      "Push off back foot",
+      "Continue walking forward"
+    ]
+  },
+  {
+    "name": "Glute Kickbacks",
+    "category": "strength",
+    "muscle_groups": ["glutes"],
+    "primary_muscle": "glutes",
+    "secondary_muscles": [],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": ["Attach ankle strap", "Kick leg backward", "Return slowly"]
+  },
+  {
+    "name": "Fire Hydrants",
+    "category": "strength",
+    "muscle_groups": ["glutes"],
+    "primary_muscle": "glutes",
+    "secondary_muscles": ["hips"],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": [
+      "Start on hands and knees",
+      "Lift knee outward",
+      "Return slowly"
+    ]
+  },
+  {
+    "name": "Superman Hold",
+    "category": "strength",
+    "muscle_groups": ["lower back"],
+    "primary_muscle": "lower back",
+    "secondary_muscles": ["glutes"],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Lie face down", "Lift arms and legs", "Hold position"]
+  },
+  {
+    "name": "Bird Dog",
+    "category": "strength",
+    "muscle_groups": ["core"],
+    "primary_muscle": "core",
+    "secondary_muscles": ["lower back"],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": [
+      "Start on hands and knees",
+      "Extend opposite arm and leg",
+      "Return slowly"
+    ]
+  },
+  {
+    "name": "Hollow Body Hold",
+    "category": "strength",
+    "muscle_groups": ["core"],
+    "primary_muscle": "abs",
+    "secondary_muscles": [],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Lie on back", "Lift shoulders and legs", "Hold position"]
+  },
+  {
+    "name": "V Ups",
+    "category": "strength",
+    "muscle_groups": ["core"],
+    "primary_muscle": "abs",
+    "secondary_muscles": ["hip flexors"],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": [
+      "Lie flat",
+      "Lift legs and torso",
+      "Reach hands toward feet"
+    ]
+  },
+  {
+    "name": "Sit Ups",
+    "category": "strength",
+    "muscle_groups": ["core"],
+    "primary_muscle": "abs",
+    "secondary_muscles": ["hip flexors"],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 5,
+    "instructions": [
+      "Lie on back with knees bent",
+      "Lift torso upward",
+      "Lower slowly"
+    ]
+  },
+  {
+    "name": "Toe Touch Crunch",
+    "category": "strength",
+    "muscle_groups": ["core"],
+    "primary_muscle": "abs",
+    "secondary_muscles": [],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": [
+      "Lie on back with legs raised",
+      "Reach hands toward toes",
+      "Lower slowly"
+    ]
+  },
+  {
+    "name": "Reverse Crunch",
+    "category": "strength",
+    "muscle_groups": ["core"],
+    "primary_muscle": "lower abs",
+    "secondary_muscles": [],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": ["Lie on back", "Lift hips toward chest", "Lower slowly"]
+  },
+  {
+    "name": "Side Plank",
+    "category": "strength",
+    "muscle_groups": ["core"],
+    "primary_muscle": "obliques",
+    "secondary_muscles": [],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Lie on side", "Lift hips upward", "Hold body straight"]
+  },
+  {
+    "name": "Wall Sit",
+    "category": "strength",
+    "muscle_groups": ["quadriceps"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes"],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": [
+      "Lean against wall",
+      "Slide down into squat",
+      "Hold position"
+    ]
+  },
+  {
+    "name": "Skater Jumps",
+    "category": "plyometric",
+    "muscle_groups": ["legs"],
+    "primary_muscle": "glutes",
+    "secondary_muscles": ["quadriceps"],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 11,
+    "instructions": ["Jump sideways", "Land on one foot", "Alternate sides"]
+  },
+  {
+    "name": "Pec Deck Fly",
+    "category": "strength",
+    "muscle_groups": ["chest"],
+    "primary_muscle": "chest",
+    "secondary_muscles": ["shoulders"],
+    "equipment": "pec deck machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": [
+      "Sit on pec deck machine",
+      "Place forearms on pads",
+      "Bring arms together",
+      "Return slowly"
+    ]
+  },
+  {
+    "name": "Reverse Pec Deck Fly",
+    "category": "strength",
+    "muscle_groups": ["shoulders", "upper back"],
+    "primary_muscle": "rear deltoids",
+    "secondary_muscles": ["traps"],
+    "equipment": "pec deck machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": [
+      "Sit facing the machine",
+      "Grip handles outward",
+      "Pull arms back",
+      "Squeeze shoulder blades"
+    ]
+  },
+  {
+    "name": "Chest Dip",
+    "category": "strength",
+    "muscle_groups": ["chest", "triceps"],
+    "primary_muscle": "chest",
+    "secondary_muscles": ["triceps", "shoulders"],
+    "equipment": "dip bars",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": [
+      "Grip dip bars",
+      "Lean forward slightly",
+      "Lower body",
+      "Push back up"
+    ]
+  },
+  {
+    "name": "Machine Chest Press",
+    "category": "strength",
+    "muscle_groups": ["chest", "triceps"],
+    "primary_muscle": "chest",
+    "secondary_muscles": ["triceps"],
+    "equipment": "chest press machine",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": [
+      "Sit on machine",
+      "Grip handles",
+      "Press forward",
+      "Return slowly"
+    ]
+  },
+  {
+    "name": "Cable Lateral Raise",
+    "category": "strength",
+    "muscle_groups": ["shoulders"],
+    "primary_muscle": "deltoids",
+    "secondary_muscles": [],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": [
+      "Attach single cable handle",
+      "Raise arm sideways",
+      "Lower slowly"
+    ]
+  },
+  {
+    "name": "Arnold Press",
+    "category": "strength",
+    "muscle_groups": ["shoulders"],
+    "primary_muscle": "deltoids",
+    "secondary_muscles": ["triceps"],
+    "equipment": "dumbbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": [
+      "Hold dumbbells in front",
+      "Rotate while pressing upward",
+      "Lower slowly"
+    ]
+  },
+  {
+    "name": "Upright Row",
+    "category": "strength",
+    "muscle_groups": ["shoulders", "traps"],
+    "primary_muscle": "traps",
+    "secondary_muscles": ["deltoids"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": [
+      "Grip bar shoulder width",
+      "Pull bar upward",
+      "Lower slowly"
+    ]
+  },
+  {
+    "name": "Shrugs",
+    "category": "strength",
+    "muscle_groups": ["traps"],
+    "primary_muscle": "traps",
+    "secondary_muscles": [],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Hold dumbbells", "Raise shoulders upward", "Lower slowly"]
+  },
+  {
+    "name": "T Bar Row",
+    "category": "strength",
+    "muscle_groups": ["back"],
+    "primary_muscle": "lats",
+    "secondary_muscles": ["biceps", "rear delts"],
+    "equipment": "t-bar machine",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": [
+      "Stand over bar",
+      "Pull weight toward chest",
+      "Lower slowly"
+    ]
+  },
+  {
+    "name": "Single Arm Dumbbell Row",
+    "category": "strength",
+    "muscle_groups": ["back"],
+    "primary_muscle": "lats",
+    "secondary_muscles": ["biceps"],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": [
+      "Place one knee on bench",
+      "Pull dumbbell toward hip",
+      "Lower slowly"
+    ]
+  },
+  {
+    "name": "Preacher Curl",
+    "category": "strength",
+    "muscle_groups": ["biceps"],
+    "primary_muscle": "biceps",
+    "secondary_muscles": ["forearms"],
+    "equipment": "preacher bench",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": [
+      "Place arms on preacher pad",
+      "Curl bar upward",
+      "Lower slowly"
+    ]
+  },
+  {
+    "name": "Cable Curl",
+    "category": "strength",
+    "muscle_groups": ["biceps"],
+    "primary_muscle": "biceps",
+    "secondary_muscles": [],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Hold cable handle", "Curl upward", "Lower slowly"]
+  },
+  {
+    "name": "Overhead Tricep Extension",
+    "category": "strength",
+    "muscle_groups": ["triceps"],
+    "primary_muscle": "triceps",
+    "secondary_muscles": [],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": [
+      "Hold dumbbell overhead",
+      "Lower behind head",
+      "Extend arms upward"
+    ]
+  },
+  {
+    "name": "Close Grip Bench Press",
+    "category": "strength",
+    "muscle_groups": ["triceps"],
+    "primary_muscle": "triceps",
+    "secondary_muscles": ["chest"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": ["Grip bar narrow", "Lower to chest", "Press upward"]
+  },
+  {
+    "name": "Hip Thrust",
+    "category": "strength",
+    "muscle_groups": ["glutes"],
+    "primary_muscle": "glutes",
+    "secondary_muscles": ["hamstrings"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": [
+      "Rest shoulders on bench",
+      "Place bar over hips",
+      "Lift hips upward",
+      "Lower slowly"
+    ]
+  },
+  {
+    "name": "Cable Pull Through",
+    "category": "strength",
+    "muscle_groups": ["glutes", "hamstrings"],
+    "primary_muscle": "glutes",
+    "secondary_muscles": ["hamstrings"],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": [
+      "Stand facing away from cable",
+      "Pull rope through legs",
+      "Extend hips forward"
+    ]
+  },
+  {
+    "name": "Box Jumps",
+    "category": "plyometric",
+    "muscle_groups": ["legs"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes", "calves"],
+    "equipment": "box",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 12,
+    "instructions": ["Stand before box", "Jump onto box", "Step down carefully"]
+  },
+  {
+    "name": "Battle Ropes",
+    "category": "cardio",
+    "muscle_groups": ["full body"],
+    "primary_muscle": "shoulders",
+    "secondary_muscles": ["core", "arms"],
+    "equipment": "battle ropes",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 14,
+    "instructions": [
+      "Hold rope ends",
+      "Create waves with arms",
+      "Maintain fast pace"
+    ]
+  },
+  {
+    "name": "Sled Push",
+    "category": "cardio",
+    "muscle_groups": ["legs"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes", "core"],
+    "equipment": "sled",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 15,
+    "instructions": [
+      "Grip sled handles",
+      "Drive legs forward",
+      "Push sled across floor"
+    ]
+  },
+  {
+    "name": "Farmer Walk",
+    "category": "strength",
+    "muscle_groups": ["forearms", "core"],
+    "primary_muscle": "forearms",
+    "secondary_muscles": ["traps", "core"],
+    "equipment": "dumbbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": [
+      "Hold heavy dumbbells",
+      "Walk forward steadily",
+      "Keep core tight"
+    ]
+  },
+  {
+    "name": "Pistol Squat",
+    "category": "strength",
+    "muscle_groups": ["quadriceps", "glutes"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes", "core"],
+    "equipment": "bodyweight",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 9,
+    "instructions": [
+      "Stand on one leg",
+      "Lower into squat",
+      "Return to standing"
+    ]
+  },
+
+  {
+    "name": "Nordic Hamstring Curl",
+    "category": "strength",
+    "muscle_groups": ["hamstrings"],
+    "primary_muscle": "hamstrings",
+    "secondary_muscles": ["glutes"],
+    "equipment": "bodyweight",
+    "difficulty": "advanced",
+    "exercise_type": "isolation",
+    "calories_per_minute": 6,
+    "instructions": [
+      "Anchor feet",
+      "Lower body forward",
+      "Pull back using hamstrings"
+    ]
+  },
+
+  {
+    "name": "Glute Ham Raise",
+    "category": "strength",
+    "muscle_groups": ["hamstrings", "glutes"],
+    "primary_muscle": "hamstrings",
+    "secondary_muscles": ["glutes"],
+    "equipment": "glute ham developer",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": ["Secure ankles", "Lower torso", "Raise using hamstrings"]
+  },
+
+  {
+    "name": "Single Leg Hip Thrust",
+    "category": "strength",
+    "muscle_groups": ["glutes"],
+    "primary_muscle": "glutes",
+    "secondary_muscles": ["hamstrings"],
+    "equipment": "bench",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": [
+      "Place shoulders on bench",
+      "Lift hips with one leg",
+      "Lower slowly"
+    ]
+  },
+
+  {
+    "name": "Barbell Hip Bridge",
+    "category": "strength",
+    "muscle_groups": ["glutes"],
+    "primary_muscle": "glutes",
+    "secondary_muscles": ["hamstrings"],
+    "equipment": "barbell",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": [
+      "Place barbell on hips",
+      "Lift hips upward",
+      "Lower slowly"
+    ]
+  },
+
+  {
+    "name": "Resistance Band Squat",
+    "category": "strength",
+    "muscle_groups": ["quadriceps", "glutes"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes"],
+    "equipment": "resistance band",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": ["Stand on band", "Squat downward", "Stand upright"]
+  },
+
+  {
+    "name": "Resistance Band Deadlift",
+    "category": "strength",
+    "muscle_groups": ["hamstrings", "glutes"],
+    "primary_muscle": "glutes",
+    "secondary_muscles": ["hamstrings"],
+    "equipment": "resistance band",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": ["Stand on band", "Pull handles upward", "Return slowly"]
+  },
+
+  {
+    "name": "Resistance Band Row",
+    "category": "strength",
+    "muscle_groups": ["back"],
+    "primary_muscle": "lats",
+    "secondary_muscles": ["biceps"],
+    "equipment": "resistance band",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 5,
+    "instructions": ["Anchor band", "Pull toward torso", "Return slowly"]
+  },
+
+  {
+    "name": "Resistance Band Chest Press",
+    "category": "strength",
+    "muscle_groups": ["chest"],
+    "primary_muscle": "chest",
+    "secondary_muscles": ["triceps"],
+    "equipment": "resistance band",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 5,
+    "instructions": ["Anchor band behind", "Press forward", "Return slowly"]
+  },
+
+  {
+    "name": "Resistance Band Pull Apart",
+    "category": "strength",
+    "muscle_groups": ["shoulders", "upper back"],
+    "primary_muscle": "rear deltoids",
+    "secondary_muscles": ["traps"],
+    "equipment": "resistance band",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Hold band", "Pull apart", "Return slowly"]
+  },
+
+  {
+    "name": "Cable Straight Arm Pulldown",
+    "category": "strength",
+    "muscle_groups": ["back"],
+    "primary_muscle": "lats",
+    "secondary_muscles": ["core"],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": ["Grip straight bar", "Pull downward", "Return slowly"]
+  },
+
+  {
+    "name": "Cable Glute Abduction",
+    "category": "strength",
+    "muscle_groups": ["glutes"],
+    "primary_muscle": "glutes",
+    "secondary_muscles": ["hips"],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Attach ankle strap", "Lift leg outward", "Return slowly"]
+  },
+
+  {
+    "name": "Cable Hip Adduction",
+    "category": "strength",
+    "muscle_groups": ["inner thighs"],
+    "primary_muscle": "adductors",
+    "secondary_muscles": ["glutes"],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Attach ankle strap", "Pull leg inward", "Return slowly"]
+  },
+
+  {
+    "name": "Cable Kickback",
+    "category": "strength",
+    "muscle_groups": ["glutes"],
+    "primary_muscle": "glutes",
+    "secondary_muscles": ["hamstrings"],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Attach ankle strap", "Kick leg backward", "Return slowly"]
+  },
+
+  {
+    "name": "Incline Dumbbell Curl",
+    "category": "strength",
+    "muscle_groups": ["biceps"],
+    "primary_muscle": "biceps",
+    "secondary_muscles": ["forearms"],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Sit on incline bench", "Curl dumbbells", "Lower slowly"]
+  },
+
+  {
+    "name": "Spider Curl",
+    "category": "strength",
+    "muscle_groups": ["biceps"],
+    "primary_muscle": "biceps",
+    "secondary_muscles": ["forearms"],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Lie chest on bench", "Curl dumbbells", "Lower slowly"]
+  },
+
+  {
+    "name": "Reverse Curl",
+    "category": "strength",
+    "muscle_groups": ["forearms"],
+    "primary_muscle": "brachioradialis",
+    "secondary_muscles": ["biceps"],
+    "equipment": "barbell",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Grip bar overhand", "Curl upward", "Lower slowly"]
+  },
+
+  {
+    "name": "Wrist Curl",
+    "category": "strength",
+    "muscle_groups": ["forearms"],
+    "primary_muscle": "forearms",
+    "secondary_muscles": [],
+    "equipment": "barbell",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 3,
+    "instructions": [
+      "Rest forearms on bench",
+      "Curl wrists upward",
+      "Lower slowly"
+    ]
+  },
+
+  {
+    "name": "Reverse Wrist Curl",
+    "category": "strength",
+    "muscle_groups": ["forearms"],
+    "primary_muscle": "forearms",
+    "secondary_muscles": [],
+    "equipment": "barbell",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 3,
+    "instructions": ["Grip bar overhand", "Raise wrists upward", "Lower slowly"]
+  },
+
+  {
+    "name": "Suitcase Carry",
+    "category": "strength",
+    "muscle_groups": ["core"],
+    "primary_muscle": "core",
+    "secondary_muscles": ["forearms"],
+    "equipment": "dumbbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": [
+      "Hold dumbbell on one side",
+      "Walk forward",
+      "Keep torso straight"
+    ]
+  },
+
+  {
+    "name": "Overhead Carry",
+    "category": "strength",
+    "muscle_groups": ["shoulders", "core"],
+    "primary_muscle": "shoulders",
+    "secondary_muscles": ["core"],
+    "equipment": "dumbbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": [
+      "Hold weight overhead",
+      "Walk forward",
+      "Maintain stability"
+    ]
+  },
+
+  {
+    "name": "Zercher Carry",
+    "category": "strength",
+    "muscle_groups": ["core", "legs"],
+    "primary_muscle": "core",
+    "secondary_muscles": ["quadriceps"],
+    "equipment": "barbell",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": [
+      "Hold bar in elbow crease",
+      "Walk forward",
+      "Maintain posture"
+    ]
+  },
+
+  {
+    "name": "Agility Ladder Drill",
+    "category": "cardio",
+    "muscle_groups": ["legs"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["calves"],
+    "equipment": "agility ladder",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 11,
+    "instructions": ["Step through ladder", "Move quickly", "Repeat pattern"]
+  },
+
+  {
+    "name": "Lateral Shuffle",
+    "category": "cardio",
+    "muscle_groups": ["legs"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes"],
+    "equipment": "none",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 10,
+    "instructions": [
+      "Move sideways quickly",
+      "Keep knees bent",
+      "Maintain rhythm"
+    ]
+  },
+
+  {
+    "name": "Bear Crawl",
+    "category": "cardio",
+    "muscle_groups": ["full body"],
+    "primary_muscle": "core",
+    "secondary_muscles": ["shoulders", "legs"],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 12,
+    "instructions": [
+      "Start on hands and feet",
+      "Crawl forward",
+      "Keep hips low"
+    ]
+  },
+
+  {
+    "name": "Crab Walk",
+    "category": "cardio",
+    "muscle_groups": ["core", "shoulders"],
+    "primary_muscle": "core",
+    "secondary_muscles": ["triceps"],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 9,
+    "instructions": ["Face upward", "Walk using hands and feet", "Move forward"]
+  },
+
+  {
+    "name": "Plank Shoulder Taps",
+    "category": "strength",
+    "muscle_groups": ["core"],
+    "primary_muscle": "core",
+    "secondary_muscles": ["shoulders"],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 5,
+    "instructions": ["Hold plank", "Tap opposite shoulder", "Alternate sides"]
+  },
+
+  {
+    "name": "Plank Jacks",
+    "category": "cardio",
+    "muscle_groups": ["core"],
+    "primary_muscle": "core",
+    "secondary_muscles": ["legs"],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 10,
+    "instructions": ["Start in plank", "Jump feet outward", "Return inward"]
+  },
+
+  {
+    "name": "Mountain Climber Twist",
+    "category": "cardio",
+    "muscle_groups": ["core"],
+    "primary_muscle": "obliques",
+    "secondary_muscles": ["shoulders"],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 11,
+    "instructions": [
+      "Drive knee across body",
+      "Return to plank",
+      "Alternate sides"
+    ]
+  },
+
+  {
+    "name": "Jumping Lunges",
+    "category": "plyometric",
+    "muscle_groups": ["legs"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes"],
+    "equipment": "bodyweight",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 13,
+    "instructions": ["Jump switch legs", "Land softly", "Repeat quickly"]
+  },
+  {
+    "name": "Barbell Curl",
+    "category": "strength",
+    "muscle_groups": ["biceps"],
+    "primary_muscle": "biceps",
+    "secondary_muscles": ["forearms"],
+    "equipment": "barbell",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Hold barbell", "Curl upward", "Lower slowly"]
+  },
+
+  {
+    "name": "EZ Bar Curl",
+    "category": "strength",
+    "muscle_groups": ["biceps"],
+    "primary_muscle": "biceps",
+    "secondary_muscles": ["forearms"],
+    "equipment": "ez bar",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Grip EZ bar", "Curl upward", "Lower slowly"]
+  },
+
+  {
+    "name": "Incline Dumbbell Curl",
+    "category": "strength",
+    "muscle_groups": ["biceps"],
+    "primary_muscle": "biceps",
+    "secondary_muscles": ["forearms"],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Sit on incline bench", "Curl dumbbells", "Lower slowly"]
+  },
+
+  {
+    "name": "Reverse Grip Curl",
+    "category": "strength",
+    "muscle_groups": ["forearms"],
+    "primary_muscle": "brachioradialis",
+    "secondary_muscles": ["biceps"],
+    "equipment": "barbell",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Grip bar overhand", "Curl upward", "Lower slowly"]
+  },
+
+  {
+    "name": "Cable Hammer Curl",
+    "category": "strength",
+    "muscle_groups": ["biceps"],
+    "primary_muscle": "brachialis",
+    "secondary_muscles": ["forearms"],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Attach rope", "Curl upward", "Lower slowly"]
+  },
+
+  {
+    "name": "Single Arm Cable Curl",
+    "category": "strength",
+    "muscle_groups": ["biceps"],
+    "primary_muscle": "biceps",
+    "secondary_muscles": ["forearms"],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Use single handle", "Curl upward", "Lower slowly"]
+  },
+
+  {
+    "name": "Dumbbell Zottman Curl",
+    "category": "strength",
+    "muscle_groups": ["biceps", "forearms"],
+    "primary_muscle": "biceps",
+    "secondary_muscles": ["forearms"],
+    "equipment": "dumbbell",
+    "difficulty": "intermediate",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Curl palms up", "Rotate downward", "Lower slowly"]
+  },
+
+  {
+    "name": "Overhead Cable Tricep Extension",
+    "category": "strength",
+    "muscle_groups": ["triceps"],
+    "primary_muscle": "triceps",
+    "secondary_muscles": [],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Hold rope overhead", "Extend arms", "Return slowly"]
+  },
+
+  {
+    "name": "Single Arm Tricep Pushdown",
+    "category": "strength",
+    "muscle_groups": ["triceps"],
+    "primary_muscle": "triceps",
+    "secondary_muscles": [],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Grip single handle", "Push downward", "Return slowly"]
+  },
+
+  {
+    "name": "Bench Dips",
+    "category": "strength",
+    "muscle_groups": ["triceps"],
+    "primary_muscle": "triceps",
+    "secondary_muscles": ["shoulders"],
+    "equipment": "bench",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": ["Place hands on bench", "Lower body", "Push upward"]
+  },
+
+  {
+    "name": "Diamond Push Up",
+    "category": "strength",
+    "muscle_groups": ["triceps", "chest"],
+    "primary_muscle": "triceps",
+    "secondary_muscles": ["chest"],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": ["Hands close together", "Lower chest", "Push upward"]
+  },
+
+  {
+    "name": "Decline Push Up",
+    "category": "strength",
+    "muscle_groups": ["chest", "shoulders"],
+    "primary_muscle": "upper chest",
+    "secondary_muscles": ["triceps"],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": ["Feet elevated", "Lower chest", "Push upward"]
+  },
+
+  {
+    "name": "Incline Push Up",
+    "category": "strength",
+    "muscle_groups": ["chest"],
+    "primary_muscle": "chest",
+    "secondary_muscles": ["triceps"],
+    "equipment": "bench",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": ["Hands on bench", "Lower chest", "Push upward"]
+  },
+
+  {
+    "name": "Ring Push Up",
+    "category": "strength",
+    "muscle_groups": ["chest", "core"],
+    "primary_muscle": "chest",
+    "secondary_muscles": ["triceps"],
+    "equipment": "gymnastic rings",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": ["Grip rings", "Lower chest", "Push upward"]
+  },
+
+  {
+    "name": "Ring Dip",
+    "category": "strength",
+    "muscle_groups": ["triceps", "chest"],
+    "primary_muscle": "triceps",
+    "secondary_muscles": ["chest"],
+    "equipment": "gymnastic rings",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 9,
+    "instructions": ["Grip rings", "Lower body", "Push upward"]
+  },
+
+  {
+    "name": "Pendlay Row",
+    "category": "strength",
+    "muscle_groups": ["back"],
+    "primary_muscle": "lats",
+    "secondary_muscles": ["biceps"],
+    "equipment": "barbell",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": ["Pull bar explosively", "Lower to floor", "Repeat"]
+  },
+
+  {
+    "name": "Meadows Row",
+    "category": "strength",
+    "muscle_groups": ["back"],
+    "primary_muscle": "lats",
+    "secondary_muscles": ["rear delts"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": ["Grip bar end", "Row upward", "Lower slowly"]
+  },
+
+  {
+    "name": "Inverted Row",
+    "category": "strength",
+    "muscle_groups": ["back"],
+    "primary_muscle": "lats",
+    "secondary_muscles": ["biceps"],
+    "equipment": "bar",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": ["Hang under bar", "Pull chest upward", "Lower slowly"]
+  },
+
+  {
+    "name": "Seal Row",
+    "category": "strength",
+    "muscle_groups": ["back"],
+    "primary_muscle": "upper back",
+    "secondary_muscles": ["biceps"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": ["Lie on bench", "Row bar upward", "Lower slowly"]
+  },
+
+  {
+    "name": "Chest Supported Row",
+    "category": "strength",
+    "muscle_groups": ["back"],
+    "primary_muscle": "lats",
+    "secondary_muscles": ["biceps"],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": ["Lie on incline bench", "Row dumbbells", "Lower slowly"]
+  },
+
+  {
+    "name": "Dumbbell Front Squat",
+    "category": "strength",
+    "muscle_groups": ["quadriceps"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes"],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": ["Hold dumbbells at shoulders", "Squat down", "Stand up"]
+  },
+
+  {
+    "name": "Split Squat",
+    "category": "strength",
+    "muscle_groups": ["quadriceps", "glutes"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes"],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": ["One leg forward", "Lower body", "Push upward"]
+  },
+
+  {
+    "name": "Jump Rope Double Under",
+    "category": "cardio",
+    "muscle_groups": ["calves"],
+    "primary_muscle": "calves",
+    "secondary_muscles": ["shoulders"],
+    "equipment": "jump rope",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 15,
+    "instructions": [
+      "Spin rope twice per jump",
+      "Maintain rhythm",
+      "Land softly"
+    ]
+  },
+
+  {
+    "name": "Shadow Boxing",
+    "category": "cardio",
+    "muscle_groups": ["full body"],
+    "primary_muscle": "shoulders",
+    "secondary_muscles": ["core"],
+    "equipment": "none",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 11,
+    "instructions": ["Throw punches", "Move feet", "Maintain rhythm"]
+  },
+
+  {
+    "name": "Jumping Jacks",
+    "category": "cardio",
+    "muscle_groups": ["full body"],
+    "primary_muscle": "legs",
+    "secondary_muscles": ["shoulders"],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 9,
+    "instructions": ["Jump feet apart", "Raise arms", "Return"]
+  },
+
+  {
+    "name": "Seal Jacks",
+    "category": "cardio",
+    "muscle_groups": ["full body"],
+    "primary_muscle": "legs",
+    "secondary_muscles": ["shoulders"],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 9,
+    "instructions": ["Jump feet apart", "Swing arms forward", "Return"]
+  },
+
+  {
+    "name": "Star Jumps",
+    "category": "plyometric",
+    "muscle_groups": ["legs"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes"],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 12,
+    "instructions": ["Jump upward", "Spread arms and legs", "Land softly"]
+  },
+
+  {
+    "name": "Treadmill Running",
+    "category": "cardio",
+    "muscle_groups": ["legs"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["hamstrings", "calves"],
+    "equipment": "treadmill",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 11,
+    "instructions": [
+      "Set desired speed",
+      "Maintain steady pace",
+      "Land mid-foot"
+    ]
+  },
+
+  {
+    "name": "Elliptical",
+    "category": "cardio",
+    "muscle_groups": ["legs"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes", "hamstrings"],
+    "equipment": "elliptical machine",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 9,
+    "instructions": [
+      "Step on pedals",
+      "Move in smooth motion",
+      "Maintain rhythm"
+    ]
+  },
+
+  {
+    "name": "Stair Climber",
+    "category": "cardio",
+    "muscle_groups": ["legs", "glutes"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes", "calves"],
+    "equipment": "stair climber",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 12,
+    "instructions": ["Step on machine", "Climb steadily", "Maintain posture"]
+  },
+
+  {
+    "name": "Rowing Machine",
+    "category": "cardio",
+    "muscle_groups": ["full body"],
+    "primary_muscle": "back",
+    "secondary_muscles": ["legs", "arms"],
+    "equipment": "rowing machine",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 11,
+    "instructions": ["Sit on rower", "Drive with legs", "Pull handle to chest"]
+  },
+
+  {
+    "name": "Assault Bike",
+    "category": "cardio",
+    "muscle_groups": ["full body"],
+    "primary_muscle": "legs",
+    "secondary_muscles": ["arms", "core"],
+    "equipment": "assault bike",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 15,
+    "instructions": [
+      "Pedal and push handles",
+      "Maintain high intensity",
+      "Breathe steadily"
+    ]
+  },
+
+  {
+    "name": "Swimming",
+    "category": "cardio",
+    "muscle_groups": ["full body"],
+    "primary_muscle": "full body",
+    "secondary_muscles": ["shoulders", "back", "legs"],
+    "equipment": "none",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 10,
+    "instructions": ["Swim laps", "Maintain form", "Control breathing"]
+  },
+
+  {
+    "name": "Kettlebell Swing",
+    "category": "strength",
+    "muscle_groups": ["glutes", "hamstrings"],
+    "primary_muscle": "glutes",
+    "secondary_muscles": ["hamstrings", "core"],
+    "equipment": "kettlebell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 10,
+    "instructions": [
+      "Hinge at hips",
+      "Swing kettlebell forward",
+      "Drive with hips"
+    ]
+  },
+
+  {
+    "name": "Kettlebell Goblet Squat",
+    "category": "strength",
+    "muscle_groups": ["quadriceps", "glutes"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes", "core"],
+    "equipment": "kettlebell",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": ["Hold kettlebell at chest", "Squat down", "Stand up"]
+  },
+
+  {
+    "name": "Kettlebell Turkish Get Up",
+    "category": "strength",
+    "muscle_groups": ["full body"],
+    "primary_muscle": "core",
+    "secondary_muscles": ["shoulders", "legs"],
+    "equipment": "kettlebell",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": [
+      "Lie down with kettlebell",
+      "Stand up slowly",
+      "Reverse movement"
+    ]
+  },
+
+  {
+    "name": "Kettlebell Snatch",
+    "category": "strength",
+    "muscle_groups": ["shoulders", "back"],
+    "primary_muscle": "shoulders",
+    "secondary_muscles": ["back", "core"],
+    "equipment": "kettlebell",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 11,
+    "instructions": ["Swing kettlebell", "Punch upward", "Catch overhead"]
+  },
+
+  {
+    "name": "Kettlebell Clean",
+    "category": "strength",
+    "muscle_groups": ["shoulders", "back"],
+    "primary_muscle": "shoulders",
+    "secondary_muscles": ["back", "legs"],
+    "equipment": "kettlebell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 9,
+    "instructions": [
+      "Swing kettlebell",
+      "Pull to shoulder",
+      "Catch in rack position"
+    ]
+  },
+
+  {
+    "name": "Kettlebell Windmill",
+    "category": "strength",
+    "muscle_groups": ["obliques", "shoulders"],
+    "primary_muscle": "obliques",
+    "secondary_muscles": ["shoulders", "hamstrings"],
+    "equipment": "kettlebell",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": [
+      "Hold kettlebell overhead",
+      "Bend to side",
+      "Keep arm straight"
+    ]
+  },
+
+  {
+    "name": "Medicine Ball Slam",
+    "category": "plyometric",
+    "muscle_groups": ["full body"],
+    "primary_muscle": "core",
+    "secondary_muscles": ["shoulders", "back"],
+    "equipment": "medicine ball",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 12,
+    "instructions": [
+      "Lift ball overhead",
+      "Slam down forcefully",
+      "Catch on bounce"
+    ]
+  },
+
+  {
+    "name": "Medicine Ball Chest Pass",
+    "category": "plyometric",
+    "muscle_groups": ["chest", "arms"],
+    "primary_muscle": "chest",
+    "secondary_muscles": ["triceps", "core"],
+    "equipment": "medicine ball",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": [
+      "Hold ball at chest",
+      "Throw forward explosively",
+      "Catch return"
+    ]
+  },
+
+  {
+    "name": "Medicine Ball Twist",
+    "category": "strength",
+    "muscle_groups": ["obliques"],
+    "primary_muscle": "obliques",
+    "secondary_muscles": ["core"],
+    "equipment": "medicine ball",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": [
+      "Sit with knees bent",
+      "Twist ball side to side",
+      "Maintain control"
+    ]
+  },
+
+  {
+    "name": "Wall Ball",
+    "category": "plyometric",
+    "muscle_groups": ["legs", "shoulders"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["shoulders", "core"],
+    "equipment": "medicine ball",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 11,
+    "instructions": [
+      "Squat with ball",
+      "Throw ball to wall",
+      "Catch and repeat"
+    ]
+  },
+
+  {
+    "name": "Barbell Front Squat",
+    "category": "strength",
+    "muscle_groups": ["quadriceps"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes", "core"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 9,
+    "instructions": [
+      "Rest bar on front shoulders",
+      "Squat down",
+      "Drive upward"
+    ]
+  },
+
+  {
+    "name": "Barbell Overhead Press",
+    "category": "strength",
+    "muscle_groups": ["shoulders"],
+    "primary_muscle": "deltoids",
+    "secondary_muscles": ["triceps", "core"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": ["Hold bar at shoulders", "Press overhead", "Lower slowly"]
+  },
+
+  {
+    "name": "Barbell Lunges",
+    "category": "strength",
+    "muscle_groups": ["quadriceps", "glutes"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes", "hamstrings"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": ["Hold bar on back", "Step forward", "Lower and return"]
+  },
+
+  {
+    "name": "Hanging Knee Raises",
+    "category": "strength",
+    "muscle_groups": ["core"],
+    "primary_muscle": "abs",
+    "secondary_muscles": ["hip flexors"],
+    "equipment": "pull-up bar",
+    "difficulty": "intermediate",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": ["Hang from bar", "Raise knees to chest", "Lower slowly"]
+  },
+
+  {
+    "name": "Hanging Leg Raises",
+    "category": "strength",
+    "muscle_groups": ["core"],
+    "primary_muscle": "abs",
+    "secondary_muscles": ["hip flexors"],
+    "equipment": "pull-up bar",
+    "difficulty": "advanced",
+    "exercise_type": "isolation",
+    "calories_per_minute": 6,
+    "instructions": ["Hang from bar", "Raise straight legs", "Lower slowly"]
+  },
+
+  {
+    "name": "L Sit",
+    "category": "strength",
+    "muscle_groups": ["core"],
+    "primary_muscle": "abs",
+    "secondary_muscles": ["hip flexors", "shoulders"],
+    "equipment": "bodyweight",
+    "difficulty": "advanced",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": ["Support on hands", "Lift legs straight", "Hold position"]
+  },
+
+  {
+    "name": "Handstand Push Up",
+    "category": "strength",
+    "muscle_groups": ["shoulders"],
+    "primary_muscle": "deltoids",
+    "secondary_muscles": ["triceps", "core"],
+    "equipment": "bodyweight",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 9,
+    "instructions": [
+      "Kick into handstand",
+      "Lower head to floor",
+      "Push back up"
+    ]
+  },
+
+  {
+    "name": "Pike Push Up",
+    "category": "strength",
+    "muscle_groups": ["shoulders"],
+    "primary_muscle": "deltoids",
+    "secondary_muscles": ["triceps"],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": ["Start in downward dog", "Lower head down", "Push back up"]
+  },
+
+  {
+    "name": "Archer Push Up",
+    "category": "strength",
+    "muscle_groups": ["chest"],
+    "primary_muscle": "chest",
+    "secondary_muscles": ["triceps", "core"],
+    "equipment": "bodyweight",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": [
+      "Wide hand position",
+      "Shift weight to one side",
+      "Alternate sides"
+    ]
+  },
+
+  {
+    "name": "Typewriter Push Up",
+    "category": "strength",
+    "muscle_groups": ["chest"],
+    "primary_muscle": "chest",
+    "secondary_muscles": ["triceps", "shoulders"],
+    "equipment": "bodyweight",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": [
+      "Wide hand position",
+      "Move side to side",
+      "Keep chest low"
+    ]
+  },
+
+  {
+    "name": "Pseudo Planche Push Up",
+    "category": "strength",
+    "muscle_groups": ["chest", "shoulders"],
+    "primary_muscle": "shoulders",
+    "secondary_muscles": ["chest", "core"],
+    "equipment": "bodyweight",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 9,
+    "instructions": ["Lean forward", "Lower chest", "Push back up"]
+  },
+
+  {
+    "name": "Muscle Up",
+    "category": "strength",
+    "muscle_groups": ["back", "chest"],
+    "primary_muscle": "lats",
+    "secondary_muscles": ["triceps", "chest"],
+    "equipment": "pull-up bar",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 10,
+    "instructions": [
+      "Pull up explosively",
+      "Transition over bar",
+      "Press upward"
+    ]
+  },
+
+  {
+    "name": "Chin Up",
+    "category": "strength",
+    "muscle_groups": ["back", "biceps"],
+    "primary_muscle": "lats",
+    "secondary_muscles": ["biceps"],
+    "equipment": "pull-up bar",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": ["Grip bar underhand", "Pull up to chin", "Lower slowly"]
+  },
+
+  {
+    "name": "Neutral Grip Pull Up",
+    "category": "strength",
+    "muscle_groups": ["back", "biceps"],
+    "primary_muscle": "lats",
+    "secondary_muscles": ["biceps"],
+    "equipment": "pull-up bar",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": ["Grip handles neutral", "Pull up", "Lower slowly"]
+  },
+
+  {
+    "name": "Wide Grip Pull Up",
+    "category": "strength",
+    "muscle_groups": ["back"],
+    "primary_muscle": "lats",
+    "secondary_muscles": ["biceps"],
+    "equipment": "pull-up bar",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": ["Grip bar wide", "Pull up", "Lower slowly"]
+  },
+
+  {
+    "name": "Clapping Push Up",
+    "category": "plyometric",
+    "muscle_groups": ["chest"],
+    "primary_muscle": "chest",
+    "secondary_muscles": ["triceps"],
+    "equipment": "bodyweight",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 9,
+    "instructions": ["Push up explosively", "Clap hands", "Land softly"]
+  },
+
+  {
+    "name": "Broad Jump",
+    "category": "plyometric",
+    "muscle_groups": ["legs"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes", "calves"],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 11,
+    "instructions": ["Squat down", "Jump forward", "Land softly"]
+  },
+
+  {
+    "name": "Tuck Jumps",
+    "category": "plyometric",
+    "muscle_groups": ["legs"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes"],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 13,
+    "instructions": ["Jump upward", "Tuck knees to chest", "Land softly"]
+  },
+
+  {
+    "name": "Single Leg Box Jump",
+    "category": "plyometric",
+    "muscle_groups": ["legs"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes"],
+    "equipment": "box",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 12,
+    "instructions": ["Stand on one leg", "Jump onto box", "Step down"]
+  },
+
+  {
+    "name": "Depth Jump",
+    "category": "plyometric",
+    "muscle_groups": ["legs"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes", "calves"],
+    "equipment": "box",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 13,
+    "instructions": [
+      "Step off box",
+      "Land and explode upward",
+      "Minimize ground contact"
+    ]
+  },
+
+  {
+    "name": "Power Clean",
+    "category": "strength",
+    "muscle_groups": ["full body"],
+    "primary_muscle": "legs",
+    "secondary_muscles": ["back", "shoulders"],
+    "equipment": "barbell",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 12,
+    "instructions": [
+      "Pull bar explosively",
+      "Catch at shoulders",
+      "Stand upright"
+    ]
+  },
+
+  {
+    "name": "Clean and Jerk",
+    "category": "strength",
+    "muscle_groups": ["full body"],
+    "primary_muscle": "legs",
+    "secondary_muscles": ["shoulders", "back"],
+    "equipment": "barbell",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 13,
+    "instructions": [
+      "Clean bar to shoulders",
+      "Dip and drive overhead",
+      "Lock out arms"
+    ]
+  },
+
+  {
+    "name": "Snatch",
+    "category": "strength",
+    "muscle_groups": ["full body"],
+    "primary_muscle": "legs",
+    "secondary_muscles": ["shoulders", "back"],
+    "equipment": "barbell",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 13,
+    "instructions": ["Pull bar explosively", "Drop under bar", "Catch overhead"]
+  },
+
+  {
+    "name": "Thruster",
+    "category": "strength",
+    "muscle_groups": ["full body"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["shoulders", "core"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 12,
+    "instructions": ["Front squat", "Drive upward", "Press overhead"]
+  },
+
+  {
+    "name": "Devil Press",
+    "category": "plyometric",
+    "muscle_groups": ["full body"],
+    "primary_muscle": "full body",
+    "secondary_muscles": ["shoulders", "legs"],
+    "equipment": "dumbbell",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 14,
+    "instructions": [
+      "Burpee with dumbbells",
+      "Snatch both dumbbells overhead",
+      "Stand upright"
+    ]
+  },
+
+  {
+    "name": "Man Maker",
+    "category": "strength",
+    "muscle_groups": ["full body"],
+    "primary_muscle": "full body",
+    "secondary_muscles": ["chest", "back", "legs"],
+    "equipment": "dumbbell",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 14,
+    "instructions": [
+      "Push up with dumbbells",
+      "Row each side",
+      "Clean and press overhead"
+    ]
+  },
+
+  {
+    "name": "Turkish Get Down",
+    "category": "strength",
+    "muscle_groups": ["core"],
+    "primary_muscle": "core",
+    "secondary_muscles": ["shoulders"],
+    "equipment": "bodyweight",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": [
+      "Stand upright",
+      "Lower to ground slowly",
+      "Keep core tight"
+    ]
+  },
+
+  {
+    "name": "Single Leg Deadlift",
+    "category": "strength",
+    "muscle_groups": ["hamstrings", "glutes"],
+    "primary_muscle": "hamstrings",
+    "secondary_muscles": ["glutes", "core"],
+    "equipment": "dumbbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": ["Stand on one leg", "Hinge forward", "Return upright"]
+  },
+
+  {
+    "name": "Landmine Press",
+    "category": "strength",
+    "muscle_groups": ["shoulders"],
+    "primary_muscle": "deltoids",
+    "secondary_muscles": ["core"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": ["Hold barbell end", "Press upward", "Lower slowly"]
+  },
+
+  {
+    "name": "Landmine Row",
+    "category": "strength",
+    "muscle_groups": ["back"],
+    "primary_muscle": "lats",
+    "secondary_muscles": ["biceps"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": ["Grip barbell end", "Row toward hip", "Lower slowly"]
+  },
+
+  {
+    "name": "Landmine Rotation",
+    "category": "strength",
+    "muscle_groups": ["obliques"],
+    "primary_muscle": "obliques",
+    "secondary_muscles": ["shoulders"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": [
+      "Hold barbell overhead",
+      "Rotate side to side",
+      "Control movement"
+    ]
+  },
+
+  {
+    "name": "Cable Woodchop",
+    "category": "strength",
+    "muscle_groups": ["obliques"],
+    "primary_muscle": "obliques",
+    "secondary_muscles": ["shoulders"],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": [
+      "Pull cable diagonally",
+      "Rotate torso",
+      "Control movement"
+    ]
+  },
+
+  {
+    "name": "Pallof Press",
+    "category": "strength",
+    "muscle_groups": ["core"],
+    "primary_muscle": "core",
+    "secondary_muscles": ["obliques"],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": ["Hold cable at chest", "Press forward", "Resist rotation"]
+  },
+
+  {
+    "name": "Ab Wheel Rollout",
+    "category": "strength",
+    "muscle_groups": ["core"],
+    "primary_muscle": "abs",
+    "secondary_muscles": ["shoulders"],
+    "equipment": "ab wheel",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": ["Kneel with wheel", "Roll forward", "Pull back"]
+  },
+
+  {
+    "name": "Dragon Flag",
+    "category": "strength",
+    "muscle_groups": ["core"],
+    "primary_muscle": "abs",
+    "secondary_muscles": ["hip flexors"],
+    "equipment": "bench",
+    "difficulty": "advanced",
+    "exercise_type": "isolation",
+    "calories_per_minute": 7,
+    "instructions": [
+      "Grip bench behind head",
+      "Raise body straight",
+      "Lower slowly"
+    ]
+  },
+
+  {
+    "name": "Dumbbell Bench Press",
+    "category": "strength",
+    "muscle_groups": ["chest", "triceps", "shoulders"],
+    "primary_muscle": "chest",
+    "secondary_muscles": ["triceps", "shoulders"],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": [
+      "Lie on bench with dumbbells",
+      "Lower to chest level",
+      "Press upward"
+    ]
+  },
+
+  {
+    "name": "Incline Dumbbell Press",
+    "category": "strength",
+    "muscle_groups": ["chest", "shoulders"],
+    "primary_muscle": "upper chest",
+    "secondary_muscles": ["shoulders", "triceps"],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": [
+      "Lie on incline bench",
+      "Lower dumbbells to chest",
+      "Press upward"
+    ]
+  },
+
+  {
+    "name": "Decline Dumbbell Press",
+    "category": "strength",
+    "muscle_groups": ["chest", "triceps"],
+    "primary_muscle": "lower chest",
+    "secondary_muscles": ["triceps"],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": ["Lie on decline bench", "Lower dumbbells", "Press upward"]
+  },
+
+  {
+    "name": "Dumbbell Pullover",
+    "category": "strength",
+    "muscle_groups": ["chest", "lats"],
+    "primary_muscle": "chest",
+    "secondary_muscles": ["lats"],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": [
+      "Lie on bench",
+      "Lower dumbbell overhead",
+      "Pull back over chest"
+    ]
+  },
+
+  {
+    "name": "Cable Crossover",
+    "category": "strength",
+    "muscle_groups": ["chest"],
+    "primary_muscle": "chest",
+    "secondary_muscles": ["shoulders"],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": ["Hold cables high", "Bring arms together", "Return slowly"]
+  },
+
+  {
+    "name": "Low Cable Crossover",
+    "category": "strength",
+    "muscle_groups": ["chest"],
+    "primary_muscle": "upper chest",
+    "secondary_muscles": ["shoulders"],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": [
+      "Hold cables low",
+      "Bring arms upward together",
+      "Return slowly"
+    ]
+  },
+
+  {
+    "name": "Dumbbell Shoulder Press",
+    "category": "strength",
+    "muscle_groups": ["shoulders"],
+    "primary_muscle": "deltoids",
+    "secondary_muscles": ["triceps"],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": [
+      "Sit with dumbbells at shoulders",
+      "Press overhead",
+      "Lower slowly"
+    ]
+  },
+
+  {
+    "name": "Seated Dumbbell Press",
+    "category": "strength",
+    "muscle_groups": ["shoulders"],
+    "primary_muscle": "deltoids",
+    "secondary_muscles": ["triceps"],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": [
+      "Sit upright",
+      "Press dumbbells overhead",
+      "Lower to shoulders"
+    ]
+  },
+
+  {
+    "name": "Rear Delt Fly",
+    "category": "strength",
+    "muscle_groups": ["shoulders"],
+    "primary_muscle": "rear deltoids",
+    "secondary_muscles": ["upper back"],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Bend forward", "Raise dumbbells sideways", "Lower slowly"]
+  },
+
+  {
+    "name": "Cable Rear Delt Fly",
+    "category": "strength",
+    "muscle_groups": ["shoulders"],
+    "primary_muscle": "rear deltoids",
+    "secondary_muscles": ["upper back"],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Cross cables", "Pull handles apart", "Return slowly"]
+  },
+
+  {
+    "name": "Barbell Shrugs",
+    "category": "strength",
+    "muscle_groups": ["traps"],
+    "primary_muscle": "traps",
+    "secondary_muscles": [],
+    "equipment": "barbell",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Hold barbell", "Raise shoulders upward", "Lower slowly"]
+  },
+
+  {
+    "name": "Dumbbell Shrugs",
+    "category": "strength",
+    "muscle_groups": ["traps"],
+    "primary_muscle": "traps",
+    "secondary_muscles": [],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": [
+      "Hold dumbbells at sides",
+      "Raise shoulders",
+      "Lower slowly"
+    ]
+  },
+
+  {
+    "name": "Cable Shrugs",
+    "category": "strength",
+    "muscle_groups": ["traps"],
+    "primary_muscle": "traps",
+    "secondary_muscles": [],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Hold cable bar", "Raise shoulders", "Lower slowly"]
+  },
+
+  {
+    "name": "Dumbbell Row",
+    "category": "strength",
+    "muscle_groups": ["back"],
+    "primary_muscle": "lats",
+    "secondary_muscles": ["biceps"],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": ["Bend forward", "Row dumbbells to hips", "Lower slowly"]
+  },
+
+  {
+    "name": "Kroc Row",
+    "category": "strength",
+    "muscle_groups": ["back"],
+    "primary_muscle": "lats",
+    "secondary_muscles": ["biceps", "traps"],
+    "equipment": "dumbbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": [
+      "Use heavy dumbbell",
+      "Row with momentum",
+      "Control descent"
+    ]
+  },
+
+  {
+    "name": "Underhand Barbell Row",
+    "category": "strength",
+    "muscle_groups": ["back"],
+    "primary_muscle": "lats",
+    "secondary_muscles": ["biceps"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": ["Grip bar underhand", "Row to lower chest", "Lower slowly"]
+  },
+
+  {
+    "name": "Wide Grip Cable Row",
+    "category": "strength",
+    "muscle_groups": ["back"],
+    "primary_muscle": "lats",
+    "secondary_muscles": ["biceps"],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": ["Grip wide bar", "Pull to chest", "Return slowly"]
+  },
+
+  {
+    "name": "Close Grip Cable Row",
+    "category": "strength",
+    "muscle_groups": ["back"],
+    "primary_muscle": "middle back",
+    "secondary_muscles": ["biceps"],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": ["Grip close handle", "Pull to torso", "Return slowly"]
+  },
+
+  {
+    "name": "V Bar Pulldown",
+    "category": "strength",
+    "muscle_groups": ["back"],
+    "primary_muscle": "lats",
+    "secondary_muscles": ["biceps"],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": ["Grip v-bar", "Pull to chest", "Return slowly"]
+  },
+
+  {
+    "name": "Straight Arm Lat Pulldown",
+    "category": "strength",
+    "muscle_groups": ["back"],
+    "primary_muscle": "lats",
+    "secondary_muscles": [],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": [
+      "Hold bar overhead",
+      "Pull down with straight arms",
+      "Return slowly"
+    ]
+  },
+
+  {
+    "name": "Machine Row",
+    "category": "strength",
+    "muscle_groups": ["back"],
+    "primary_muscle": "lats",
+    "secondary_muscles": ["biceps"],
+    "equipment": "rowing machine",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": ["Sit at machine", "Pull handles to torso", "Return slowly"]
+  },
+
+  {
+    "name": "Assisted Pull Up",
+    "category": "strength",
+    "muscle_groups": ["back", "biceps"],
+    "primary_muscle": "lats",
+    "secondary_muscles": ["biceps"],
+    "equipment": "assisted pull-up machine",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": ["Kneel on platform", "Pull up", "Lower slowly"]
+  },
+
+  {
+    "name": "Dumbbell Deadlift",
+    "category": "strength",
+    "muscle_groups": ["glutes", "hamstrings", "back"],
+    "primary_muscle": "glutes",
+    "secondary_muscles": ["hamstrings", "lower back"],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": ["Hold dumbbells", "Hinge at hips", "Stand upright"]
+  },
+
+  {
+    "name": "Trap Bar Deadlift",
+    "category": "strength",
+    "muscle_groups": ["glutes", "hamstrings", "back"],
+    "primary_muscle": "glutes",
+    "secondary_muscles": ["quadriceps", "hamstrings"],
+    "equipment": "trap bar",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 10,
+    "instructions": ["Stand inside trap bar", "Grip handles", "Lift and stand"]
+  },
+
+  {
+    "name": "Rack Pull",
+    "category": "strength",
+    "muscle_groups": ["back", "glutes"],
+    "primary_muscle": "back",
+    "secondary_muscles": ["glutes", "traps"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 9,
+    "instructions": [
+      "Set bar on rack at knee height",
+      "Pull to lockout",
+      "Lower slowly"
+    ]
+  },
+
+  {
+    "name": "Hack Squat",
+    "category": "strength",
+    "muscle_groups": ["quadriceps"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes"],
+    "equipment": "hack squat machine",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": ["Stand in machine", "Lower body", "Push upward"]
+  },
+
+  {
+    "name": "Sissy Squat",
+    "category": "strength",
+    "muscle_groups": ["quadriceps"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": [],
+    "equipment": "bodyweight",
+    "difficulty": "advanced",
+    "exercise_type": "isolation",
+    "calories_per_minute": 6,
+    "instructions": ["Lean back", "Lower knees forward", "Return upright"]
+  },
+
+  {
+    "name": "Front Squat",
+    "category": "strength",
+    "muscle_groups": ["quadriceps"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes", "core"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 9,
+    "instructions": [
+      "Rest bar on front shoulders",
+      "Squat down",
+      "Drive upward"
+    ]
+  },
+
+  {
+    "name": "Safety Bar Squat",
+    "category": "strength",
+    "muscle_groups": ["quadriceps", "glutes"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes"],
+    "equipment": "safety squat bar",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 9,
+    "instructions": ["Place safety bar on back", "Squat down", "Stand upright"]
+  },
+
+  {
+    "name": "Pause Squat",
+    "category": "strength",
+    "muscle_groups": ["quadriceps", "glutes"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 9,
+    "instructions": ["Squat down", "Pause at bottom", "Drive upward"]
+  },
+
+  {
+    "name": "Box Squat",
+    "category": "strength",
+    "muscle_groups": ["quadriceps", "glutes"],
+    "primary_muscle": "glutes",
+    "secondary_muscles": ["quadriceps"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": ["Squat to box", "Sit briefly", "Explode upward"]
+  },
+
+  {
+    "name": "Leg Press",
+    "category": "strength",
+    "muscle_groups": ["quadriceps", "glutes"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes", "hamstrings"],
+    "equipment": "leg press machine",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": ["Sit in machine", "Push platform away", "Lower slowly"]
+  },
+
+  {
+    "name": "Single Leg Press",
+    "category": "strength",
+    "muscle_groups": ["quadriceps"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes"],
+    "equipment": "leg press machine",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": ["Use one leg", "Press platform", "Lower slowly"]
+  },
+
+  {
+    "name": "Lying Leg Curl",
+    "category": "strength",
+    "muscle_groups": ["hamstrings"],
+    "primary_muscle": "hamstrings",
+    "secondary_muscles": [],
+    "equipment": "leg curl machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": ["Lie on machine", "Curl heels to glutes", "Lower slowly"]
+  },
+
+  {
+    "name": "Seated Leg Curl",
+    "category": "strength",
+    "muscle_groups": ["hamstrings"],
+    "primary_muscle": "hamstrings",
+    "secondary_muscles": [],
+    "equipment": "leg curl machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": ["Sit on machine", "Curl legs downward", "Return slowly"]
+  },
+
+  {
+    "name": "Stiff Leg Deadlift",
+    "category": "strength",
+    "muscle_groups": ["hamstrings"],
+    "primary_muscle": "hamstrings",
+    "secondary_muscles": ["glutes", "lower back"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": [
+      "Hold bar with straight legs",
+      "Lower bar",
+      "Return upright"
+    ]
+  },
+
+  {
+    "name": "Dumbbell Romanian Deadlift",
+    "category": "strength",
+    "muscle_groups": ["hamstrings", "glutes"],
+    "primary_muscle": "hamstrings",
+    "secondary_muscles": ["glutes"],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": ["Hold dumbbells", "Hinge at hips", "Return upright"]
+  },
+
+  {
+    "name": "Adductor Machine",
+    "category": "strength",
+    "muscle_groups": ["inner thighs"],
+    "primary_muscle": "adductors",
+    "secondary_muscles": [],
+    "equipment": "adductor machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Sit on machine", "Bring legs together", "Return slowly"]
+  },
+
+  {
+    "name": "Abductor Machine",
+    "category": "strength",
+    "muscle_groups": ["glutes"],
+    "primary_muscle": "glutes",
+    "secondary_muscles": ["hips"],
+    "equipment": "abductor machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Sit on machine", "Push legs apart", "Return slowly"]
+  },
+
+  {
+    "name": "Calf Press on Leg Press",
+    "category": "strength",
+    "muscle_groups": ["calves"],
+    "primary_muscle": "gastrocnemius",
+    "secondary_muscles": [],
+    "equipment": "leg press machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Place toes on platform", "Press with toes", "Lower heels"]
+  },
+
+  {
+    "name": "Donkey Calf Raise",
+    "category": "strength",
+    "muscle_groups": ["calves"],
+    "primary_muscle": "gastrocnemius",
+    "secondary_muscles": [],
+    "equipment": "calf machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Bend at hips", "Raise heels", "Lower slowly"]
+  },
+
+  {
+    "name": "Smith Machine Squat",
+    "category": "strength",
+    "muscle_groups": ["quadriceps", "glutes"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes"],
+    "equipment": "smith machine",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": ["Position bar on back", "Squat down", "Stand upright"]
+  },
+
+  {
+    "name": "Smith Machine Bench Press",
+    "category": "strength",
+    "muscle_groups": ["chest"],
+    "primary_muscle": "chest",
+    "secondary_muscles": ["triceps"],
+    "equipment": "smith machine",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": ["Lie under bar", "Lower to chest", "Press upward"]
+  },
+
+  {
+    "name": "Smith Machine Shoulder Press",
+    "category": "strength",
+    "muscle_groups": ["shoulders"],
+    "primary_muscle": "deltoids",
+    "secondary_muscles": ["triceps"],
+    "equipment": "smith machine",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": ["Sit under bar", "Press overhead", "Lower slowly"]
+  },
+
+  {
+    "name": "Overhead Dumbbell Tricep Extension",
+    "category": "strength",
+    "muscle_groups": ["triceps"],
+    "primary_muscle": "triceps",
+    "secondary_muscles": [],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": [
+      "Hold dumbbell overhead",
+      "Lower behind head",
+      "Extend upward"
+    ]
+  },
+
+  {
+    "name": "Rope Tricep Pushdown",
+    "category": "strength",
+    "muscle_groups": ["triceps"],
+    "primary_muscle": "triceps",
+    "secondary_muscles": [],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": [
+      "Hold rope attachment",
+      "Push down and apart",
+      "Return slowly"
+    ]
+  },
+
+  {
+    "name": "EZ Bar Tricep Extension",
+    "category": "strength",
+    "muscle_groups": ["triceps"],
+    "primary_muscle": "triceps",
+    "secondary_muscles": [],
+    "equipment": "ez bar",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": [
+      "Hold EZ bar overhead",
+      "Lower behind head",
+      "Extend upward"
+    ]
+  },
+
+  {
+    "name": "Cable Bicep Curl",
+    "category": "strength",
+    "muscle_groups": ["biceps"],
+    "primary_muscle": "biceps",
+    "secondary_muscles": [],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Hold cable bar", "Curl upward", "Lower slowly"]
+  },
+
+  {
+    "name": "Cross Body Hammer Curl",
+    "category": "strength",
+    "muscle_groups": ["biceps"],
+    "primary_muscle": "brachialis",
+    "secondary_muscles": ["forearms"],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Hold dumbbell", "Curl across body", "Lower slowly"]
+  },
+
+  {
+    "name": "Cable Crunch",
+    "category": "strength",
+    "muscle_groups": ["core"],
+    "primary_muscle": "abs",
+    "secondary_muscles": [],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": ["Kneel holding rope", "Crunch downward", "Return slowly"]
+  },
+
+  {
+    "name": "Decline Sit Up",
+    "category": "strength",
+    "muscle_groups": ["core"],
+    "primary_muscle": "abs",
+    "secondary_muscles": [],
+    "equipment": "decline bench",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": ["Lie on decline bench", "Sit up", "Lower slowly"]
+  },
+
+  {
+    "name": "Weighted Crunch",
+    "category": "strength",
+    "muscle_groups": ["core"],
+    "primary_muscle": "abs",
+    "secondary_muscles": [],
+    "equipment": "weight plate",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": ["Hold weight on chest", "Crunch upward", "Lower slowly"]
+  },
+
+  {
+    "name": "Bicycle Crunch",
+    "category": "strength",
+    "muscle_groups": ["core"],
+    "primary_muscle": "abs",
+    "secondary_muscles": ["obliques"],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": [
+      "Lie on back",
+      "Alternate knee to elbow",
+      "Maintain rhythm"
+    ]
+  },
+
+  {
+    "name": "Dead Bug",
+    "category": "strength",
+    "muscle_groups": ["core"],
+    "primary_muscle": "core",
+    "secondary_muscles": [],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Lie on back", "Extend opposite limbs", "Alternate sides"]
+  },
+
+  {
+    "name": "Dumbbell Side Bend",
+    "category": "strength",
+    "muscle_groups": ["obliques"],
+    "primary_muscle": "obliques",
+    "secondary_muscles": [],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Hold dumbbell at side", "Bend to side", "Return upright"]
+  },
+
+  {
+    "name": "Barbell Rollout",
+    "category": "strength",
+    "muscle_groups": ["core"],
+    "primary_muscle": "abs",
+    "secondary_muscles": ["shoulders"],
+    "equipment": "barbell",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": ["Kneel with barbell", "Roll forward", "Pull back"]
+  },
+  {
+    "name": "Incline Cable Fly",
+    "category": "strength",
+    "muscle_groups": ["chest"],
+    "primary_muscle": "upper chest",
+    "secondary_muscles": ["shoulders"],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": [
+      "Set bench at incline",
+      "Pull cables together",
+      "Return slowly"
+    ]
+  },
+
+  {
+    "name": "Decline Cable Fly",
+    "category": "strength",
+    "muscle_groups": ["chest"],
+    "primary_muscle": "lower chest",
+    "secondary_muscles": ["shoulders"],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": [
+      "Set bench at decline",
+      "Pull cables together",
+      "Return slowly"
+    ]
+  },
+
+  {
+    "name": "Svend Press",
+    "category": "strength",
+    "muscle_groups": ["chest"],
+    "primary_muscle": "chest",
+    "secondary_muscles": ["shoulders"],
+    "equipment": "weight plate",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": [
+      "Squeeze plates together",
+      "Press forward",
+      "Return to chest"
+    ]
+  },
+
+  {
+    "name": "Floor Press",
+    "category": "strength",
+    "muscle_groups": ["chest", "triceps"],
+    "primary_muscle": "chest",
+    "secondary_muscles": ["triceps"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": ["Lie on floor", "Lower bar to chest", "Press upward"]
+  },
+
+  {
+    "name": "Dumbbell Floor Press",
+    "category": "strength",
+    "muscle_groups": ["chest", "triceps"],
+    "primary_muscle": "chest",
+    "secondary_muscles": ["triceps"],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": ["Lie on floor", "Lower dumbbells", "Press upward"]
+  },
+
+  {
+    "name": "Plate Loaded Chest Press",
+    "category": "strength",
+    "muscle_groups": ["chest"],
+    "primary_muscle": "chest",
+    "secondary_muscles": ["triceps"],
+    "equipment": "plate loaded machine",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": ["Sit on machine", "Press handles forward", "Return slowly"]
+  },
+
+  {
+    "name": "Lu Raise",
+    "category": "strength",
+    "muscle_groups": ["shoulders"],
+    "primary_muscle": "deltoids",
+    "secondary_muscles": [],
+    "equipment": "weight plate",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Hold plate overhead", "Lower to waist", "Raise back up"]
+  },
+
+  {
+    "name": "Bradford Press",
+    "category": "strength",
+    "muscle_groups": ["shoulders"],
+    "primary_muscle": "deltoids",
+    "secondary_muscles": ["triceps"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": ["Press overhead", "Lower behind head", "Press back over"]
+  },
+
+  {
+    "name": "Bus Driver",
+    "category": "strength",
+    "muscle_groups": ["shoulders"],
+    "primary_muscle": "deltoids",
+    "secondary_muscles": ["core"],
+    "equipment": "weight plate",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": [
+      "Hold plate like steering wheel",
+      "Rotate side to side",
+      "Keep arms extended"
+    ]
+  },
+
+  {
+    "name": "Cuban Press",
+    "category": "strength",
+    "muscle_groups": ["shoulders"],
+    "primary_muscle": "deltoids",
+    "secondary_muscles": ["rotator cuff"],
+    "equipment": "dumbbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": ["Upright row", "Rotate to front rack", "Press overhead"]
+  },
+
+  {
+    "name": "Scarecrow",
+    "category": "strength",
+    "muscle_groups": ["shoulders"],
+    "primary_muscle": "rear deltoids",
+    "secondary_muscles": ["rotator cuff"],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": [
+      "Elbows at shoulder height",
+      "Rotate forearms up and down",
+      "Control movement"
+    ]
+  },
+
+  {
+    "name": "Y Raise",
+    "category": "strength",
+    "muscle_groups": ["shoulders"],
+    "primary_muscle": "deltoids",
+    "secondary_muscles": ["upper back"],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Bend forward", "Raise arms in Y shape", "Lower slowly"]
+  },
+
+  {
+    "name": "T Raise",
+    "category": "strength",
+    "muscle_groups": ["shoulders"],
+    "primary_muscle": "rear deltoids",
+    "secondary_muscles": ["upper back"],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Bend forward", "Raise arms to T shape", "Lower slowly"]
+  },
+
+  {
+    "name": "W Raise",
+    "category": "strength",
+    "muscle_groups": ["shoulders"],
+    "primary_muscle": "rear deltoids",
+    "secondary_muscles": ["upper back"],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": [
+      "Bend forward",
+      "Raise arms in W shape",
+      "Squeeze shoulder blades"
+    ]
+  },
+
+  {
+    "name": "Barbell Face Pull",
+    "category": "strength",
+    "muscle_groups": ["shoulders", "upper back"],
+    "primary_muscle": "rear deltoids",
+    "secondary_muscles": ["traps"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": [
+      "Pull bar to face",
+      "Flare elbows",
+      "Squeeze shoulder blades"
+    ]
+  },
+
+  {
+    "name": "High Cable Chest Fly",
+    "category": "strength",
+    "muscle_groups": ["chest"],
+    "primary_muscle": "lower chest",
+    "secondary_muscles": [],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": [
+      "Hold cables high",
+      "Pull downward and together",
+      "Return slowly"
+    ]
+  },
+
+  {
+    "name": "Reverse Grip Bench Press",
+    "category": "strength",
+    "muscle_groups": ["chest", "triceps"],
+    "primary_muscle": "upper chest",
+    "secondary_muscles": ["triceps"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": ["Grip bar underhand", "Lower to chest", "Press upward"]
+  },
+
+  {
+    "name": "Yates Row",
+    "category": "strength",
+    "muscle_groups": ["back"],
+    "primary_muscle": "lats",
+    "secondary_muscles": ["biceps"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": [
+      "Grip bar underhand",
+      "Row with less bend",
+      "Control descent"
+    ]
+  },
+
+  {
+    "name": "Snatch Grip Deadlift",
+    "category": "strength",
+    "muscle_groups": ["back", "legs"],
+    "primary_muscle": "back",
+    "secondary_muscles": ["glutes", "traps"],
+    "equipment": "barbell",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 10,
+    "instructions": ["Grip bar very wide", "Deadlift upward", "Lower slowly"]
+  },
+
+  {
+    "name": "Deficit Deadlift",
+    "category": "strength",
+    "muscle_groups": ["back", "legs"],
+    "primary_muscle": "glutes",
+    "secondary_muscles": ["hamstrings", "back"],
+    "equipment": "barbell",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 11,
+    "instructions": [
+      "Stand on platform",
+      "Deadlift from deficit",
+      "Stand upright"
+    ]
+  },
+
+  {
+    "name": "Jefferson Deadlift",
+    "category": "strength",
+    "muscle_groups": ["legs"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 9,
+    "instructions": [
+      "Straddle barbell",
+      "Lift with one hand each side",
+      "Stand upright"
+    ]
+  },
+
+  {
+    "name": "Helms Row",
+    "category": "strength",
+    "muscle_groups": ["back"],
+    "primary_muscle": "lats",
+    "secondary_muscles": ["biceps"],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": [
+      "Chest supported on incline",
+      "Row dumbbell",
+      "Lower slowly"
+    ]
+  },
+
+  {
+    "name": "Kneeling Cable Pullover",
+    "category": "strength",
+    "muscle_groups": ["back"],
+    "primary_muscle": "lats",
+    "secondary_muscles": ["core"],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": [
+      "Kneel facing cable",
+      "Pull bar down and back",
+      "Return slowly"
+    ]
+  },
+
+  {
+    "name": "Iso Lateral Row",
+    "category": "strength",
+    "muscle_groups": ["back"],
+    "primary_muscle": "lats",
+    "secondary_muscles": ["biceps"],
+    "equipment": "hammer strength machine",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": [
+      "Sit on machine",
+      "Pull handles independently",
+      "Return slowly"
+    ]
+  },
+
+  {
+    "name": "Banded Pull Apart",
+    "category": "strength",
+    "muscle_groups": ["shoulders", "upper back"],
+    "primary_muscle": "rear deltoids",
+    "secondary_muscles": ["upper back"],
+    "equipment": "resistance band",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Hold band at chest", "Pull apart", "Return slowly"]
+  },
+
+  {
+    "name": "Front Rack Carry",
+    "category": "strength",
+    "muscle_groups": ["core", "shoulders"],
+    "primary_muscle": "core",
+    "secondary_muscles": ["shoulders"],
+    "equipment": "kettlebell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": [
+      "Hold kettlebells at shoulders",
+      "Walk forward",
+      "Maintain posture"
+    ]
+  },
+
+  {
+    "name": "Goblet Carry",
+    "category": "strength",
+    "muscle_groups": ["core"],
+    "primary_muscle": "core",
+    "secondary_muscles": ["shoulders"],
+    "equipment": "kettlebell",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": ["Hold kettlebell at chest", "Walk forward", "Keep upright"]
+  },
+
+  {
+    "name": "Waiter Carry",
+    "category": "strength",
+    "muscle_groups": ["shoulders", "core"],
+    "primary_muscle": "shoulders",
+    "secondary_muscles": ["core"],
+    "equipment": "kettlebell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": [
+      "Hold kettlebell overhead",
+      "Walk forward",
+      "Maintain stability"
+    ]
+  },
+
+  {
+    "name": "Bottoms Up Kettlebell Press",
+    "category": "strength",
+    "muscle_groups": ["shoulders"],
+    "primary_muscle": "deltoids",
+    "secondary_muscles": ["forearms"],
+    "equipment": "kettlebell",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": [
+      "Hold kettlebell upside down",
+      "Press overhead",
+      "Lower slowly"
+    ]
+  },
+
+  {
+    "name": "Halo",
+    "category": "strength",
+    "muscle_groups": ["shoulders"],
+    "primary_muscle": "deltoids",
+    "secondary_muscles": ["core"],
+    "equipment": "kettlebell",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 5,
+    "instructions": [
+      "Circle kettlebell around head",
+      "Alternate directions",
+      "Control movement"
+    ]
+  },
+
+  {
+    "name": "Renegade Row",
+    "category": "strength",
+    "muscle_groups": ["back", "core"],
+    "primary_muscle": "lats",
+    "secondary_muscles": ["core"],
+    "equipment": "dumbbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": ["Plank on dumbbells", "Row one side", "Alternate sides"]
+  },
+
+  {
+    "name": "Plank Row",
+    "category": "strength",
+    "muscle_groups": ["back", "core"],
+    "primary_muscle": "core",
+    "secondary_muscles": ["lats"],
+    "equipment": "dumbbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": ["Hold plank position", "Row dumbbell", "Minimize rotation"]
+  },
+
+  {
+    "name": "Dumbbell Clean and Press",
+    "category": "strength",
+    "muscle_groups": ["full body"],
+    "primary_muscle": "shoulders",
+    "secondary_muscles": ["legs", "core"],
+    "equipment": "dumbbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 11,
+    "instructions": [
+      "Clean dumbbells to shoulders",
+      "Press overhead",
+      "Lower to start"
+    ]
+  },
+
+  {
+    "name": "Dumbbell Snatch",
+    "category": "strength",
+    "muscle_groups": ["full body"],
+    "primary_muscle": "shoulders",
+    "secondary_muscles": ["legs", "back"],
+    "equipment": "dumbbell",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 11,
+    "instructions": [
+      "Swing dumbbell",
+      "Pull overhead in one motion",
+      "Lock out arm"
+    ]
+  },
+
+  {
+    "name": "Single Arm Overhead Press",
+    "category": "strength",
+    "muscle_groups": ["shoulders"],
+    "primary_muscle": "deltoids",
+    "secondary_muscles": ["core"],
+    "equipment": "dumbbell",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": ["Hold one dumbbell", "Press overhead", "Lower slowly"]
+  },
+
+  {
+    "name": "Z Press",
+    "category": "strength",
+    "muscle_groups": ["shoulders"],
+    "primary_muscle": "deltoids",
+    "secondary_muscles": ["core"],
+    "equipment": "barbell",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": [
+      "Sit on floor legs extended",
+      "Press barbell overhead",
+      "Lower to shoulders"
+    ]
+  },
+
+  {
+    "name": "Viking Press",
+    "category": "strength",
+    "muscle_groups": ["shoulders"],
+    "primary_muscle": "deltoids",
+    "secondary_muscles": ["triceps"],
+    "equipment": "landmine",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": ["Hold landmine attachment", "Press upward", "Lower slowly"]
+  },
+
+  {
+    "name": "Seesaw Press",
+    "category": "strength",
+    "muscle_groups": ["shoulders"],
+    "primary_muscle": "deltoids",
+    "secondary_muscles": ["core"],
+    "equipment": "kettlebell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": [
+      "One kettlebell overhead",
+      "Alternate pressing",
+      "Keep one up at all times"
+    ]
+  },
+
+  {
+    "name": "Hatfield Squat",
+    "category": "strength",
+    "muscle_groups": ["quadriceps"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes"],
+    "equipment": "safety squat bar",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 9,
+    "instructions": [
+      "Hold rack for support",
+      "Squat with safety bar",
+      "Stand upright"
+    ]
+  },
+
+  {
+    "name": "Cyclist Squat",
+    "category": "strength",
+    "muscle_groups": ["quadriceps"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": [],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": ["Heels elevated", "Squat deep", "Drive upward"]
+  },
+
+  {
+    "name": "Zercher Squat",
+    "category": "strength",
+    "muscle_groups": ["quadriceps"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["core"],
+    "equipment": "barbell",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 9,
+    "instructions": ["Hold bar in elbow crease", "Squat down", "Stand upright"]
+  },
+
+  {
+    "name": "Anderson Squat",
+    "category": "strength",
+    "muscle_groups": ["quadriceps"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": ["glutes"],
+    "equipment": "barbell",
+    "difficulty": "advanced",
+    "exercise_type": "compound",
+    "calories_per_minute": 9,
+    "instructions": [
+      "Start from pins at bottom",
+      "Squat from dead stop",
+      "Return to pins"
+    ]
+  },
+
+  {
+    "name": "Spanish Squat",
+    "category": "strength",
+    "muscle_groups": ["quadriceps"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": [],
+    "equipment": "resistance band",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 6,
+    "instructions": [
+      "Band behind knees",
+      "Squat with forward shin angle",
+      "Stand upright"
+    ]
+  },
+
+  {
+    "name": "Petersen Squat",
+    "category": "strength",
+    "muscle_groups": ["quadriceps"],
+    "primary_muscle": "quadriceps",
+    "secondary_muscles": [],
+    "equipment": "slant board",
+    "difficulty": "advanced",
+    "exercise_type": "isolation",
+    "calories_per_minute": 7,
+    "instructions": ["Kneel on slant board", "Lean back", "Return upright"]
+  },
+
+  {
+    "name": "Copenhagen Plank",
+    "category": "strength",
+    "muscle_groups": ["inner thighs", "core"],
+    "primary_muscle": "adductors",
+    "secondary_muscles": ["core"],
+    "equipment": "bench",
+    "difficulty": "advanced",
+    "exercise_type": "isolation",
+    "calories_per_minute": 6,
+    "instructions": [
+      "Side plank with top leg on bench",
+      "Hold position",
+      "Keep hips elevated"
+    ]
+  },
+
+  {
+    "name": "Single Leg Romanian Deadlift",
+    "category": "strength",
+    "muscle_groups": ["hamstrings"],
+    "primary_muscle": "hamstrings",
+    "secondary_muscles": ["glutes"],
+    "equipment": "dumbbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 7,
+    "instructions": ["Stand on one leg", "Hinge at hip", "Return upright"]
+  },
+
+  {
+    "name": "B Stance Romanian Deadlift",
+    "category": "strength",
+    "muscle_groups": ["hamstrings"],
+    "primary_muscle": "hamstrings",
+    "secondary_muscles": ["glutes"],
+    "equipment": "barbell",
+    "difficulty": "intermediate",
+    "exercise_type": "compound",
+    "calories_per_minute": 8,
+    "instructions": ["Stagger stance", "Hinge at hips", "Return upright"]
+  },
+
+  {
+    "name": "Frog Pump",
+    "category": "strength",
+    "muscle_groups": ["glutes"],
+    "primary_muscle": "glutes",
+    "secondary_muscles": [],
+    "equipment": "bodyweight",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": ["Soles of feet together", "Lift hips", "Squeeze glutes"]
+  },
+
+  {
+    "name": "Clam Shell",
+    "category": "strength",
+    "muscle_groups": ["glutes"],
+    "primary_muscle": "glutes",
+    "secondary_muscles": ["hips"],
+    "equipment": "resistance band",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Lie on side", "Open top knee", "Control movement"]
+  },
+
+  {
+    "name": "Monster Walk",
+    "category": "strength",
+    "muscle_groups": ["glutes"],
+    "primary_muscle": "glutes",
+    "secondary_muscles": ["hips"],
+    "equipment": "resistance band",
+    "difficulty": "beginner",
+    "exercise_type": "compound",
+    "calories_per_minute": 6,
+    "instructions": ["Band around knees", "Walk sideways", "Maintain tension"]
+  },
+
+  {
+    "name": "Banded Glute Bridge",
+    "category": "strength",
+    "muscle_groups": ["glutes"],
+    "primary_muscle": "glutes",
+    "secondary_muscles": [],
+    "equipment": "resistance band",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": ["Band above knees", "Bridge hips up", "Push knees out"]
+  },
+
+  {
+    "name": "Cable Kickback",
+    "category": "strength",
+    "muscle_groups": ["glutes"],
+    "primary_muscle": "glutes",
+    "secondary_muscles": [],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Attach ankle cuff", "Kick backward", "Squeeze glute"]
+  },
+
+  {
+    "name": "Reverse Hyper",
+    "category": "strength",
+    "muscle_groups": ["glutes", "hamstrings"],
+    "primary_muscle": "glutes",
+    "secondary_muscles": ["hamstrings", "lower back"],
+    "equipment": "reverse hyper machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 6,
+    "instructions": ["Lie face down", "Swing legs upward", "Lower slowly"]
+  },
+
+  {
+    "name": "45 Degree Back Extension",
+    "category": "strength",
+    "muscle_groups": ["lower back"],
+    "primary_muscle": "lower back",
+    "secondary_muscles": ["glutes"],
+    "equipment": "back extension machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 5,
+    "instructions": ["Position on machine", "Lower torso", "Extend upward"]
+  },
+
+  {
+    "name": "Pallof Hold",
+    "category": "strength",
+    "muscle_groups": ["core"],
+    "primary_muscle": "core",
+    "secondary_muscles": ["obliques"],
+    "equipment": "cable machine",
+    "difficulty": "beginner",
+    "exercise_type": "isolation",
+    "calories_per_minute": 4,
+    "instructions": ["Hold cable extended", "Resist rotation", "Hold position"]
+  }
+]

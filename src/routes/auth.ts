@@ -202,6 +202,65 @@ router.post('/google-firebase', async (req, res) => {
   }
 })
 
+// POST /api/auth/phone-firebase - Phone Authentication endpoint
+router.post('/phone-firebase', async (req, res) => {
+  try {
+    const { idToken } = req.body
+
+    if (!idToken) {
+      return errorResponse(res, 'ID token required', 400)
+    }
+
+    // Verify the Firebase ID token using Firebase Admin SDK
+    const decodedToken = await admin.auth().verifyIdToken(idToken)
+
+    const { uid: firebaseUid, phone_number } = decodedToken
+
+    if (!phone_number) {
+      return errorResponse(res, 'Phone number not provided', 400)
+    }
+
+    // Try to find existing user by phone number
+    let user = await User.findOne({ phone_number })
+
+    if (!user) {
+      // Create new user with phone number
+      // Generate a default name from phone number
+      const defaultName = `User_${phone_number.slice(-4)}`
+
+      user = await User.create({
+        phone_number,
+        name: defaultName,
+        auth_provider: 'phone',
+        units: 'metric',
+        onboarding_completed: false,
+      })
+    }
+
+    const token = generateToken(user._id.toString())
+
+    return successResponse(res, {
+      token,
+      needsOnboarding: !user.onboarding_completed,
+      user: {
+        id: user._id,
+        email: user.email,
+        name: user.name,
+        avatar_url: user.avatar_url,
+        height: user.height,
+        weight_kg: user.weight_kg,
+        date_of_birth: user.date_of_birth,
+        gender: user.gender,
+        units: user.units,
+        phone_number: user.phone_number,
+      },
+    })
+  } catch (err: any) {
+    console.error('Phone Firebase auth error:', err)
+    return errorResponse(res, 'Phone authentication failed', 401)
+  }
+})
+
 // GET /api/auth/me
 router.get('/me', authenticateUser, async (req: AuthRequest, res) => {
   try {

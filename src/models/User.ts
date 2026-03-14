@@ -12,7 +12,8 @@ export interface IUser {
   gender?: 'male' | 'female' | 'other';
   units: 'metric' | 'imperial';
   google_id?: string;
-  auth_provider: 'email' | 'google';
+  phone_number?: string;
+  auth_provider: 'email' | 'google' | 'phone';
   onboarding_completed: boolean;
   created_at: Date;
   updated_at: Date;
@@ -22,8 +23,8 @@ const UserSchema = new Schema<IUser>(
   {
     email: {
       type: String,
-      required: [true, 'Email is required'],
       unique: true,
+      sparse: true,
       lowercase: true,
       trim: true,
     },
@@ -67,9 +68,15 @@ const UserSchema = new Schema<IUser>(
       unique: true,
       sparse: true,
     },
+    phone_number: {
+      type: String,
+      unique: true,
+      sparse: true,
+      trim: true,
+    },
     auth_provider: {
       type: String,
-      enum: ['email', 'google'],
+      enum: ['email', 'google', 'phone'],
       default: 'email',
     },
     onboarding_completed: {
@@ -84,6 +91,7 @@ const UserSchema = new Schema<IUser>(
 
 UserSchema.index({ email: 1 });
 UserSchema.index({ google_id: 1 });
+UserSchema.index({ phone_number: 1 });
 
 const User = models.User || model<IUser>('User', UserSchema);
 

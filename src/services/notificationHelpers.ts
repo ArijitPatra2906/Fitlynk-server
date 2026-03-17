@@ -409,6 +409,20 @@ export class NotificationHelpers {
     });
   }
 
+  // Todo reminder
+  static async notifyTodoReminder(
+    userId: mongoose.Types.ObjectId | string,
+    incompleteTodos: number
+  ) {
+    await notificationService.sendNotification({
+      userId,
+      type: 'todo_reminder',
+      title: '📝 Incomplete Todos',
+      body: `You have ${incompleteTodos} incomplete ${incompleteTodos === 1 ? 'todo' : 'todos'} for today. Don't forget to complete them!`,
+      data: { incompleteTodos },
+    });
+  }
+
   /**
    * UTILITY FUNCTIONS FOR CHECKING IF GOALS ARE MET
    */

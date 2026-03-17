@@ -11,6 +11,7 @@ import StepLog from '../models/StepLog';
 import MealLog from '../models/MealLog';
 import Goal from '../models/Goal';
 import WaterLog from '../models/WaterLog';
+import Todo from '../models/Todo';
 import mongoose from 'mongoose';
 
 class NotificationScheduler {
@@ -103,6 +104,11 @@ class NotificationScheduler {
           if (prefs.incomplete_goals && currentTime === '20:00') {
             await this.sendIncompleteGoalsReminder(userId);
           }
+
+          // Todo reminder (check at 10 PM daily)
+          if (currentTime === '22:00') {
+            await this.sendTodoReminderIfIncomplete(userId);
+          }
         }
       } catch (error) {
         console.error('Error in hourly notification check:', error);
@@ -186,11 +192,22 @@ class NotificationScheduler {
 
   private async sendWaterReminderIfNeeded(userId: mongoose.Types.ObjectId) {
     try {
-      const today = new Date().toISOString().split('T')[0];
+      // Get start and end of today in local timezone
+      const startOfDay = new Date();
+      startOfDay.setHours(0, 0, 0, 0);
+
+      const endOfDay = new Date();
+      endOfDay.setHours(23, 59, 59, 999);
 
       const [goal, waterLogs] = await Promise.all([
         Goal.findOne({ user_id: userId }),
-        WaterLog.find({ user_id: userId, date: today }),
+        WaterLog.find({
+          user_id: userId,
+          date: {
+            $gte: startOfDay,
+            $lte: endOfDay
+          }
+        }),
       ]);
 
       if (!goal) return;
@@ -204,6 +221,28 @@ class NotificationScheduler {
       }
     } catch (error) {
       console.error('Error sending water reminder:', error);
+    }
+  }
+
+  private async sendTodoReminderIfIncomplete(userId: mongoose.Types.ObjectId) {
+    try {
+      // Get today's date string in YYYY-MM-DD format
+      const today = new Date();
+      const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+
+      // Find incomplete todos with today's due date
+      const incompleteTodos = await Todo.countDocuments({
+        user_id: userId,
+        completed: false,
+        due_date: todayStr,
+      });
+
+      // Only send reminder if there are incomplete todos
+      if (incompleteTodos > 0) {
+        await NotificationHelpers.notifyTodoReminder(userId, incompleteTodos);
+      }
+    } catch (error) {
+      console.error('Error sending todo reminder:', error);
     }
   }
 

@@ -23,6 +23,7 @@ export type NotificationType =
   | 'incomplete_goals'
   | 'template_reminder'
   | 'rest_day_suggestion'
+  | 'todo_reminder'
   // Progress & Insights
   | 'weekly_summary'
   | 'personal_best'
@@ -79,6 +80,7 @@ const NotificationSchema = new Schema<INotification>(
         'incomplete_goals',
         'template_reminder',
         'rest_day_suggestion',
+        'todo_reminder',
         // Insights
         'weekly_summary',
         'personal_best',

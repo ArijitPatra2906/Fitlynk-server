@@ -159,7 +159,9 @@ router.get('/recent-activity', async (req: AuthRequest, res) => {
     const limit = Number.isFinite(rawLimit) ? Math.max(1, Math.min(50, rawLimit)) : 5;
     const perTypeFetch = Math.max(10, limit * 3);
 
-    const [meals, workouts, waters, weights, steps] = await Promise.all([
+    // Temporarily disabled - step log not working properly
+    // const [meals, workouts, waters, weights, steps] = await Promise.all([
+    const [meals, workouts, waters, weights] = await Promise.all([
       MealLog.find({ user_id: req.user._id })
         .populate('food_id', 'name')
         .sort({ created_at: -1 })
@@ -182,10 +184,11 @@ router.get('/recent-activity', async (req: AuthRequest, res) => {
         .sort({ recorded_at: -1, created_at: -1 })
         .limit(perTypeFetch)
         .lean<any[]>(),
-      StepLog.find({ user_id: req.user._id })
-        .sort({ updated_at: -1, date: -1 })
-        .limit(perTypeFetch)
-        .lean<any[]>(),
+      // Temporarily disabled - step log not working properly
+      // StepLog.find({ user_id: req.user._id })
+      //   .sort({ updated_at: -1, date: -1 })
+      //   .limit(perTypeFetch)
+      //   .lean<any[]>(),
     ]);
 
     const activities = [
@@ -226,13 +229,14 @@ router.get('/recent-activity', async (req: AuthRequest, res) => {
         metadata: `${Number(metric.weight_kg || 0).toFixed(1)} kg`,
         timestamp: metric.recorded_at || metric.created_at,
       })),
-      ...steps.map((step: any) => ({
-        type: 'steps',
-        name: 'Step Log',
-        description: step.source ? `${step.source} sync` : 'Daily steps',
-        metadata: `${Math.round(step.steps || 0).toLocaleString()} steps`,
-        timestamp: step.updated_at || step.date,
-      })),
+      // Temporarily disabled - step log not working properly
+      // ...steps.map((step: any) => ({
+      //   type: 'steps',
+      //   name: 'Step Log',
+      //   description: step.source ? `${step.source} sync` : 'Daily steps',
+      //   metadata: `${Math.round(step.steps || 0).toLocaleString()} steps`,
+      //   timestamp: step.updated_at || step.date,
+      // })),
     ];
 
     activities.sort((a: any, b: any) => {

@@ -127,39 +127,6 @@ router.post('/', async (req: AuthRequest, res) => {
       user_id: req.user._id,
     });
 
-    // If this is a daily recurring todo, check if tomorrow's instance exists
-    // If not, create it automatically
-    if (req.body.recurs_daily && req.body.due_date) {
-      const currentDate = new Date(req.body.due_date);
-      const tomorrow = new Date(currentDate);
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      const year = tomorrow.getFullYear();
-      const month = String(tomorrow.getMonth() + 1).padStart(2, '0');
-      const day = String(tomorrow.getDate()).padStart(2, '0');
-      const tomorrowDateStr = `${year}-${month}-${day}`;
-
-      // Check if tomorrow's instance already exists
-      const existingTomorrow = await Todo.findOne({
-        user_id: req.user._id,
-        title: req.body.title,
-        due_date: tomorrowDateStr,
-        recurs_daily: true,
-      });
-
-      // Only create if it doesn't exist
-      if (!existingTomorrow) {
-        await Todo.create({
-          user_id: req.user._id,
-          title: req.body.title,
-          description: req.body.description,
-          priority: req.body.priority,
-          due_date: tomorrowDateStr,
-          recurs_daily: true,
-          completed: false,
-        });
-      }
-    }
-
     return successResponse(res, todo, 201);
   } catch (error: any) {
     console.error('Create todo error:', error);

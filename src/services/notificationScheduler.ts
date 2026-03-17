@@ -32,6 +32,9 @@ class NotificationScheduler {
     // Daily goal update reminder (1st of each month at 9 AM)
     this.scheduleMonthlyGoalReminder();
 
+    // Recurring todos creation (midnight daily)
+    this.scheduleRecurringTodosCreation();
+
     console.log('✅ Notification scheduler initialized');
   }
 
@@ -166,6 +169,63 @@ class NotificationScheduler {
     });
 
     this.jobs.set('monthly_goal_reminder', job);
+  }
+
+  /**
+   * Recurring todos creation (midnight daily at 00:00)
+   */
+  private scheduleRecurringTodosCreation() {
+    // Run every day at midnight (00:00)
+    const job = cron.schedule('0 0 * * *', async () => {
+      console.log('🔄 Creating recurring todos for today...');
+
+      try {
+        // Get today's date in YYYY-MM-DD format
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        const todayStr = `${year}-${month}-${day}`;
+
+        // Find all recurring todos
+        const recurringTodos = await Todo.find({
+          recurs_daily: true,
+        });
+
+        console.log(`Found ${recurringTodos.length} recurring todos to process`);
+
+        // For each recurring todo, check if today's instance exists
+        for (const recurringTodo of recurringTodos) {
+          // Check if today's instance already exists
+          const existingToday = await Todo.findOne({
+            user_id: recurringTodo.user_id,
+            title: recurringTodo.title,
+            due_date: todayStr,
+            recurs_daily: true,
+          });
+
+          // Only create if it doesn't exist
+          if (!existingToday) {
+            await Todo.create({
+              user_id: recurringTodo.user_id,
+              title: recurringTodo.title,
+              description: recurringTodo.description,
+              priority: recurringTodo.priority,
+              due_date: todayStr,
+              recurs_daily: true,
+              completed: false,
+            });
+            console.log(`Created recurring todo "${recurringTodo.title}" for ${todayStr}`);
+          }
+        }
+
+        console.log('✅ Recurring todos creation completed');
+      } catch (error) {
+        console.error('Error creating recurring todos:', error);
+      }
+    });
+
+    this.jobs.set('recurring_todos_creation', job);
   }
 
   /**

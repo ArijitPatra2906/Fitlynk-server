@@ -22,6 +22,7 @@ import metricsRoutes from './routes/metrics'
 import nutritionRoutes from './routes/nutrition'
 import testRoutes from './routes/test'
 import notificationsRoutes from './routes/notifications'
+import todosRoutes from './routes/todos'
 
 const app = express()
 const PORT = parseInt(process.env.PORT || '5000', 10)
@@ -79,6 +80,7 @@ app.use('/api/exercises', exercisesRoutes)
 app.use('/api/metrics', metricsRoutes)
 app.use('/api/nutrition', nutritionRoutes)
 app.use('/api/notifications', notificationsRoutes)
+app.use('/api/todos', todosRoutes)
 app.use('/api/test', testRoutes)
 
 // 404 handler

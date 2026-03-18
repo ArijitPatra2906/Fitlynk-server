@@ -125,6 +125,7 @@ const startServer = async () => {
 ║   Environment: ${(process.env.NODE_ENV || 'development').padEnd(26)} ║
 ║   Database: Connected ✓                   ║
 ║   Notifications: Scheduled ✓              ║
+║   Timezone: IST (Asia/Kolkata) 🇮🇳        ║
 ╚═══════════════════════════════════════════╝
       `)
     })

@@ -1,6 +1,7 @@
 /**
  * Notification Scheduler
  * Handles scheduled notifications using cron jobs
+ * All times are in IST (Indian Standard Time - Asia/Kolkata)
  */
 
 import * as cron from 'node-cron';
@@ -13,6 +14,7 @@ import Goal from '../models/Goal';
 import WaterLog from '../models/WaterLog';
 import Todo from '../models/Todo';
 import mongoose from 'mongoose';
+import { getISTDate, getISTDateString, getISTTimeString, getISTHour, getISTMinute } from '../utils/timezone';
 
 class NotificationScheduler {
   private jobs: Map<string, cron.ScheduledTask> = new Map();
@@ -39,17 +41,17 @@ class NotificationScheduler {
   }
 
   /**
-   * Check every hour for time-based reminders
-   * Runs at the top of each hour
+   * Check every 30 minutes for time-based reminders
+   * Runs at :00 and :30 of each hour to match IST timezone (which is UTC+5:30)
    */
   private scheduleHourlyChecks() {
-    const job = cron.schedule('0 * * * *', async () => {
-      const now = new Date();
-      const currentHour = now.getHours();
-      const currentMinute = now.getMinutes();
-      const currentTime = `${currentHour.toString().padStart(2, '0')}:00`;
+    const job = cron.schedule('*/30 * * * *', async () => {
+      // Get current time in IST
+      const currentHour = getISTHour();
+      const currentMinute = getISTMinute();
+      const currentTime = getISTTimeString();
 
-      console.log(`⏰ Running hourly notification check at ${currentTime}`);
+      console.log(`⏰ Running hourly notification check at ${currentTime} IST (Hour: ${currentHour}, Minute: ${currentMinute})`);
 
       try {
         // Get all users with notification preferences
@@ -57,17 +59,24 @@ class NotificationScheduler {
           push_notifications_enabled: true,
         });
 
+        console.log(`Found ${allPrefs.length} users with push notifications enabled`);
+
         for (const prefs of allPrefs) {
           // Skip if in quiet hours
           if (this.isInQuietHours(prefs, currentHour, currentMinute)) {
+            console.log(`User ${prefs.user_id} in quiet hours, skipping...`);
             continue;
           }
 
           const userId = prefs.user_id;
 
-          // Morning check-in
-          if (prefs.morning_checkin.enabled && prefs.morning_checkin.time === currentTime) {
-            await NotificationHelpers.notifyMorningCheckin(userId);
+          // Morning check-in - compare time strings
+          if (prefs.morning_checkin.enabled) {
+            console.log(`User ${userId}: Morning check-in enabled=${prefs.morning_checkin.enabled}, time=${prefs.morning_checkin.time}, currentTime=${currentTime}`);
+            if (prefs.morning_checkin.time === currentTime) {
+              console.log(`✅ Sending morning check-in to user ${userId} at ${currentTime} IST`);
+              await NotificationHelpers.notifyMorningCheckin(userId);
+            }
           }
 
           // Workout reminder
@@ -122,12 +131,12 @@ class NotificationScheduler {
   }
 
   /**
-   * Weekly summary (Sunday at 8 PM)
+   * Weekly summary (Sunday at 8 PM IST)
    */
   private scheduleWeeklySummary() {
-    // Run every Sunday at 20:00 (8 PM)
-    const job = cron.schedule('0 20 * * 0', async () => {
-      console.log('📊 Running weekly summary notifications...');
+    // Run every Sunday at 20:00 IST (8 PM IST = 14:30 UTC)
+    const job = cron.schedule('30 14 * * 0', async () => {
+      console.log('📊 Running weekly summary notifications at 8 PM IST...');
 
       try {
         const allPrefs = await NotificationPreferences.find({
@@ -147,12 +156,12 @@ class NotificationScheduler {
   }
 
   /**
-   * Monthly goal update reminder (1st of month at 9 AM)
+   * Monthly goal update reminder (1st of month at 9 AM IST)
    */
   private scheduleMonthlyGoalReminder() {
-    // Run on the 1st of each month at 09:00
-    const job = cron.schedule('0 9 1 * *', async () => {
-      console.log('🎯 Running monthly goal update reminders...');
+    // Run on the 1st of each month at 09:00 IST (9 AM IST = 03:30 UTC)
+    const job = cron.schedule('30 3 1 * *', async () => {
+      console.log('🎯 Running monthly goal update reminders at 9 AM IST...');
 
       try {
         const allPrefs = await NotificationPreferences.find({
@@ -172,20 +181,17 @@ class NotificationScheduler {
   }
 
   /**
-   * Recurring todos creation (midnight daily at 00:00)
+   * Recurring todos creation (midnight IST daily at 00:00 IST)
    */
   private scheduleRecurringTodosCreation() {
-    // Run every day at midnight (00:00)
-    const job = cron.schedule('0 0 * * *', async () => {
-      console.log('🔄 Creating recurring todos for today...');
+    // Run every day at midnight IST (00:00 IST = 18:30 UTC previous day)
+    const job = cron.schedule('30 18 * * *', async () => {
+      console.log('🔄 Creating recurring todos for today at midnight IST...');
 
       try {
-        // Get today's date in YYYY-MM-DD format
-        const today = new Date();
-        const year = today.getFullYear();
-        const month = String(today.getMonth() + 1).padStart(2, '0');
-        const day = String(today.getDate()).padStart(2, '0');
-        const todayStr = `${year}-${month}-${day}`;
+        // Get today's date in IST timezone in YYYY-MM-DD format
+        const todayStr = getISTDateString();
+        console.log(`IST Date: ${todayStr}`);
 
         // Find all recurring todos
         const recurringTodos = await Todo.find({
@@ -215,7 +221,7 @@ class NotificationScheduler {
               recurs_daily: true,
               completed: false,
             });
-            console.log(`Created recurring todo "${recurringTodo.title}" for ${todayStr}`);
+            console.log(`Created recurring todo "${recurringTodo.title}" for ${todayStr} IST`);
           }
         }
 

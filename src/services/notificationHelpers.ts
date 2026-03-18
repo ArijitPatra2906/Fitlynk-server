@@ -86,16 +86,17 @@ export class NotificationHelpers {
     });
   }
 
+  // TEMPORARILY DISABLED - Step tracking not working properly
   // Step goal achieved
-  static async notifyStepGoalReached(userId: mongoose.Types.ObjectId | string, steps: number) {
-    await notificationService.sendNotification({
-      userId,
-      type: 'step_goal_reached',
-      title: '👟 Step Goal Achieved!',
-      body: `${steps.toLocaleString()} steps today! You're on fire!`,
-      data: { steps },
-    });
-  }
+  // static async notifyStepGoalReached(userId: mongoose.Types.ObjectId | string, steps: number) {
+  //   await notificationService.sendNotification({
+  //     userId,
+  //     type: 'step_goal_reached',
+  //     title: '👟 Step Goal Achieved!',
+  //     body: `${steps.toLocaleString()} steps today! You're on fire!`,
+  //     data: { steps },
+  //   });
+  // }
 
   // Water goal complete
   static async notifyWaterGoalReached(
@@ -262,19 +263,20 @@ export class NotificationHelpers {
     });
   }
 
-  // Evening summary
+  // Evening summary (TEMPORARILY REMOVED steps from summary - not working properly)
   static async notifyEveningSummary(
     userId: mongoose.Types.ObjectId | string,
     summary: {
       caloriesLogged: number;
-      stepsToday: number;
+      // stepsToday: number; // TEMPORARILY DISABLED
       workoutsToday: number;
       goalsRemaining: string[];
     }
   ) {
-    const { caloriesLogged, stepsToday, workoutsToday, goalsRemaining } = summary;
+    const { caloriesLogged, /* stepsToday, */ workoutsToday, goalsRemaining } = summary;
 
-    let body = `Today: ${Math.round(caloriesLogged)} cal, ${stepsToday.toLocaleString()} steps, ${workoutsToday} workout${workoutsToday !== 1 ? 's' : ''}.`;
+    // TEMPORARILY REMOVED steps from summary
+    let body = `Today: ${Math.round(caloriesLogged)} cal, ${workoutsToday} workout${workoutsToday !== 1 ? 's' : ''}.`;
 
     if (goalsRemaining.length > 0) {
       body += ` Remaining: ${goalsRemaining.join(', ')}`;
@@ -384,19 +386,20 @@ export class NotificationHelpers {
    * SYSTEM NOTIFICATIONS
    */
 
+  // TEMPORARILY DISABLED - Step tracking not working properly
   // Step sync complete
-  static async notifyStepSyncComplete(
-    userId: mongoose.Types.ObjectId | string,
-    stepsSynced: number
-  ) {
-    await notificationService.sendNotification({
-      userId,
-      type: 'step_sync_complete',
-      title: '🔄 Steps Synced',
-      body: `Synced ${stepsSynced.toLocaleString()} steps from your device`,
-      data: { stepsSynced },
-    });
-  }
+  // static async notifyStepSyncComplete(
+  //   userId: mongoose.Types.ObjectId | string,
+  //   stepsSynced: number
+  // ) {
+  //   await notificationService.sendNotification({
+  //     userId,
+  //     type: 'step_sync_complete',
+  //     title: '🔄 Steps Synced',
+  //     body: `Synced ${stepsSynced.toLocaleString()} steps from your device`,
+  //     data: { stepsSynced },
+  //   });
+  // }
 
   // Goal update reminder
   static async notifyGoalUpdateReminder(userId: mongoose.Types.ObjectId | string) {
@@ -463,15 +466,16 @@ export class NotificationHelpers {
         await this.notifyMacroGoalReached(userId, 'fat', goal.fat_g);
       }
 
+      // TEMPORARILY DISABLED - Step tracking not working properly
       // Check step goal
-      const stepLog = await StepLog.findOne({
-        user_id: userIdObj,
-        date: today,
-      });
+      // const stepLog = await StepLog.findOne({
+      //   user_id: userIdObj,
+      //   date: today,
+      // });
 
-      if (stepLog && stepLog.steps >= goal.step_target) {
-        await this.notifyStepGoalReached(userId, stepLog.steps);
-      }
+      // if (stepLog && stepLog.steps >= goal.step_target) {
+      //   await this.notifyStepGoalReached(userId, stepLog.steps);
+      // }
 
       // Check water goal
       const waterLogs = await WaterLog.find({
@@ -485,12 +489,13 @@ export class NotificationHelpers {
       }
 
       // Check if all goals met (perfect day)
+      // TEMPORARILY REMOVED step goal check - not working properly
       const allGoalsMet =
         totalCalories >= goal.calorie_target &&
         totalProtein >= goal.protein_g &&
         totalCarbs >= goal.carbs_g &&
         totalFat >= goal.fat_g &&
-        (stepLog ? stepLog.steps >= goal.step_target : false) &&
+        // (stepLog ? stepLog.steps >= goal.step_target : false) && // TEMPORARILY DISABLED
         totalWater >= goal.water_target_ml;
 
       if (allGoalsMet) {

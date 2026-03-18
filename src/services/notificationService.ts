@@ -11,6 +11,7 @@ interface NotificationPayload {
   title: string;
   body: string;
   data?: Record<string, any>;
+  redirect_path?: string;
 }
 
 class NotificationService {
@@ -149,6 +150,7 @@ class NotificationService {
         title: payload.title,
         body: payload.body,
         data: payload.data || {},
+        redirect_path: payload.redirect_path,
         read: false,
         sent_at: new Date(),
       });

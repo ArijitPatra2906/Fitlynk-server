@@ -41,17 +41,17 @@ class NotificationScheduler {
   }
 
   /**
-   * Check every 30 minutes for time-based reminders
-   * Runs at :00 and :30 of each hour to match IST timezone (which is UTC+5:30)
+   * Check every 5 minutes for time-based reminders
+   * Runs frequently to catch all possible reminder times
    */
   private scheduleHourlyChecks() {
-    const job = cron.schedule('*/30 * * * *', async () => {
+    const job = cron.schedule('*/5 * * * *', async () => {
       // Get current time in IST
       const currentHour = getISTHour();
       const currentMinute = getISTMinute();
       const currentTime = getISTTimeString();
 
-      console.log(`⏰ Running hourly notification check at ${currentTime} IST (Hour: ${currentHour}, Minute: ${currentMinute})`);
+      console.log(`⏰ Running notification check at ${currentTime} IST (Hour: ${currentHour}, Minute: ${currentMinute})`);
 
       try {
         // Get all users with notification preferences
@@ -117,10 +117,13 @@ class NotificationScheduler {
             await this.sendIncompleteGoalsReminder(userId);
           }
 
-          // Todo reminder (check at 10 PM daily)
+          // Todo reminder (check at 10 PM daily for incomplete todos)
           if (currentTime === '22:00') {
             await this.sendTodoReminderIfIncomplete(userId);
           }
+
+          // Check for todos with specific reminder times (send 5 minutes before)
+          await this.checkTodoReminders(userId, currentTime);
         }
       } catch (error) {
         console.error('Error in hourly notification check:', error);
@@ -218,6 +221,7 @@ class NotificationScheduler {
               description: recurringTodo.description,
               priority: recurringTodo.priority,
               due_date: todayStr,
+              reminder_time: recurringTodo.reminder_time,
               recurs_daily: true,
               completed: false,
             });
@@ -292,23 +296,62 @@ class NotificationScheduler {
 
   private async sendTodoReminderIfIncomplete(userId: mongoose.Types.ObjectId) {
     try {
-      // Get today's date string in YYYY-MM-DD format
-      const today = new Date();
-      const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+      // Get today's date string in IST
+      const todayStr = getISTDateString();
 
       // Find incomplete todos with today's due date
-      const incompleteTodos = await Todo.countDocuments({
+      const incompleteTodos = await Todo.find({
         user_id: userId,
         completed: false,
         due_date: todayStr,
-      });
+      }).limit(1);
 
       // Only send reminder if there are incomplete todos
-      if (incompleteTodos > 0) {
-        await NotificationHelpers.notifyTodoReminder(userId, incompleteTodos);
+      if (incompleteTodos.length > 0) {
+        const todo = incompleteTodos[0];
+        await NotificationHelpers.notifyTodoReminder(userId, {
+          title: 'You have incomplete todos for today',
+          description: `Starting with: ${todo.title}`,
+          due_date: todayStr,
+          reminder_time: '22:00',
+        });
       }
     } catch (error) {
       console.error('Error sending todo reminder:', error);
+    }
+  }
+
+  /**
+   * Check for todos with specific reminder times
+   * Sends notification at the exact scheduled time
+   */
+  private async checkTodoReminders(userId: mongoose.Types.ObjectId, currentTime: string) {
+    try {
+      const todayStr = getISTDateString();
+
+      // Find todos with reminder_time matching current time
+      const todosToRemind = await Todo.find({
+        user_id: userId,
+        completed: false,
+        reminder_time: currentTime,
+        $or: [
+          { due_date: todayStr },
+          { due_date: { $exists: false } }, // Also remind for todos without due date
+        ],
+      });
+
+      // Send notification for each todo
+      for (const todo of todosToRemind) {
+        await NotificationHelpers.notifyTodoReminder(userId, {
+          title: todo.title,
+          description: todo.description,
+          due_date: todo.due_date,
+          reminder_time: todo.reminder_time,
+        });
+        console.log(`📝 Sent todo reminder for "${todo.title}" to user ${userId} at ${currentTime} IST`);
+      }
+    } catch (error) {
+      console.error('Error checking todo reminders:', error);
     }
   }
 

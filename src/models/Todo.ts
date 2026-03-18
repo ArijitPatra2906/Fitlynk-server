@@ -7,6 +7,7 @@ export interface ITodo extends Document {
   completed: boolean;
   completed_at?: Date;
   due_date?: string;
+  reminder_time?: string; // Time in HH:MM format (24-hour)
   priority?: 'low' | 'medium' | 'high';
   recurs_daily?: boolean;
   created_at: Date;
@@ -40,6 +41,16 @@ const TodoSchema = new Schema<ITodo>(
     },
     due_date: {
       type: String,
+    },
+    reminder_time: {
+      type: String,
+      validate: {
+        validator: function(v: string) {
+          // Validate HH:MM format (24-hour)
+          return !v || /^([0-1][0-9]|2[0-3]):[0-5][0-9]$/.test(v);
+        },
+        message: 'reminder_time must be in HH:MM format (24-hour)',
+      },
     },
     priority: {
       type: String,

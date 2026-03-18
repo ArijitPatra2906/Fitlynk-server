@@ -36,6 +36,7 @@ export class NotificationHelpers {
       title: '💪 Workout Finished!',
       body: `${workoutData.name} - ${duration} min, ${workoutData.total_sets} sets, ${volume.toLocaleString()} kg volume. Beast mode!`,
       data: workoutData,
+      redirect_path: '/exercise',
     });
   }
 
@@ -212,6 +213,7 @@ export class NotificationHelpers {
       title: '🌄 Good Morning!',
       body: greeting,
       data: {},
+      redirect_path: '/dashboard',
     });
   }
 
@@ -223,6 +225,7 @@ export class NotificationHelpers {
       title: '🏋️ Gym Time!',
       body: "Your workout is scheduled for now. Let's get it done!",
       data: {},
+      redirect_path: '/exercise',
     });
   }
 
@@ -240,6 +243,7 @@ export class NotificationHelpers {
       title: '💧 Stay Hydrated',
       body: `You've logged ${percentage}% of your water goal. Time for a refill!`,
       data: { currentMl, goalMl, percentage },
+      redirect_path: '/water',
     });
   }
 
@@ -260,6 +264,32 @@ export class NotificationHelpers {
       title: `${mealType.charAt(0).toUpperCase() + mealType.slice(1)} Reminder`,
       body: messages[mealType],
       data: { mealType },
+      redirect_path: '/nutrition',
+    });
+  }
+
+  // Todo reminder (sent at scheduled time)
+  static async notifyTodoReminder(
+    userId: mongoose.Types.ObjectId | string,
+    todoData: {
+      title: string;
+      description?: string;
+      due_date?: string;
+      reminder_time?: string;
+    }
+  ) {
+    await notificationService.sendNotification({
+      userId,
+      type: 'todo_reminder',
+      title: '⏰ Reminder for Upcoming Task',
+      body: `${todoData.title}${todoData.description ? ` - ${todoData.description}` : ''}`,
+      data: {
+        title: todoData.title,
+        description: todoData.description,
+        due_date: todoData.due_date,
+        reminder_time: todoData.reminder_time,
+      },
+      redirect_path: '/todos',
     });
   }
 
@@ -409,20 +439,6 @@ export class NotificationHelpers {
       title: '🎯 Update Your Goals',
       body: 'It\'s been a while since you updated your goals. Time to reassess your progress!',
       data: {},
-    });
-  }
-
-  // Todo reminder
-  static async notifyTodoReminder(
-    userId: mongoose.Types.ObjectId | string,
-    incompleteTodos: number
-  ) {
-    await notificationService.sendNotification({
-      userId,
-      type: 'todo_reminder',
-      title: '📝 Incomplete Todos',
-      body: `You have ${incompleteTodos} incomplete ${incompleteTodos === 1 ? 'todo' : 'todos'} for today. Don't forget to complete them!`,
-      data: { incompleteTodos },
     });
   }
 

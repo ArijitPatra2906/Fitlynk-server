@@ -40,6 +40,7 @@ export interface INotification {
   title: string;
   body: string;
   data?: Record<string, any>; // Additional metadata (workout_id, exercise_name, etc.)
+  redirect_path?: string; // Path to navigate to when notification is tapped (e.g., '/todos', '/water')
   read: boolean;
   sent_at?: Date; // When push notification was sent
   read_at?: Date; // When user marked as read
@@ -104,6 +105,10 @@ const NotificationSchema = new Schema<INotification>(
     data: {
       type: Schema.Types.Mixed,
       default: {},
+    },
+    redirect_path: {
+      type: String,
+      maxlength: 200,
     },
     read: {
       type: Boolean,

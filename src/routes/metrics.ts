@@ -397,18 +397,19 @@ router.post('/steps', async (req: AuthRequest, res) => {
       );
     }
 
+    // TEMPORARILY DISABLED - Step tracking not working properly
     // Check if step goal was reached (use final total)
-    if (stepLog) {
-      const goal = await Goal.findOne({ user_id: req.user._id });
-      if (goal && stepLog.steps >= goal.step_target && goal.step_target > 0) {
-        NotificationHelpers.notifyStepGoalReached(req.user._id, stepLog.steps)
-          .catch(err => console.error('Error sending step goal notification:', err));
+    // if (stepLog) {
+    //   const goal = await Goal.findOne({ user_id: req.user._id });
+    //   if (goal && stepLog.steps >= goal.step_target && goal.step_target > 0) {
+    //     NotificationHelpers.notifyStepGoalReached(req.user._id, stepLog.steps)
+    //       .catch((err: any) => console.error('Error sending step goal notification:', err));
 
-        // Check if all daily goals met
-        NotificationHelpers.checkAndNotifyDailyGoals(req.user._id)
-          .catch(err => console.error('Error checking daily goals:', err));
-      }
-    }
+    //     // Check if all daily goals met
+    //     NotificationHelpers.checkAndNotifyDailyGoals(req.user._id)
+    //       .catch((err: any) => console.error('Error checking daily goals:', err));
+    //   }
+    // }
 
     return successResponse(res, stepLog);
   } catch (error: any) {

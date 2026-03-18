@@ -352,16 +352,19 @@ class NotificationScheduler {
       if (!goal) return;
 
       const caloriesLogged = meals.reduce((sum, meal) => sum + meal.calories, 0);
-      const stepsToday = stepLog?.steps || 0;
+      // TEMPORARILY DISABLED - Step tracking not working properly
+      // const stepsToday = stepLog?.steps || 0;
 
       const goalsRemaining: string[] = [];
       if (caloriesLogged < goal.calorie_target) goalsRemaining.push('calories');
-      if (stepsToday < goal.step_target) goalsRemaining.push('steps');
+      // TEMPORARILY DISABLED - Step tracking not working properly
+      // if (stepsToday < goal.step_target) goalsRemaining.push('steps');
       if (workouts === 0) goalsRemaining.push('workout');
 
       await NotificationHelpers.notifyEveningSummary(userId, {
         caloriesLogged,
-        stepsToday,
+        // TEMPORARILY DISABLED - Step tracking not working properly
+        // stepsToday,
         workoutsToday: workouts,
         goalsRemaining,
       });

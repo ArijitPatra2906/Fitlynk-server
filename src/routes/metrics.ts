@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { createHash } from 'crypto';
 import Goal from '../models/Goal';
 import BodyMetrics from '../models/BodyMetrics';
 import StepLog from '../models/StepLog';
@@ -6,6 +7,7 @@ import WaterLog from '../models/WaterLog';
 import User from '../models/User';
 import MealLog from '../models/MealLog';
 import Workout from '../models/Workout';
+import ProgressPhoto from '../models/ProgressPhoto';
 import { errorResponse, successResponse } from '../utils/auth';
 import { authenticateUser, AuthRequest } from '../middleware/auth';
 import NotificationHelpers from '../services/notificationHelpers';
@@ -520,6 +522,186 @@ router.post('/water', async (req: AuthRequest, res) => {
     return successResponse(res, waterLog, 201);
   } catch (error: any) {
     console.error('Create water log error:', error);
+    return errorResponse(res, error.message || 'Internal server error', 500);
+  }
+});
+
+// GET /api/metrics/progress-photos
+router.get('/progress-photos', async (req: AuthRequest, res) => {
+  try {
+    const { startDate, endDate, page, limit } = req.query;
+
+    const filter: any = { user_id: req.user._id };
+
+    if (startDate && endDate) {
+      filter.taken_at = {
+        $gte: toStartOfDay(startDate as string),
+        $lte: toEndOfDay(endDate as string),
+      };
+    }
+
+    const hasPagination = page !== undefined;
+    const rawLimit = parseInt((limit as string) || '50', 10);
+    const limitNum = Number.isFinite(rawLimit) ? Math.max(1, rawLimit) : 50;
+
+    if (!hasPagination) {
+      const photos = await ProgressPhoto.find(filter)
+        .sort({ taken_at: -1 })
+        .limit(limitNum);
+      return successResponse(res, photos);
+    }
+
+    const rawPage = parseInt((page as string) || '1', 10);
+    const pageNum = Number.isFinite(rawPage) ? Math.max(1, rawPage) : 1;
+    const skip = (pageNum - 1) * limitNum;
+
+    const [total, photos] = await Promise.all([
+      ProgressPhoto.countDocuments(filter),
+      ProgressPhoto.find(filter).sort({ taken_at: -1 }).skip(skip).limit(limitNum),
+    ]);
+
+    const totalPages = Math.max(1, Math.ceil(total / limitNum));
+    return successResponse(res, {
+      photos,
+      pagination: {
+        page: pageNum,
+        limit: limitNum,
+        total,
+        totalPages,
+        hasNext: pageNum < totalPages,
+        hasPrev: pageNum > 1,
+      },
+    });
+  } catch (error: any) {
+    console.error('Get progress photos error:', error);
+    return errorResponse(res, error.message || 'Internal server error', 500);
+  }
+});
+
+// POST /api/metrics/progress-photos
+router.post('/progress-photos', async (req: AuthRequest, res) => {
+  try {
+    const { imageData, caption, taken_at, weight_kg, body_fat_pct, tags } = req.body;
+
+    if (!imageData || !imageData.startsWith('data:image/')) {
+      return errorResponse(res, 'Valid imageData is required', 400);
+    }
+
+    // Basic guard to prevent very large base64 payloads (max ~10MB)
+    if (imageData.length > 10_000_000) {
+      return errorResponse(res, 'Image payload is too large. Max 10MB', 413);
+    }
+
+    const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
+    const apiKey = process.env.CLOUDINARY_API_KEY;
+    const apiSecret = process.env.CLOUDINARY_API_SECRET;
+    if (!cloudName || !apiKey || !apiSecret) {
+      return errorResponse(res, 'Cloudinary env is not configured on server', 500);
+    }
+
+    const timestamp = Math.floor(Date.now() / 1000);
+    const folder = 'fitlynk/progress-photos';
+    const publicId = `progress_${req.user._id}_${Date.now()}`;
+
+    // Original image
+    const signatureBase = `folder=${folder}&public_id=${publicId}&timestamp=${timestamp}${apiSecret}`;
+    const signature = createHash('sha1').update(signatureBase).digest('hex');
+
+    const body = new URLSearchParams();
+    body.append('file', imageData);
+    body.append('api_key', apiKey);
+    body.append('timestamp', String(timestamp));
+    body.append('folder', folder);
+    body.append('public_id', publicId);
+    body.append('signature', signature);
+
+    const uploadRes = await fetch(
+      `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body.toString(),
+      }
+    );
+
+    const uploadPayload: any = await uploadRes.json();
+    if (!uploadRes.ok || !uploadPayload?.secure_url) {
+      return errorResponse(
+        res,
+        uploadPayload?.error?.message || 'Cloudinary upload failed',
+        uploadRes.status || 500
+      );
+    }
+
+    // Generate thumbnail URL (300x300)
+    const thumbnailUrl = uploadPayload.secure_url.replace(
+      '/upload/',
+      '/upload/c_fill,w_300,h_300,q_auto,f_auto/'
+    );
+
+    // Create progress photo record
+    const photo = await ProgressPhoto.create({
+      user_id: req.user._id,
+      photo_url: uploadPayload.secure_url,
+      thumbnail_url: thumbnailUrl,
+      caption: caption || '',
+      taken_at: taken_at || new Date(),
+      weight_kg: weight_kg || undefined,
+      body_fat_pct: body_fat_pct || undefined,
+      tags: tags || [],
+    });
+
+    return successResponse(res, photo, 201);
+  } catch (error: any) {
+    console.error('Create progress photo error:', error);
+    return errorResponse(res, error.message || 'Internal server error', 500);
+  }
+});
+
+// DELETE /api/metrics/progress-photos/:id
+router.delete('/progress-photos/:id', async (req: AuthRequest, res) => {
+  try {
+    const photo = await ProgressPhoto.findOne({
+      _id: req.params.id,
+      user_id: req.user._id,
+    });
+
+    if (!photo) {
+      return errorResponse(res, 'Progress photo not found', 404);
+    }
+
+    await ProgressPhoto.deleteOne({ _id: req.params.id });
+
+    return successResponse(res, { message: 'Progress photo deleted successfully' });
+  } catch (error: any) {
+    console.error('Delete progress photo error:', error);
+    return errorResponse(res, error.message || 'Internal server error', 500);
+  }
+});
+
+// PUT /api/metrics/progress-photos/:id
+router.put('/progress-photos/:id', async (req: AuthRequest, res) => {
+  try {
+    const { caption, weight_kg, body_fat_pct, tags } = req.body;
+
+    const photo = await ProgressPhoto.findOneAndUpdate(
+      { _id: req.params.id, user_id: req.user._id },
+      {
+        caption,
+        weight_kg,
+        body_fat_pct,
+        tags,
+      },
+      { new: true, runValidators: true }
+    );
+
+    if (!photo) {
+      return errorResponse(res, 'Progress photo not found', 404);
+    }
+
+    return successResponse(res, photo);
+  } catch (error: any) {
+    console.error('Update progress photo error:', error);
     return errorResponse(res, error.message || 'Internal server error', 500);
   }
 });

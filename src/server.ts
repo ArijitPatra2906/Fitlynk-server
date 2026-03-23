@@ -65,9 +65,9 @@ app.use(
   }),
 )
 
-// Accept larger payloads for profile avatar data URLs uploaded from mobile/web.
-app.use(express.json({ limit: '2mb' }))
-app.use(express.urlencoded({ extended: true, limit: '2mb' }))
+// Accept larger payloads for profile avatar data URLs and progress photos uploaded from mobile/web.
+app.use(express.json({ limit: '15mb' }))
+app.use(express.urlencoded({ extended: true, limit: '15mb' }))
 
 // Health check endpoint
 app.get('/health', (req, res) => {

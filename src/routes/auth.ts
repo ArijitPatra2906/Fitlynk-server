@@ -484,4 +484,100 @@ router.post(
   },
 )
 
+// PUT /api/auth/change-password
+router.put('/change-password', authenticateUser, async (req: AuthRequest, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body
+
+    if (!currentPassword || !newPassword) {
+      return errorResponse(res, 'Current and new password are required', 400)
+    }
+
+    if (newPassword.length < 8) {
+      return errorResponse(res, 'New password must be at least 8 characters', 400)
+    }
+
+    // Check if user is using email authentication
+    if (req.user.auth_provider !== 'email') {
+      return errorResponse(
+        res,
+        'Password change is only available for email accounts',
+        400,
+      )
+    }
+
+    // Verify current password
+    const user = await User.findById(req.user._id).select('+password')
+    if (!user || !user.password) {
+      return errorResponse(res, 'User not found', 404)
+    }
+
+    const isPasswordValid = await comparePassword(currentPassword, user.password)
+    if (!isPasswordValid) {
+      return errorResponse(res, 'Current password is incorrect', 401)
+    }
+
+    // Hash and update new password
+    const hashedPassword = await hashPassword(newPassword)
+    user.password = hashedPassword
+    user.updated_at = new Date()
+    await user.save()
+
+    return successResponse(res, { message: 'Password changed successfully' })
+  } catch (error: any) {
+    console.error('Change password error:', error)
+    return errorResponse(res, error.message || 'Failed to change password', 500)
+  }
+})
+
+// DELETE /api/auth/account
+router.delete('/account', authenticateUser, async (req: AuthRequest, res) => {
+  try {
+    const userId = req.user._id
+
+    // Delete all user data from all collections
+    await Promise.all([
+      User.findByIdAndDelete(userId),
+      // Import models dynamically to avoid circular dependencies
+      (async () => {
+        const Goal = (await import('../models/Goal')).default
+        await Goal.deleteMany({ user_id: userId })
+      })(),
+      (async () => {
+        const BodyMetrics = (await import('../models/BodyMetrics')).default
+        await BodyMetrics.deleteMany({ user_id: userId })
+      })(),
+      (async () => {
+        const StepLog = (await import('../models/StepLog')).default
+        await StepLog.deleteMany({ user_id: userId })
+      })(),
+      (async () => {
+        const WaterLog = (await import('../models/WaterLog')).default
+        await WaterLog.deleteMany({ user_id: userId })
+      })(),
+      (async () => {
+        const MealLog = (await import('../models/MealLog')).default
+        await MealLog.deleteMany({ user_id: userId })
+      })(),
+      (async () => {
+        const Workout = (await import('../models/Workout')).default
+        await Workout.deleteMany({ user_id: userId })
+      })(),
+      (async () => {
+        const ProgressPhoto = (await import('../models/ProgressPhoto')).default
+        await ProgressPhoto.deleteMany({ user_id: userId })
+      })(),
+      (async () => {
+        const NotificationPreferences = (await import('../models/NotificationPreferences')).default
+        await NotificationPreferences.deleteMany({ user_id: userId })
+      })(),
+    ])
+
+    return successResponse(res, { message: 'Account deleted successfully' })
+  } catch (error: any) {
+    console.error('Delete account error:', error)
+    return errorResponse(res, error.message || 'Failed to delete account', 500)
+  }
+})
+
 export default router

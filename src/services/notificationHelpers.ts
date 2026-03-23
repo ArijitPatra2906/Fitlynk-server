@@ -203,9 +203,44 @@ export class NotificationHelpers {
       "Rise and shine! Today is a great day to make progress! 🌅",
       "Morning! Let's make today count! 🎯",
       "New day, new opportunities! Let's go! ☀️",
+      "Wake up and be awesome! Your body is ready! 🔥",
+      "Good morning, champion! Time to level up! 🏆",
+      "Hello sunshine! Let's smash those fitness goals! ⚡",
+      "Another day, another chance to be stronger! 💯",
+      "Morning warrior! Your dedication inspires! 🌟",
+      "Good morning! Consistency is key - let's do this! 🚀",
+      "Wake up! Your future self will thank you! 🙌",
+      "Good morning! Small steps lead to big changes! 🎖️",
+      "Rise up! Today's workout won't do itself! 🏋️",
+      "Good morning! Be the best version of yourself! ✨",
+      "New day, new PRs waiting to be crushed! 💥",
+      "Good morning! Your only limit is you! 🌈",
+      "Wake up determined, go to bed satisfied! 😤",
+      "Good morning! Progress over perfection! 📈",
+      "Another beautiful day to get fit! Let's go! 🌺",
+      "Good morning! Your health is your wealth! 💎",
+      "Rise and grind! Champions are made in the morning! 🥇",
+      "Good morning! Believe in your strength! 🦁",
+      "New day to write your fitness story! Let's begin! 📝",
+      "Good morning! Success starts with showing up! 👊",
+      "Wake up! Today is leg day... just kidding! (or am I?) 😄",
+      "Good morning! Make it happen, captain! ⚓",
+      "Another day closer to your goals! Keep pushing! 🎯",
+      "Good morning! Your body can do amazing things! 🌠",
+      "Rise up! Greatness is built one day at a time! 🏗️",
+      "Good morning! You're stronger than you think! 🦾",
+      "New dawn, new gains! Let's get after it! 🌄",
     ];
 
-    const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+    // Use day of year to get consistent but different greeting each day
+    const now = new Date();
+    const startOfYear = new Date(now.getFullYear(), 0, 0);
+    const diff = now.getTime() - startOfYear.getTime();
+    const oneDay = 1000 * 60 * 60 * 24;
+    const dayOfYear = Math.floor(diff / oneDay);
+
+    // Use day of year modulo array length to get a different greeting each day
+    const greeting = greetings[dayOfYear % greetings.length];
 
     await notificationService.sendNotification({
       userId,

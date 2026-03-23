@@ -73,32 +73,95 @@ class NotificationScheduler {
           // Morning check-in - compare time strings
           if (prefs.morning_checkin.enabled) {
             console.log(`User ${userId}: Morning check-in enabled=${prefs.morning_checkin.enabled}, time=${prefs.morning_checkin.time}, currentTime=${currentTime}`);
-            if (prefs.morning_checkin.time === currentTime) {
+            const todayStr = getISTDateString();
+            const alreadySent = prefs.last_morning_checkin_sent === todayStr;
+
+            if (prefs.morning_checkin.time === currentTime && !alreadySent) {
               console.log(`✅ Sending morning check-in to user ${userId} at ${currentTime} IST`);
               await NotificationHelpers.notifyMorningCheckin(userId);
+
+              // Mark as sent for today
+              await NotificationPreferences.updateOne(
+                { _id: prefs._id },
+                { last_morning_checkin_sent: todayStr }
+              );
+            } else if (alreadySent) {
+              console.log(`⏭️ Skipping morning check-in for user ${userId} - already sent today`);
             }
           }
 
           // Workout reminder
           if (prefs.workout_reminder.enabled && prefs.workout_reminder.time === currentTime) {
-            await NotificationHelpers.notifyWorkoutReminder(userId);
+            const todayStr = getISTDateString();
+            const alreadySent = prefs.last_workout_reminder_sent === todayStr;
+
+            if (!alreadySent) {
+              console.log(`✅ Sending workout reminder to user ${userId} at ${currentTime} IST`);
+              await NotificationHelpers.notifyWorkoutReminder(userId);
+
+              // Mark as sent for today
+              await NotificationPreferences.updateOne(
+                { _id: prefs._id },
+                { last_workout_reminder_sent: todayStr }
+              );
+            } else {
+              console.log(`⏭️ Skipping workout reminder for user ${userId} - already sent today`);
+            }
           }
 
           // Water reminders (can have multiple times)
           if (prefs.water_reminder.enabled && prefs.water_reminder.times.includes(currentTime)) {
-            await this.sendWaterReminderIfNeeded(userId);
+            const todayStr = getISTDateString();
+            const reminderKey = `${todayStr}:${currentTime}`;
+            const alreadySent = prefs.last_water_reminder_sent === reminderKey;
+
+            if (!alreadySent) {
+              console.log(`✅ Sending water reminder to user ${userId} at ${currentTime} IST`);
+              await this.sendWaterReminderIfNeeded(userId);
+
+              // Mark this specific time as sent for today
+              await NotificationPreferences.updateOne(
+                { _id: prefs._id },
+                { last_water_reminder_sent: reminderKey }
+              );
+            } else {
+              console.log(`⏭️ Skipping water reminder for user ${userId} - already sent at ${currentTime} today`);
+            }
           }
 
           // Meal reminders
           if (prefs.meal_reminder.enabled) {
+            const todayStr = getISTDateString();
+
             if (prefs.meal_reminder.breakfast_time === currentTime) {
-              await this.sendMealReminderIfNotLogged(userId, 'breakfast');
+              const alreadySent = prefs.last_meal_reminder_sent?.breakfast === todayStr;
+              if (!alreadySent) {
+                await this.sendMealReminderIfNotLogged(userId, 'breakfast');
+                await NotificationPreferences.updateOne(
+                  { _id: prefs._id },
+                  { 'last_meal_reminder_sent.breakfast': todayStr }
+                );
+              }
             }
             if (prefs.meal_reminder.lunch_time === currentTime) {
-              await this.sendMealReminderIfNotLogged(userId, 'lunch');
+              const alreadySent = prefs.last_meal_reminder_sent?.lunch === todayStr;
+              if (!alreadySent) {
+                await this.sendMealReminderIfNotLogged(userId, 'lunch');
+                await NotificationPreferences.updateOne(
+                  { _id: prefs._id },
+                  { 'last_meal_reminder_sent.lunch': todayStr }
+                );
+              }
             }
             if (prefs.meal_reminder.dinner_time === currentTime) {
-              await this.sendMealReminderIfNotLogged(userId, 'dinner');
+              const alreadySent = prefs.last_meal_reminder_sent?.dinner === todayStr;
+              if (!alreadySent) {
+                await this.sendMealReminderIfNotLogged(userId, 'dinner');
+                await NotificationPreferences.updateOne(
+                  { _id: prefs._id },
+                  { 'last_meal_reminder_sent.dinner': todayStr }
+                );
+              }
             }
           }
 

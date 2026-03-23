@@ -140,10 +140,9 @@ router.post('/body', async (req: AuthRequest, res) => {
       user_id: req.user._id,
     });
 
-    const weightKg = Number(req.body?.weight_kg);
-    if (Number.isFinite(weightKg) && weightKg > 0) {
-      await User.findByIdAndUpdate(req.user._id, { weight_kg: weightKg });
-    }
+    // Note: We do NOT update user.weight_kg here
+    // user.weight_kg represents the starting weight from onboarding
+    // Current weight is tracked in BodyMetrics collection only
 
     return successResponse(res, metric, 201);
   } catch (error: any) {

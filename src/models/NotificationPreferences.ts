@@ -60,6 +60,16 @@ export interface INotificationPreferences {
   step_sync_complete: boolean;
   goal_update_reminder: boolean;
 
+  // Tracking for preventing duplicate reminders
+  last_water_reminder_sent?: string; // Format: "YYYY-MM-DD:HH:MM"
+  last_morning_checkin_sent?: string; // Format: "YYYY-MM-DD"
+  last_workout_reminder_sent?: string; // Format: "YYYY-MM-DD"
+  last_meal_reminder_sent?: {
+    breakfast?: string; // Format: "YYYY-MM-DD"
+    lunch?: string;
+    dinner?: string;
+  };
+
   created_at: Date;
   updated_at: Date;
 }
@@ -169,6 +179,19 @@ const NotificationPreferencesSchema = new Schema<INotificationPreferences>(
     // System
     step_sync_complete: { type: Boolean, default: false }, // Default off (can be noisy)
     goal_update_reminder: { type: Boolean, default: true },
+
+    // Tracking for preventing duplicate reminders
+    last_water_reminder_sent: { type: String }, // Format: "YYYY-MM-DD:HH:MM"
+    last_morning_checkin_sent: { type: String }, // Format: "YYYY-MM-DD"
+    last_workout_reminder_sent: { type: String }, // Format: "YYYY-MM-DD"
+    last_meal_reminder_sent: {
+      type: {
+        breakfast: { type: String },
+        lunch: { type: String },
+        dinner: { type: String },
+      },
+      default: {},
+    },
   },
   {
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },

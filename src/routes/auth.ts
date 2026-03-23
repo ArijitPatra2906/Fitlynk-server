@@ -274,10 +274,13 @@ router.get('/me', authenticateUser, async (req: AuthRequest, res) => {
 // PUT /api/auth/profile
 router.put('/profile', authenticateUser, async (req: AuthRequest, res) => {
   try {
+    // Note: weight_kg in User model represents the STARTING/BASELINE weight
+    // It should only be updated here if the user explicitly wants to reset their baseline
+    // Current weight tracking is done through BodyMetrics collection
     const allowedUpdates = [
       'name',
       'height',
-      'weight_kg',
+      'weight_kg', // Starting/baseline weight only
       'date_of_birth',
       'gender',
       'units',

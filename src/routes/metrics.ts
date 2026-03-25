@@ -499,17 +499,26 @@ router.post('/water', async (req: AuthRequest, res) => {
       user_id: req.user._id,
     });
 
-    // Check if water goal was reached
+    // Check if water goal was reached and auto-complete todos
     const today = new Date().toISOString().split('T')[0];
+
+    // Create start and end of day for date range query
+    const startOfDay = new Date(today + 'T00:00:00.000Z');
+    const endOfDay = new Date(today + 'T23:59:59.999Z');
+
     const [goal, waterLogs] = await Promise.all([
       Goal.findOne({ user_id: req.user._id }),
-      WaterLog.find({ user_id: req.user._id, date: today }),
+      WaterLog.find({
+        user_id: req.user._id,
+        date: { $gte: startOfDay, $lte: endOfDay }
+      }),
     ]);
 
-    if (goal && goal.water_target_ml > 0) {
+    if (goal) {
       const totalWater = waterLogs.reduce((sum, log) => sum + log.amount_ml, 0);
 
-      if (totalWater >= goal.water_target_ml) {
+      // Send notification if water goal was reached
+      if (goal.water_target_ml > 0 && totalWater >= goal.water_target_ml) {
         NotificationHelpers.notifyWaterGoalReached(req.user._id, totalWater)
           .catch(err => console.error('Error sending water goal notification:', err));
 
@@ -517,6 +526,91 @@ router.post('/water', async (req: AuthRequest, res) => {
         NotificationHelpers.checkAndNotifyDailyGoals(req.user._id)
           .catch(err => console.error('Error checking daily goals:', err));
       }
+
+      // Auto-complete water-related todos based on target (check every time water is logged)
+      const Todo = (await import('../models/Todo')).default;
+      const todayStr = today;
+
+      console.log(`🔍 [WATER TODO AUTO-COMPLETE] Starting check for user ${req.user._id}`);
+      console.log(`📅 Today's date string: ${todayStr}`);
+      console.log(`💧 Total water intake: ${totalWater}ml`);
+      console.log(`🎯 User's water goal: ${goal.water_target_ml}ml`);
+
+      // Find incomplete water-related todos for today
+      const waterTodos = await Todo.find({
+        user_id: req.user._id,
+        completed: false,
+        due_date: todayStr,
+        $or: [
+          { title: /water/i },
+          { title: /hydrat/i },
+          { title: /drink/i },
+        ],
+      });
+
+      console.log(`📝 Found ${waterTodos.length} incomplete water-related todos for today`);
+
+      // Helper function to extract water volume target from todo title/description
+      const extractWaterTarget = (text: string): number | null => {
+        // Match patterns like: "4 liters", "4L", "2.5 liters", "3000ml", "3000 ml", "1.5L"
+        const literMatch = text.match(/(\d+(?:\.\d+)?)\s*(?:liter|litre|L)s?/i)
+        if (literMatch) {
+          return parseFloat(literMatch[1]) * 1000 // Convert to ml
+        }
+
+        const mlMatch = text.match(/(\d+)\s*(?:ml|milliliter|millilitre)s?/i)
+        if (mlMatch) {
+          return parseInt(mlMatch[1])
+        }
+
+        return null
+      }
+
+      // Mark them as completed if water target is met
+      for (const todo of waterTodos) {
+        console.log(`\n📋 Checking todo: "${todo.title}"`);
+        console.log(`   Due date: ${todo.due_date}`);
+        console.log(`   Description: ${todo.description || 'N/A'}`);
+
+        const combinedText = `${todo.title} ${todo.description || ''}`
+        const targetMl = extractWaterTarget(combinedText)
+
+        console.log(`   Extracted target: ${targetMl !== null ? targetMl + 'ml' : 'None (will use goal)'}`);
+
+        let shouldComplete = false
+
+        if (targetMl !== null) {
+          // Todo has a specific water target - check if intake meets it
+          if (totalWater >= targetMl) {
+            shouldComplete = true
+            console.log(`   ✅ COMPLETING: water intake ${totalWater}ml >= target ${targetMl}ml`)
+          } else {
+            console.log(`   ⏭️  SKIPPING: water intake ${totalWater}ml < target ${targetMl}ml`)
+          }
+        } else {
+          // No specific target mentioned - use user's daily goal as threshold
+          if (goal.water_target_ml > 0 && totalWater >= goal.water_target_ml) {
+            shouldComplete = true
+            console.log(`   ✅ COMPLETING: water intake ${totalWater}ml >= goal ${goal.water_target_ml}ml`)
+          } else {
+            console.log(`   ⏭️  SKIPPING: water intake ${totalWater}ml < goal ${goal.water_target_ml}ml (or goal not set)`)
+          }
+        }
+
+        if (shouldComplete) {
+          try {
+            const result = await Todo.findByIdAndUpdate(todo._id, {
+              completed: true,
+              completed_at: new Date(),
+            })
+            console.log(`   ✨ Successfully updated todo ${todo._id} in database`)
+          } catch (err) {
+            console.error(`   ❌ Error updating todo ${todo._id}:`, err)
+          }
+        }
+      }
+
+      console.log(`\n🏁 [WATER TODO AUTO-COMPLETE] Check complete\n`);
     }
 
     return successResponse(res, waterLog, 201);

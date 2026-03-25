@@ -64,6 +64,7 @@ export interface INotificationPreferences {
   last_water_reminder_sent?: string; // Format: "YYYY-MM-DD:HH:MM"
   last_morning_checkin_sent?: string; // Format: "YYYY-MM-DD"
   last_workout_reminder_sent?: string; // Format: "YYYY-MM-DD"
+  last_incomplete_goals_sent?: string; // Format: "YYYY-MM-DD"
   last_meal_reminder_sent?: {
     breakfast?: string; // Format: "YYYY-MM-DD"
     lunch?: string;
@@ -184,6 +185,7 @@ const NotificationPreferencesSchema = new Schema<INotificationPreferences>(
     last_water_reminder_sent: { type: String }, // Format: "YYYY-MM-DD:HH:MM"
     last_morning_checkin_sent: { type: String }, // Format: "YYYY-MM-DD"
     last_workout_reminder_sent: { type: String }, // Format: "YYYY-MM-DD"
+    last_incomplete_goals_sent: { type: String }, // Format: "YYYY-MM-DD"
     last_meal_reminder_sent: {
       type: {
         breakfast: { type: String },

@@ -102,10 +102,30 @@ const buildWorkoutPayload = async (req: AuthRequest, existingWorkout?: any) => {
     user_id: req.user._id,
   }
 
-  basePayload.calories = await calculateWorkoutCalories(
-    req.user._id.toString(),
-    basePayload,
-  )
+  console.log('[BUILD_PAYLOAD] is_template:', basePayload.is_template)
+  console.log('[BUILD_PAYLOAD] Before cleanup:', {
+    has_started_at: !!basePayload.started_at,
+    has_ended_at: !!basePayload.ended_at,
+    has_template_id: !!basePayload.template_id,
+  })
+
+  // If this is a template, remove workout-specific fields
+  if (basePayload.is_template) {
+    delete basePayload.started_at
+    delete basePayload.ended_at
+    delete basePayload.template_id
+    console.log('[BUILD_PAYLOAD] Cleaned up template fields')
+  }
+
+  // Use calories from request body if provided, otherwise calculate it
+  if (incomingData.calories !== undefined && incomingData.calories !== null) {
+    basePayload.calories = incomingData.calories
+  } else {
+    basePayload.calories = await calculateWorkoutCalories(
+      req.user._id.toString(),
+      basePayload,
+    )
+  }
 
   return basePayload
 }
@@ -328,6 +348,91 @@ router.put('/:id', async (req: AuthRequest, res) => {
       // Check if all daily goals met
       NotificationHelpers.checkAndNotifyDailyGoals(req.user._id)
         .catch(err => console.error('Error checking daily goals:', err))
+
+      // Auto-complete workout todo based on duration
+      const Todo = (await import('../models/Todo')).default
+      const todayStr = new Date().toISOString().split('T')[0]
+
+      console.log(`🔍 [WORKOUT TODO AUTO-COMPLETE] Starting check for user ${req.user._id}`)
+      console.log(`📅 Today's date string: ${todayStr}`)
+      console.log(`⏱️  Workout duration: ${Math.round(durationMinutes)} minutes`)
+
+      // Find incomplete workout-related todos for today
+      const workoutTodos = await Todo.find({
+        user_id: req.user._id,
+        completed: false,
+        due_date: todayStr,
+        $or: [
+          { title: /workout/i },
+          { title: /exercise/i },
+          { title: /gym/i },
+          { title: /training/i },
+        ],
+      })
+
+      console.log(`📝 Found ${workoutTodos.length} incomplete workout-related todos for today`)
+
+      // Helper function to extract duration target from todo title/description
+      const extractDurationTarget = (text: string): number | null => {
+        // Match patterns like: "1 hour", "2 hours", "60 min", "90 minutes", "1hr", "1.5 hours"
+        const hourMatch = text.match(/(\d+(?:\.\d+)?)\s*(?:hour|hr)s?/i)
+        if (hourMatch) {
+          return parseFloat(hourMatch[1]) * 60 // Convert to minutes
+        }
+
+        const minMatch = text.match(/(\d+)\s*(?:min|minute)s?/i)
+        if (minMatch) {
+          return parseInt(minMatch[1])
+        }
+
+        return null
+      }
+
+      // Mark them as completed if duration target is met
+      for (const todo of workoutTodos) {
+        console.log(`\n📋 Checking todo: "${todo.title}"`)
+        console.log(`   Due date: ${todo.due_date}`)
+        console.log(`   Description: ${todo.description || 'N/A'}`)
+
+        const combinedText = `${todo.title} ${todo.description || ''}`
+        const targetMinutes = extractDurationTarget(combinedText)
+
+        console.log(`   Extracted target: ${targetMinutes !== null ? targetMinutes + ' minutes' : 'None (will use default 60min)'}`)
+
+        let shouldComplete = false
+
+        if (targetMinutes !== null) {
+          // Todo has a specific duration target - check if workout meets it
+          if (durationMinutes >= targetMinutes) {
+            shouldComplete = true
+            console.log(`   ✅ COMPLETING: workout duration ${Math.round(durationMinutes)}min >= target ${targetMinutes}min`)
+          } else {
+            console.log(`   ⏭️  SKIPPING: workout duration ${Math.round(durationMinutes)}min < target ${targetMinutes}min`)
+          }
+        } else {
+          // No specific target mentioned - use default 60 minute threshold
+          if (durationMinutes >= 60) {
+            shouldComplete = true
+            console.log(`   ✅ COMPLETING: workout duration ${Math.round(durationMinutes)}min >= default 60min`)
+          } else {
+            console.log(`   ⏭️  SKIPPING: workout duration ${Math.round(durationMinutes)}min < default 60min`)
+          }
+        }
+
+        if (shouldComplete) {
+          try {
+            const result = await Todo.findByIdAndUpdate(todo._id, {
+              completed: true,
+              completed_at: new Date(),
+            })
+            console.log(`   ✨ Successfully updated todo ${todo._id} in database`)
+          } catch (err) {
+            console.error(`   ❌ Error updating todo ${todo._id}:`, err)
+          }
+        }
+      }
+
+      console.log(`\n🏁 [WORKOUT TODO AUTO-COMPLETE] Check complete\n`)
     }
 
     return successResponse(res, workout)
@@ -338,6 +443,52 @@ router.put('/:id', async (req: AuthRequest, res) => {
 })
 
 // DELETE /api/workouts/:id
+router.post('/:id/to-template', async (req: AuthRequest, res) => {
+  try {
+    const existingWorkout = await Workout.findOne({
+      _id: req.params.id,
+      user_id: req.user._id,
+    })
+
+    if (!existingWorkout) {
+      return errorResponse(res, 'Workout not found', 404)
+    }
+
+    // Create a new template based on the existing workout
+    const templateName = req.body.name || `${existingWorkout.name} Template`
+
+    const newTemplate = await Workout.create({
+      user_id: req.user._id,
+      name: templateName,
+      is_template: true,
+      exercises: existingWorkout.exercises.map((exercise: any) => ({
+        exercise_id: exercise.exercise_id,
+        order_index: exercise.order_index,
+        notes: exercise.notes,
+        sets: exercise.sets.map((set: any) => ({
+          set_number: set.set_number,
+          reps: set.reps,
+          weight_kg: set.weight_kg,
+          duration_s: set.duration_s,
+          distance_m: set.distance_m,
+          is_warmup: set.is_warmup,
+          // Don't copy completed_at for templates
+        })),
+      })),
+      notes: existingWorkout.notes,
+    })
+
+    const populatedTemplate = await Workout.findById(newTemplate._id).populate(
+      'exercises.exercise_id',
+    )
+
+    return successResponse(res, populatedTemplate)
+  } catch (error: any) {
+    console.error('Create template from workout error:', error)
+    return errorResponse(res, error.message || 'Internal server error', 500)
+  }
+})
+
 router.delete('/:id', async (req: AuthRequest, res) => {
   try {
     const workout = await Workout.findOneAndDelete({

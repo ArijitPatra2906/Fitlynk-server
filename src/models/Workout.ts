@@ -108,8 +108,18 @@ const WorkoutSchema = new Schema<IWorkout>(
     },
     started_at: {
       type: Date,
-      required: [true, 'Start time is required'],
+      required: false,
       index: true,
+      validate: {
+        validator: function(this: IWorkout, value: Date) {
+          // started_at is required for workouts but not for templates
+          if (!this.is_template && !value) {
+            return false
+          }
+          return true
+        },
+        message: 'Start time is required for workouts'
+      }
     },
     ended_at: {
       type: Date,

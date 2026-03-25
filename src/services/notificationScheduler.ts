@@ -96,14 +96,39 @@ class NotificationScheduler {
             const alreadySent = prefs.last_workout_reminder_sent === todayStr;
 
             if (!alreadySent) {
-              console.log(`✅ Sending workout reminder to user ${userId} at ${currentTime} IST`);
-              await NotificationHelpers.notifyWorkoutReminder(userId);
+              // Check if user has an active workout (started but not ended)
+              const activeWorkout = await Workout.findOne({
+                user_id: userId,
+                started_at: { $ne: null },
+                ended_at: null,
+              });
 
-              // Mark as sent for today
-              await NotificationPreferences.updateOne(
-                { _id: prefs._id },
-                { last_workout_reminder_sent: todayStr }
-              );
+              if (activeWorkout) {
+                console.log(`⏭️ Skipping workout reminder for user ${userId} - workout already in progress`);
+              } else {
+                // Check if user already completed a workout today
+                const startOfDayIST = new Date(todayStr + 'T00:00:00Z');
+                const endOfDayIST = new Date(todayStr + 'T23:59:59Z');
+
+                const completedWorkoutToday = await Workout.findOne({
+                  user_id: userId,
+                  started_at: { $gte: startOfDayIST, $lte: endOfDayIST },
+                  ended_at: { $ne: null },
+                });
+
+                if (completedWorkoutToday) {
+                  console.log(`⏭️ Skipping workout reminder for user ${userId} - already completed workout today`);
+                } else {
+                  console.log(`✅ Sending workout reminder to user ${userId} at ${currentTime} IST`);
+                  await NotificationHelpers.notifyWorkoutReminder(userId);
+
+                  // Mark as sent for today
+                  await NotificationPreferences.updateOne(
+                    { _id: prefs._id },
+                    { last_workout_reminder_sent: todayStr }
+                  );
+                }
+              }
             } else {
               console.log(`⏭️ Skipping workout reminder for user ${userId} - already sent today`);
             }
@@ -177,7 +202,20 @@ class NotificationScheduler {
 
           // Incomplete goals reminder (check at 8 PM if enabled)
           if (prefs.incomplete_goals && currentTime === '20:00') {
-            await this.sendIncompleteGoalsReminder(userId);
+            const todayStr = getISTDateString();
+            const alreadySent = prefs.last_incomplete_goals_sent === todayStr;
+
+            if (!alreadySent) {
+              await this.sendIncompleteGoalsReminder(userId);
+
+              // Mark as sent for today
+              await NotificationPreferences.updateOne(
+                { _id: prefs._id },
+                { last_incomplete_goals_sent: todayStr }
+              );
+            } else {
+              console.log(`⏭️ Skipping incomplete goals reminder for user ${userId} - already sent today`);
+            }
           }
 
           // Todo reminder (check at 10 PM daily for incomplete todos)
@@ -325,21 +363,14 @@ class NotificationScheduler {
 
   private async sendWaterReminderIfNeeded(userId: mongoose.Types.ObjectId) {
     try {
-      // Get start and end of today in local timezone
-      const startOfDay = new Date();
-      startOfDay.setHours(0, 0, 0, 0);
-
-      const endOfDay = new Date();
-      endOfDay.setHours(23, 59, 59, 999);
+      // Get today's date in IST timezone in YYYY-MM-DD format
+      const todayStr = getISTDateString();
 
       const [goal, waterLogs] = await Promise.all([
         Goal.findOne({ user_id: userId }),
         WaterLog.find({
           user_id: userId,
-          date: {
-            $gte: startOfDay,
-            $lte: endOfDay
-          }
+          date: todayStr
         }),
       ]);
 
@@ -373,8 +404,8 @@ class NotificationScheduler {
       if (incompleteTodos.length > 0) {
         const todo = incompleteTodos[0];
         await NotificationHelpers.notifyTodoReminder(userId, {
-          title: 'You have incomplete todos for today',
-          description: `Starting with: ${todo.title}`,
+          title: '📝 End of day todo check',
+          description: `You still have pending tasks. Next up: ${todo.title}`,
           due_date: todayStr,
           reminder_time: '22:00',
         });
@@ -507,13 +538,12 @@ class NotificationScheduler {
 
   private async sendIncompleteGoalsReminder(userId: mongoose.Types.ObjectId) {
     try {
-      const today = new Date().toISOString().split('T')[0];
+      const todayStr = getISTDateString();
 
-      const [goal, meals, stepLog, waterLogs] = await Promise.all([
+      const [goal, meals, waterLogs] = await Promise.all([
         Goal.findOne({ user_id: userId }),
-        MealLog.find({ user_id: userId, date: today }),
-        StepLog.findOne({ user_id: userId, date: today }),
-        WaterLog.find({ user_id: userId, date: today }),
+        MealLog.find({ user_id: userId, date: todayStr }),
+        WaterLog.find({ user_id: userId, date: todayStr }),
       ]);
 
       if (!goal) return;
@@ -525,9 +555,7 @@ class NotificationScheduler {
         incompleteGoals.push('calories');
       }
 
-      if (!stepLog || stepLog.steps < goal.step_target) {
-        incompleteGoals.push('steps');
-      }
+      // STEP TRACKING TEMPORARILY DISABLED - not working properly
 
       const totalWater = waterLogs.reduce((sum, log) => sum + log.amount_ml, 0);
       if (totalWater < goal.water_target_ml) {
